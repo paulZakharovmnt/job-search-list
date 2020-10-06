@@ -1,13 +1,15 @@
 import React from "react";
 import "./App.css";
+import Auth from "./components/Auth/Auth";
 import Main from "./components/Database/Main";
 
-function App() {
+const App = () => {
   return (
     <div className="App">
-      <Main />
+      <Auth />
+      {/* <Main /> */}
     </div>
   );
-}
+};
 
 export default App;
