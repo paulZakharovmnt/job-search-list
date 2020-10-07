@@ -1,5 +1,5 @@
 import React from "react";
-import fire from "../../core/firebase";
+import { fire } from "../../core/firebase";
 
 const Nav = ({
   showJobAddScreen,

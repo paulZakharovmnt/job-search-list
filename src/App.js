@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import Auth from "./components/Auth/Auth";
 import Main from "./components/Database/Main";
-import database from "./core/firebase";
 
 const App = () => {
   const [user, setUser] = useState("");

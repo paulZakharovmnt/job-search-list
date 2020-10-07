@@ -4,7 +4,7 @@ import AddNewJob from "./AddNewJob";
 import JobList from "./JobList";
 import database from "../../core/firebase";
 
-const Main = () => {
+const Main = ({ user }) => {
   const [userAddingNewJob, setUserAddingNewJob] = useState(true);
   const [fullJobsInfoList, setfullJobsInfoList] = useState(null);
   const [listOfCompanies, setListOfCompanies] = useState([]);
@@ -49,7 +49,19 @@ const Main = () => {
 
   const getInfoFromFirebase = () => {
     database
-      .collection("userId")
+      .collection("users")
+      .doc(user.uid)
+      .collection("userData")
+      .doc("fullJobsInfo")
+      .onSnapshot((doc) => {
+        setfullJobsInfoList(doc.data());
+        console.log(doc.data());
+      });
+
+    database
+      .collection("users")
+      .doc(user.uid)
+      .collection("userData")
       .doc("listOfJobs")
       .onSnapshot((doc) => {
         if (!doc.data().listOfCompanies) {
@@ -57,21 +69,43 @@ const Main = () => {
         }
         setListOfCompanies(doc.data().listOfCompanies);
       });
-    database
-      .collection("userId")
-      .doc("fullJobsInfo")
-      .onSnapshot((doc) => {
-        setfullJobsInfoList(doc.data());
-        console.log(doc.data());
-      });
+
+    // database
+    //   .collection(user.id)
+    //   .doc("listOfJobs")
+    //   .onSnapshot((doc) => {
+    //     if (!doc.data().listOfCompanies) {
+    //       return;
+    //     }
+    //     setListOfCompanies(doc.data().listOfCompanies);
+    //   });
+    // database
+    //   .collection(user.id)
+    //   .doc("fullJobsInfo")
+    //   .onSnapshot((doc) => {
+    //     setfullJobsInfoList(doc.data());
+    //     console.log(doc.data());
+    //   });
   };
 
   const setCompanyList = () => {
-    database.collection("userId").doc("listOfJobs").set({ listOfCompanies });
+    database
+      .collection("users")
+      .doc(user.uid)
+      .collection("userData")
+      .doc("listOfJobs")
+      .set({ listOfCompanies });
+    // database.collection(user.id).doc("listOfJobs").set({ listOfCompanies });
   };
 
   const setJobsInfo = () => {
-    database.collection("userId").doc("fullJobsInfo").set(fullJobsInfoList);
+    // database.collection(user.id).doc("fullJobsInfo").set(fullJobsInfoList);
+    database
+      .collection("users")
+      .doc(user.uid)
+      .collection("userData")
+      .doc("fullJobsInfo")
+      .set(fullJobsInfoList);
   };
 
   const setInfoToFirebase = () => {
