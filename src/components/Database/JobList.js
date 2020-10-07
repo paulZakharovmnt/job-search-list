@@ -2,6 +2,9 @@ import React from "react";
 import Job from "./Job";
 
 const JobList = ({ listOfCompanies, fullJobsInfoList, userInputSearch }) => {
+  // if (!listOfCompanies) {
+  //   return null;
+  // }
   const filteredJObList = listOfCompanies.filter((company) => {
     return company.includes(userInputSearch);
   });

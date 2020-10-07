@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import fire from "../../core/firebase";
+import { fire } from "../../core/firebase";
 import LoginPage from "./LogInPage";
 
-const Auth = () => {
-  const [user, setUser] = useState("");
+const Auth = ({ handleSetUser }) => {
+  //   const [user, setUser] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -38,17 +38,19 @@ const Auth = () => {
       .catch((err) => console.log(err));
   };
 
-  const handleLogOut = () => {
-    fire.auth().signOut();
-  };
+  //   const handleLogOut = () => {
+  //     fire.auth().signOut();
+  //   };
 
   const authListener = () => {
     fire.auth().onAuthStateChanged((user) => {
       if (user) {
         clearInputs();
-        setUser(user);
+        handleSetUser(user);
+        // setUser(user);
       } else {
-        setUser("");
+        // setUser("");
+        handleSetUser("");
       }
     });
   };
