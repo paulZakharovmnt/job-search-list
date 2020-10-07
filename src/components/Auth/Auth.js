@@ -2,20 +2,23 @@ import React, { useState, useEffect } from "react";
 import { fire } from "../../core/firebase";
 import LoginPage from "./LogInPage";
 import database from "../../core/firebase";
+import "./Auth.css";
 
 const Auth = ({ handleSetUser }) => {
   //   const [user, setUser] = useState("");
+  const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
-  const [hasAccount, setHasAccount] = useState(false);
+  const [hasAccount, setHasAccount] = useState(true);
 
   const clearInputs = () => {
     setEmail("");
     setPassword("");
+    setUserName("");
   };
 
   const clearErrors = () => {
@@ -36,7 +39,9 @@ const Auth = ({ handleSetUser }) => {
     fire
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then((result) => createCollection(result.user.uid))
+      .then((result) => {
+        createCollection(result.user.uid);
+      })
       .catch((err) => console.log(err));
   };
 
@@ -75,15 +80,20 @@ const Auth = ({ handleSetUser }) => {
       .collection("userData")
       .doc("listOfJobs")
       .set({});
+    fire.auth().currentUser.updateProfile({
+      displayName: userName,
+    });
   };
 
   const authListener = () => {
     fire.auth().onAuthStateChanged((user) => {
       if (user) {
         clearInputs();
+        console.log(user);
         let userInfo = {
           email: user.email,
           uid: user.uid,
+          name: user.displayName,
         };
         handleSetUser(userInfo);
         // setUser(user);
@@ -103,6 +113,8 @@ const Auth = ({ handleSetUser }) => {
       <LoginPage
         email={email}
         setEmail={setEmail}
+        setUserName={setUserName}
+        userName={userName}
         password={password}
         setPassword={setPassword}
         handleLogin={handleLogin}
