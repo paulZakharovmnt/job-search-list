@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./AddNewJob.css";
 
 const AddNewJob = ({ handleAddJobToList }) => {
   const [companyName, setCompanyName] = useState("");
@@ -14,6 +15,7 @@ const AddNewJob = ({ handleAddJobToList }) => {
     const fullJobInfo = {
       company: companyName,
       city: companyCity,
+      source: sourceWhereApplied,
       result: result,
       comment: comment,
     };
@@ -26,45 +28,74 @@ const AddNewJob = ({ handleAddJobToList }) => {
   };
 
   return (
-    <div className="job">
+    <div className="add-job">
       <form onSubmit={(event) => submitAllInputs(event.target.value)}>
-        <h2>Company Name</h2>
-        <input
-          value={companyName}
-          onChange={(event) => setCompanyName(event.target.value)}
-        />
-        <hr />
-        <h3>City where you applied</h3>
-        <input
-          value={companyCity}
-          onChange={(event) => setCompanyCity(event.target.value)}
-        />
-        <hr />
+        <div className="company-cont">
+          <div className="add-company-name">
+            <input
+              value={companyName}
+              onChange={(event) => setCompanyName(event.target.value)}
+            />
+            <p>Company Name</p>
+          </div>
+        </div>
+        <div className="option-cont">
+          <div className="left-cont">
+            <div className="result">
+              <input
+                value={result}
+                onChange={(event) => setResult(event.target.value)}
+              />
+              <p> Result </p>
+            </div>
 
-        <h3>Apply date</h3>
+            <div className="comments">
+              <textarea
+                value={comment}
+                onChange={(event) => setComment(event.target.value)}
+              ></textarea>
+              <p>Comments</p>
+            </div>
+          </div>
 
-        <hr />
+          <div className="right-cont">
+            <div className="add-city">
+              <input
+                value={companyCity}
+                onChange={(event) => setCompanyCity(event.target.value)}
+              />
+              <p>City where you applied</p>
+            </div>
 
-        <h4>Source where applied</h4>
-        <select>
-          <option>LinkedIn</option>
-          <option>Indeed</option>
-          <option>GlassDoor</option>
-        </select>
+            <div className="apply-date">
+              <input
+                className="date-input"
+                value={applyDate}
+                type="date"
+                onChange={(event) => setApplyDate(event.target.value)}
+              />
+              <p>Apply date</p>
+            </div>
 
-        <hr />
-        <h4> Result </h4>
-        <input
-          value={result}
-          onChange={(event) => setResult(event.target.value)}
-        />
+            <div className="source">
+              <select
+                value={sourceWhereApplied}
+                onChange={(event) => setSourceWhereApplied(event.target.value)}
+              >
+                <option value="LinkedIn">LinkedIn</option>
+                <option value="Indeed">Indeed</option>
+                <option value="GlassDoor">GlassDoor</option>
+              </select>
+              <p>Source where applied</p>
+            </div>
+          </div>
+        </div>
 
-        <h4>Comments</h4>
-        <textarea
-          value={comment}
-          onChange={(event) => setComment(event.target.value)}
-        ></textarea>
-        <button onClick={submitAllInputs}>Submit</button>
+        <div className="submit-bottno-container">
+          <button className="submit-btn" onClick={submitAllInputs}>
+            Submit
+          </button>
+        </div>
       </form>
     </div>
   );

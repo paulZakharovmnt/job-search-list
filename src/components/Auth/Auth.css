@@ -75,7 +75,7 @@ label {
   transition: all 0.3s;
 }
 
-input {
+label input {
   background-color: transparent;
   border: 0;
   border-bottom: 2px solid #4a4a4a;
@@ -122,4 +122,14 @@ input:valid + .label-text {
   background-color: white;
   color: #333333;
   outline: 0;
+}
+
+.btnContainer p {
+  color: #9b9b9b;
+}
+
+.btnContainer span {
+  color: white;
+  cursor: pointer;
+  border-bottom: 1px solid white;
 }

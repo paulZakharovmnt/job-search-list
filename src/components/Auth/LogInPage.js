@@ -109,7 +109,7 @@ const LoginPage = ({
               Sing In
             </button>
             <p>
-              Don't have an account ?{" "}
+              Don't have an account?{" "}
               <span onClick={() => setHasAccount(!hasAccount)}>Sign Up</span>
             </p>
           </>

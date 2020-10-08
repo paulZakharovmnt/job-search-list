@@ -41,33 +41,18 @@ const Auth = ({ handleSetUser }) => {
       .createUserWithEmailAndPassword(email, password)
       .then((result) => {
         createCollection(result.user.uid);
+        addUserName();
       })
       .catch((err) => console.log(err));
   };
 
+  const addUserName = () => {
+    fire.auth().currentUser.updateProfile({
+      displayName: userName,
+    });
+  };
+
   const createCollection = (id) => {
-    // database.collection("what").doc(id).set();
-    // console.log(
-    //   database
-    //     .collection("users")
-    //     .doc("fOAV5T6d8lMDhOMsE9oZ0v6uIpf2")
-    //     .onSnapshot((doc) => {
-    //       console.log(doc.data().test);
-    //     })
-    // );
-
-    // const listTest = ["1", "2"];
-    // const InfoTest = { 1: "wefwef", 2: "wefwg" };
-
-    // console.log(
-    //   database
-    //     .collection("users")
-    //     .doc(id)
-    //     .get()
-    //     .then((doc) => doc.size)
-    // );
-    // console.log(database.collection("users").doc("111").get());
-
     database
       .collection("users")
       .doc(id)
@@ -80,9 +65,6 @@ const Auth = ({ handleSetUser }) => {
       .collection("userData")
       .doc("listOfJobs")
       .set({});
-    fire.auth().currentUser.updateProfile({
-      displayName: userName,
-    });
   };
 
   const authListener = () => {
@@ -93,8 +75,9 @@ const Auth = ({ handleSetUser }) => {
         let userInfo = {
           email: user.email,
           uid: user.uid,
-          name: user.displayName,
+          displayName: user.displayName,
         };
+        console.log(userInfo);
         handleSetUser(userInfo);
         // setUser(user);
       } else {
