@@ -25,6 +25,61 @@
 }
 
 .submit-btn {
+  opacity: 1;
+  outline: 0;
+  color: #fff;
+  font-size: 20px;
+  line-height: 40px;
+  position: relative;
+  text-align: center;
+  letter-spacing: 1px;
+  display: inline-block;
+  text-decoration: none;
+  font-family: "Open Sans";
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.submit-btn::after {
+  top: 0;
+  left: 0;
+  opacity: 0;
+  width: 100%;
+  color: rgba(255, 255, 255, 0.76);
+  display: block;
+  transition: 0.5s;
+  position: absolute;
+  background: #333333;
+  content: attr(data-back);
+  transform: translateY(50%) rotateX(90deg);
+}
+
+.submit-btn::before {
+  top: 0;
+  left: 0;
+  opacity: 1;
+  color: #333333;
+  display: block;
+  padding: 0 30px;
+  line-height: 40px;
+  transition: 0.5s;
+  position: relative;
+  background: inherit;
+  content: attr(data-front);
+  transform: translateY(0) rotateX(0);
+}
+
+.submit-btn:hover::after {
+  opacity: 1;
+  transform: translateY(0) rotateX(0);
+}
+
+.submit-btn:hover::before {
+  opacity: 0;
+  transform: translateY(-50%) rotateX(90deg);
+}
+
+/* .submit-btn {
   background-color: #333333;
   border: 2px solid white;
   border-radius: 27px;
@@ -42,9 +97,9 @@
   background-color: white;
   color: #333333;
   outline: 0;
-}
+} */
 
-.add-job input {
+/* .add-job input {
   background-color: transparent;
   border: 0;
   border-bottom: 2px solid #4a4a4a;
@@ -72,8 +127,7 @@
 .add-job input:valid + p {
   font-size: 13px;
   /* transform: translateY(-74px); */
-}
-
+/* }  */
 /* 
 .add-job {
     display: block;
@@ -82,7 +136,7 @@
     text-align: center;
   } */
 
-p {
+/* p {
   color: #9b9b9b;
   cursor: text;
   font-size: 16px;
@@ -90,4 +144,51 @@ p {
   text-transform: uppercase;
   transform: translateY(-40px);
   transition: all 0.3s;
+} */
+
+.result {
+  display: block;
+  letter-spacing: 4px;
+  padding-top: 30px;
+  text-align: center;
 }
+
+.text {
+  color: #868585;
+  cursor: text;
+  font-size: 16px;
+  line-height: 20px;
+  text-transform: uppercase;
+  /* transform: translateY(-34px); */
+  transition: all 0.3s;
+}
+
+.result input {
+  background-color: transparent;
+  border: 0;
+  border-bottom: 2px solid #4a4a4a;
+  color: black;
+  font-size: 24px;
+  letter-spacing: -1px;
+  outline: 0;
+  padding: 5px 20px;
+  text-align: center;
+  transition: all 0.3s;
+  width: 200px;
+}
+
+.result input:focus {
+  max-width: 100%;
+  width: 350px;
+}
+/* 
+.result input:focus + .text {
+  color: #f0f0f0;
+  font-size: 13px;
+  transform: translateY(-74px);
+}
+
+.result input:valid + .text {
+  font-size: 13px;
+  transform: translateY(-74px);
+} */

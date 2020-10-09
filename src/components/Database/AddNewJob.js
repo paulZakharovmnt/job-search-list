@@ -16,6 +16,7 @@ const AddNewJob = ({ handleAddJobToList }) => {
       company: companyName,
       city: companyCity,
       source: sourceWhereApplied,
+      date: applyDate,
       result: result,
       comment: comment,
     };
@@ -31,23 +32,23 @@ const AddNewJob = ({ handleAddJobToList }) => {
     <div className="add-job">
       <form onSubmit={(event) => submitAllInputs(event.target.value)}>
         <div className="company-cont">
-          <div className="add-company-name">
+          <label className="result">
             <input
               value={companyName}
               onChange={(event) => setCompanyName(event.target.value)}
             />
-            <p>Company Name</p>
-          </div>
+            <div className="text">Company Name</div>
+          </label>
         </div>
         <div className="option-cont">
           <div className="left-cont">
-            <div className="result">
+            <label className="result">
               <input
                 value={result}
                 onChange={(event) => setResult(event.target.value)}
               />
-              <p> Result </p>
-            </div>
+              <div className="text"> Result </div>
+            </label>
 
             <div className="comments">
               <textarea
@@ -59,13 +60,13 @@ const AddNewJob = ({ handleAddJobToList }) => {
           </div>
 
           <div className="right-cont">
-            <div className="add-city">
+            <label className="result">
               <input
                 value={companyCity}
                 onChange={(event) => setCompanyCity(event.target.value)}
               />
-              <p>City where you applied</p>
-            </div>
+              <div className="text">City where you applied</div>
+            </label>
 
             <div className="apply-date">
               <input
@@ -92,9 +93,12 @@ const AddNewJob = ({ handleAddJobToList }) => {
         </div>
 
         <div className="submit-bottno-container">
-          <button className="submit-btn" onClick={submitAllInputs}>
-            Submit
-          </button>
+          <div
+            data-back="Add to List"
+            data-front="Submit"
+            className="submit-btn"
+            onClick={submitAllInputs}
+          ></div>
         </div>
       </form>
     </div>

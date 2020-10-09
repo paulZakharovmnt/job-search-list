@@ -21,7 +21,7 @@ const Main = ({ user }) => {
 
   useEffect(() => {
     getInfoFromFirebase();
-    console.log("get");
+    // console.log("get");
   }, []);
 
   useEffect(() => {
@@ -31,11 +31,11 @@ const Main = ({ user }) => {
     if (listOfCompanies.length > 0) {
       // setInfoToFirebase();
       console.log("set CompanyList");
-      setCompanyList();
+      setCompanyList(listOfCompanies);
     }
     if (fullJobsInfoList) {
       setJobsInfo();
-      console.log("set Info");
+      // console.log("set Info");
     }
   }, [listOfCompanies, fullJobsInfoList]);
 
@@ -64,10 +64,10 @@ const Main = ({ user }) => {
       .collection("userData")
       .doc("listOfJobs")
       .onSnapshot((doc) => {
-        if (!doc.data().listOfCompanies) {
+        if (!doc.data().companyList) {
           return;
         }
-        setListOfCompanies(doc.data().listOfCompanies);
+        setListOfCompanies(doc.data().companyList);
       });
 
     // database
@@ -88,13 +88,13 @@ const Main = ({ user }) => {
     //   });
   };
 
-  const setCompanyList = () => {
+  const setCompanyList = (companyList) => {
     database
       .collection("users")
       .doc(user.uid)
       .collection("userData")
       .doc("listOfJobs")
-      .set({ listOfCompanies });
+      .set({ companyList });
     // database.collection(user.id).doc("listOfJobs").set({ listOfCompanies });
   };
 
@@ -133,6 +133,36 @@ const Main = ({ user }) => {
     // });
   };
 
+  const handleDeleteCompany = (company) => {
+    // console.log(company);
+    const updatedCompanyList = listOfCompanies.filter((item) => {
+      return item !== company;
+    });
+    setListOfCompanies(updatedCompanyList);
+
+    const state = fullJobsInfoList;
+
+    const newState = Object.keys(state).reduce((obj, key) => {
+      if (key !== company) {
+        obj[key] = state[key];
+      }
+      return obj;
+    }, {});
+
+    setfullJobsInfoList(newState);
+
+    if (listOfCompanies.length === 1) {
+      console.log("working");
+      setCompanyList(updatedCompanyList);
+    }
+
+    // setCompanyList();
+
+    // let oldInfoList = fullJobsInfoList;
+    // delete oldInfoList[company];
+    // console.log(oldInfoList);
+  };
+
   const handleAddJobToList = (job) => {
     const newFullList = { ...fullJobsInfoList };
     newFullList[job.company] = job;
@@ -166,6 +196,7 @@ const Main = ({ user }) => {
           listOfCompanies={listOfCompanies}
           fullJobsInfoList={fullJobsInfoList}
           userInputSearch={userInputSearch}
+          handleDeleteCompany={handleDeleteCompany}
         />
       )}
     </div>
