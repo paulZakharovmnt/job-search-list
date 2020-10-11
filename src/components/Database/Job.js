@@ -1,15 +1,15 @@
 import React from "react";
 
-const Job = ({ company, fullJobsInfoList, handleDeleteCompany }) => {
+const Job = ({ company, fullJobsInfoList, handleDeleteCompany, editJob }) => {
   const jobInfo = fullJobsInfoList[company];
   return (
-    <li className="job">
+    <li className="job" onClick={() => editJob(jobInfo)}>
       <h4>{company}</h4>
       <p>{jobInfo.city}</p>
       <p>{jobInfo.date}</p>
       <p>{jobInfo.source}</p>
       <p>{jobInfo.result}</p>
-      <p>{jobInfo.comment}</p>
+      {/* <p>{jobInfo.comments}</p> */}
       <div className="icons">
         <i className="fas fa-edit"></i>
         <i

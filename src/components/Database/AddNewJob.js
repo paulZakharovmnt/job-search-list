@@ -12,13 +12,18 @@ const AddNewJob = ({ handleAddJobToList }) => {
   const submitAllInputs = (event) => {
     event.preventDefault();
 
+    let newComment = {};
+    newComment[applyDate] = comment;
+
+    console.log(newComment);
+
     const fullJobInfo = {
       company: companyName,
       city: companyCity,
       source: sourceWhereApplied,
       date: applyDate,
       result: result,
-      comment: comment,
+      comments: newComment,
     };
     handleAddJobToList(fullJobInfo);
 

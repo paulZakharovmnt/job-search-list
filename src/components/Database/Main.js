@@ -3,11 +3,15 @@ import Nav from "../Nav/Nav";
 import AddNewJob from "./AddNewJob";
 import JobList from "./JobList";
 import database from "../../core/firebase";
+import EditItem from "./EditItem/EditItem";
 
 const Main = ({ user }) => {
   const [userAddingNewJob, setUserAddingNewJob] = useState(true);
   const [fullJobsInfoList, setfullJobsInfoList] = useState(null);
   const [listOfCompanies, setListOfCompanies] = useState([]);
+
+  const [userWantsToEditItem, setUserWantsToEditItem] = useState(false);
+  const [editingJob, setEditingJob] = useState(null);
 
   const [userInputSearch, setUserInputSearch] = useState("");
 
@@ -21,7 +25,7 @@ const Main = ({ user }) => {
 
   useEffect(() => {
     getInfoFromFirebase();
-    // console.log("get");
+    console.log("get");
   }, []);
 
   useEffect(() => {
@@ -35,7 +39,7 @@ const Main = ({ user }) => {
     }
     if (fullJobsInfoList) {
       setJobsInfo();
-      // console.log("set Info");
+      console.log("set Info");
     }
   }, [listOfCompanies, fullJobsInfoList]);
 
@@ -55,7 +59,7 @@ const Main = ({ user }) => {
       .doc("fullJobsInfo")
       .onSnapshot((doc) => {
         setfullJobsInfoList(doc.data());
-        console.log(doc.data());
+        // console.log(doc.data());
       });
 
     database
@@ -181,6 +185,23 @@ const Main = ({ user }) => {
     // getInfoFromFirebase();
     // submitJobToFirebase(newFullList, newListOfCompanies);
   };
+
+  const handleEditWindowToggler = () => {
+    setUserWantsToEditItem(!userWantsToEditItem);
+  };
+
+  const handleEditJob = (jobInfo) => {
+    setEditingJob(jobInfo);
+    handleEditWindowToggler();
+  };
+
+  const addCommentToTheJobInfo = (updatedJob) => {
+    let oldList = { ...fullJobsInfoList };
+    oldList[updatedJob.company] = updatedJob;
+    setfullJobsInfoList(oldList);
+    setEditingJob(null);
+  };
+
   return (
     <div>
       <Nav
@@ -197,6 +218,15 @@ const Main = ({ user }) => {
           fullJobsInfoList={fullJobsInfoList}
           userInputSearch={userInputSearch}
           handleDeleteCompany={handleDeleteCompany}
+          editJob={handleEditJob}
+        />
+      )}
+
+      {userWantsToEditItem && (
+        <EditItem
+          editingJob={editingJob}
+          handleEditWindowToggler={handleEditWindowToggler}
+          addCommentToTheJobInfo={addCommentToTheJobInfo}
         />
       )}
     </div>

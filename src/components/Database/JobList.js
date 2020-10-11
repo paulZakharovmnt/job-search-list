@@ -7,6 +7,7 @@ const JobList = ({
   fullJobsInfoList,
   userInputSearch,
   handleDeleteCompany,
+  editJob,
 }) => {
   // if (!listOfCompanies) {
   //   return null;
@@ -32,6 +33,7 @@ const JobList = ({
             fullJobsInfoList={fullJobsInfoList}
             key={company}
             handleDeleteCompany={handleDeleteCompany}
+            editJob={editJob}
           />
         );
       })}

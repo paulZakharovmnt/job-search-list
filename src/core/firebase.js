@@ -3,13 +3,13 @@ import "firebase/firestore";
 import "firebase/firebase-auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDOV18zogcc-RHRt70VkPn3FUAYXBxAk00",
-  authDomain: "joblist-eb3f6.firebaseapp.com",
-  databaseURL: "https://joblist-eb3f6.firebaseio.com",
-  projectId: "joblist-eb3f6",
-  storageBucket: "joblist-eb3f6.appspot.com",
-  messagingSenderId: "804955760936",
-  appId: "1:804955760936:web:1afeca66c11591fd9ec81d",
+  apiKey: "AIzaSyBtfXEAOyCoi8v63T4E0H_TdJfPyR6rZkw",
+  authDomain: "job-base-70122.firebaseapp.com",
+  databaseURL: "https://job-base-70122.firebaseio.com",
+  projectId: "job-base-70122",
+  storageBucket: "job-base-70122.appspot.com",
+  messagingSenderId: "70839232285",
+  appId: "1:70839232285:web:f5261f082e25a57e33a3f4",
 };
 
 export const fire = firebase.initializeApp(firebaseConfig);
