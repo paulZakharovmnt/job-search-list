@@ -5,6 +5,12 @@ import JobList from "./JobList";
 import database from "../../core/firebase";
 import EditItem from "./EditItem/EditItem";
 
+import UseGetInfoFromFirebase from "../../core/fetchJobInfoFromFB";
+import UseFetchCompaniesListFromFB from "../../core/fetchCompaniesListFromFB";
+import getUpdatedJobsInfo from "../../core/getUpdatedJobsInfo";
+import setJobsListToFB from "../../core/setJobsListToFB";
+import setJobsInfoToFB from "../../core/setJobsInfoToFB";
+
 const Main = ({ user }) => {
   const [userAddingNewJob, setUserAddingNewJob] = useState(true);
   const [fullJobsInfoList, setfullJobsInfoList] = useState(null);
@@ -23,33 +29,30 @@ const Main = ({ user }) => {
     setUserAddingNewJob(false);
   };
 
+  // const jobs = UseGetInfoFromFirebase(user);
+  // console.log(jobs[0]);
+
+  // const list = UseFetchCompaniesListFromFB(user);
+  // console.log(list[0]);
+
   useEffect(() => {
     getInfoFromFirebase();
+    // const list = fetchCompaniesListFromFB(user);
+    // const jobs = getInfoFromFirebase(user);
+    // console.log(list);
     console.log("get");
   }, []);
 
   useEffect(() => {
-    // if (!listOfCompanies) {
-    //   return;
-    // }
     if (listOfCompanies.length > 0) {
-      // setInfoToFirebase();
       console.log("set CompanyList");
-      setCompanyList(listOfCompanies);
+      setJobsListToFB(user, listOfCompanies);
     }
     if (fullJobsInfoList) {
-      setJobsInfo();
+      setJobsInfoToFB(user, fullJobsInfoList);
       console.log("set Info");
     }
   }, [listOfCompanies, fullJobsInfoList]);
-
-  // useEffect(() => {
-  //   if (!fullJobsInfoList) {
-  //     return;
-  //   }
-  //   setJobsInfo();
-  //   console.log("set Info");
-  // }, [fullJobsInfoList]);
 
   const getInfoFromFirebase = () => {
     database
@@ -59,7 +62,6 @@ const Main = ({ user }) => {
       .doc("fullJobsInfo")
       .onSnapshot((doc) => {
         setfullJobsInfoList(doc.data());
-        // console.log(doc.data());
       });
 
     database
@@ -73,98 +75,33 @@ const Main = ({ user }) => {
         }
         setListOfCompanies(doc.data().companyList);
       });
-
-    // database
-    //   .collection(user.id)
-    //   .doc("listOfJobs")
-    //   .onSnapshot((doc) => {
-    //     if (!doc.data().listOfCompanies) {
-    //       return;
-    //     }
-    //     setListOfCompanies(doc.data().listOfCompanies);
-    //   });
-    // database
-    //   .collection(user.id)
-    //   .doc("fullJobsInfo")
-    //   .onSnapshot((doc) => {
-    //     setfullJobsInfoList(doc.data());
-    //     console.log(doc.data());
-    //   });
-  };
-
-  const setCompanyList = (companyList) => {
-    database
-      .collection("users")
-      .doc(user.uid)
-      .collection("userData")
-      .doc("listOfJobs")
-      .set({ companyList });
-    // database.collection(user.id).doc("listOfJobs").set({ listOfCompanies });
-  };
-
-  const setJobsInfo = () => {
-    // database.collection(user.id).doc("fullJobsInfo").set(fullJobsInfoList);
-    database
-      .collection("users")
-      .doc(user.uid)
-      .collection("userData")
-      .doc("fullJobsInfo")
-      .set(fullJobsInfoList);
-  };
-
-  const setInfoToFirebase = () => {
-    database.collection("userId").doc("listOfJobs").set({ listOfCompanies });
-    database.collection("userId").doc("fullJobsInfo").set(fullJobsInfoList);
-  };
-
-  const submitJobToFirebase = (newFullList, newListOfCompanies) => {
-    // database.collection("test").doc("test").add({
-    //   job,
-    // });
-    // database
-    //   .collection("test")
-    //   .get()
-    //   .then((obj) => {
-    //     obj.forEach((doc) => {
-    //       console.log(doc);
-    //     });
-    //   });
-    // console.log(database.collection("test").doc("test").doc("test?"));
-    // database.collection("userId").add({ newListOfCompanies });
-    // database.collection("userId").add(newFullList);
-    // database.collection("test").doc("test1").set({
-    //   job: job,
-    // });
   };
 
   const handleDeleteCompany = (company) => {
-    // console.log(company);
     const updatedCompanyList = listOfCompanies.filter((item) => {
       return item !== company;
     });
     setListOfCompanies(updatedCompanyList);
 
-    const state = fullJobsInfoList;
+    const updatedJobsInfo = getUpdatedJobsInfo(fullJobsInfoList, company);
+    setfullJobsInfoList(updatedJobsInfo);
+    // const state = fullJobsInfoList;
 
-    const newState = Object.keys(state).reduce((obj, key) => {
-      if (key !== company) {
-        obj[key] = state[key];
-      }
-      return obj;
-    }, {});
+    // const newState = Object.keys(state).reduce((obj, key) => {
+    //   if (key !== company) {
+    //     obj[key] = state[key];
+    //   }
+    //   return obj;
+    // }, {});
 
-    setfullJobsInfoList(newState);
+    // setfullJobsInfoList(newState);
+
+    //************** FIX IT */
 
     if (listOfCompanies.length === 1) {
       console.log("working");
-      setCompanyList(updatedCompanyList);
+      setJobsListToFB(user, updatedCompanyList);
     }
-
-    // setCompanyList();
-
-    // let oldInfoList = fullJobsInfoList;
-    // delete oldInfoList[company];
-    // console.log(oldInfoList);
   };
 
   const handleAddJobToList = (job) => {
@@ -179,14 +116,12 @@ const Main = ({ user }) => {
     const newListOfCompanies = [...listOfCompanies, job.company];
     setListOfCompanies(newListOfCompanies);
     showJobListPage();
-    // setInfoToFirebase();
-
-    // submitJobToFirebase();
-    // getInfoFromFirebase();
-    // submitJobToFirebase(newFullList, newListOfCompanies);
   };
 
   const handleEditWindowToggler = () => {
+    if (userWantsToEditItem) {
+      setEditingJob(null);
+    }
     setUserWantsToEditItem(!userWantsToEditItem);
   };
 

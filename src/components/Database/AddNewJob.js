@@ -59,6 +59,7 @@ const AddNewJob = ({ handleAddJobToList }) => {
               <textarea
                 value={comment}
                 onChange={(event) => setComment(event.target.value)}
+                required
               ></textarea>
               <p>Comments</p>
             </div>
@@ -75,6 +76,7 @@ const AddNewJob = ({ handleAddJobToList }) => {
 
             <div className="apply-date">
               <input
+                required
                 className="date-input"
                 value={applyDate}
                 type="date"
