@@ -85,18 +85,6 @@ const Main = ({ user }) => {
 
     const updatedJobsInfo = getUpdatedJobsInfo(fullJobsInfoList, company);
     setfullJobsInfoList(updatedJobsInfo);
-    // const state = fullJobsInfoList;
-
-    // const newState = Object.keys(state).reduce((obj, key) => {
-    //   if (key !== company) {
-    //     obj[key] = state[key];
-    //   }
-    //   return obj;
-    // }, {});
-
-    // setfullJobsInfoList(newState);
-
-    //************** FIX IT */
 
     if (listOfCompanies.length === 1) {
       console.log("working");
@@ -134,7 +122,6 @@ const Main = ({ user }) => {
     let oldList = { ...fullJobsInfoList };
     oldList[updatedJob.company] = updatedJob;
     setfullJobsInfoList(oldList);
-    setEditingJob(null);
   };
 
   return (
