@@ -3,16 +3,16 @@ import Job from "./Job";
 import "./JobList.css";
 
 const JobList = ({
-  listOfCompanies,
-  fullJobsInfoList,
+  listOfCompaniesTitles,
+  fullInfoCompaniesList,
   userInputSearch,
-  handleDeleteCompany,
+  handleDeleteCompanyFromList,
   editJob,
 }) => {
   // if (!listOfCompanies) {
   //   return null;
   // }
-  const filteredJObList = listOfCompanies.filter((company) => {
+  const filteredJObList = listOfCompaniesTitles.filter((company) => {
     return company.toLowerCase().includes(userInputSearch.toLowerCase());
   });
   return (
@@ -30,9 +30,9 @@ const JobList = ({
         return (
           <Job
             company={company}
-            fullJobsInfoList={fullJobsInfoList}
+            fullInfoCompaniesList={fullInfoCompaniesList}
             key={company}
-            handleDeleteCompany={handleDeleteCompany}
+            handleDeleteCompanyFromList={handleDeleteCompanyFromList}
             editJob={editJob}
           />
         );

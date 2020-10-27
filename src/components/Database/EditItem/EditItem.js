@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./EditItem.css";
 
 const EditItem = ({
-  editingJob,
+  jobUserWantsToEdit,
   handleEditWindowToggler,
   addCommentToTheJobInfo,
 }) => {
@@ -10,7 +10,7 @@ const EditItem = ({
   const [commentDate, setCommentDate] = useState("");
   const [newComment, setNewComment] = useState("");
 
-  let showComments = Object.entries(editingJob.comments).map((arr) => {
+  let showComments = Object.entries(jobUserWantsToEdit.comments).map((arr) => {
     return (
       <div key={arr[0]}>
         <h4>Date</h4>
@@ -23,7 +23,7 @@ const EditItem = ({
 
   const handleAddNewComment = (event) => {
     event.preventDefault();
-    let updatedJob = editingJob;
+    let updatedJob = jobUserWantsToEdit;
     updatedJob.comments[commentDate] = newComment;
 
     addCommentToTheJobInfo(updatedJob);
@@ -33,16 +33,36 @@ const EditItem = ({
   return (
     <div className="black-cover">
       <div className="edit-window">
-        <p>{editingJob.company}</p>
-        <p>{editingJob.city}</p>
-        <p>{editingJob.result}</p>
-        <p>{editingJob.source}</p>
-        {showComments}
-        <button
-          onClick={() => setUserWantsToAddComment(!userWantsToAddComment)}
-        >
-          Add Comment
-        </button>
+        <button onClick={handleEditWindowToggler}>Close</button>
+        <div className="info-cont">
+          <h4>Company name:</h4>
+          <p>{jobUserWantsToEdit.company}</p>
+        </div>
+        <div className="info-cont">
+          <h4>City:</h4>
+          <p>{jobUserWantsToEdit.city}</p>
+        </div>
+        <div className="info-cont">
+          <h4>Date applied:</h4>
+          <p>{jobUserWantsToEdit.date}</p>
+        </div>
+        <div className="info-cont">
+          <h4>Source: </h4>
+          <p>{jobUserWantsToEdit.source}</p>
+        </div>
+        <div className="info-cont">
+          <h4>Result: </h4>
+          <p>{jobUserWantsToEdit.result}</p>
+        </div>
+        <div className="comments-cont">
+          {showComments}
+          <button
+            onClick={() => setUserWantsToAddComment(!userWantsToAddComment)}
+          >
+            Add Comment
+          </button>
+        </div>
+
         {userWantsToAddComment && (
           <div className="add-comment">
             <form>
@@ -59,8 +79,6 @@ const EditItem = ({
             </form>
           </div>
         )}
-
-        <button onClick={handleEditWindowToggler}>Close</button>
       </div>
     </div>
   );

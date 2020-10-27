@@ -5,19 +5,18 @@ import JobList from "./JobList";
 import database from "../../core/firebase";
 import EditItem from "./EditItem/EditItem";
 
-import UseGetInfoFromFirebase from "../../core/fetchJobInfoFromFB";
-import UseFetchCompaniesListFromFB from "../../core/fetchCompaniesListFromFB";
 import getUpdatedJobsInfo from "../../core/getUpdatedJobsInfo";
 import setJobsListToFB from "../../core/setJobsListToFB";
 import setJobsInfoToFB from "../../core/setJobsInfoToFB";
+import useSettings from "../../core/customHooks/useSettings";
 
 const Main = ({ user }) => {
   const [userAddingNewJob, setUserAddingNewJob] = useState(true);
-  const [fullJobsInfoList, setfullJobsInfoList] = useState(null);
-  const [listOfCompanies, setListOfCompanies] = useState([]);
+  const [fullInfoCompaniesList, setFullInfoCompaniesList] = useState(null);
+  const [listOfCompaniesTitles, setListOfCompaniesTitles] = useState([]);
 
   const [userWantsToEditItem, setUserWantsToEditItem] = useState(false);
-  const [editingJob, setEditingJob] = useState(null);
+  const [jobUserWantsToEdit, setJobUserWantsToEdit] = useState(null);
 
   const [userInputSearch, setUserInputSearch] = useState("");
 
@@ -44,15 +43,15 @@ const Main = ({ user }) => {
   }, []);
 
   useEffect(() => {
-    if (listOfCompanies.length > 0) {
+    if (listOfCompaniesTitles.length > 0) {
       console.log("set CompanyList");
-      setJobsListToFB(user, listOfCompanies);
+      setJobsListToFB(user, listOfCompaniesTitles);
     }
-    if (fullJobsInfoList) {
-      setJobsInfoToFB(user, fullJobsInfoList);
+    if (fullInfoCompaniesList) {
+      setJobsInfoToFB(user, fullInfoCompaniesList);
       console.log("set Info");
     }
-  }, [listOfCompanies, fullJobsInfoList]);
+  }, [listOfCompaniesTitles, fullInfoCompaniesList]);
 
   const getInfoFromFirebase = () => {
     database
@@ -61,7 +60,7 @@ const Main = ({ user }) => {
       .collection("userData")
       .doc("fullJobsInfo")
       .onSnapshot((doc) => {
-        setfullJobsInfoList(doc.data());
+        setFullInfoCompaniesList(doc.data());
       });
 
     database
@@ -73,55 +72,55 @@ const Main = ({ user }) => {
         if (!doc.data().companyList) {
           return;
         }
-        setListOfCompanies(doc.data().companyList);
+        setListOfCompaniesTitles(doc.data().companyList);
       });
   };
 
-  const handleDeleteCompany = (company) => {
-    const updatedCompanyList = listOfCompanies.filter((item) => {
+  const handleDeleteCompanyFromList = (company) => {
+    const updatedCompanyList = listOfCompaniesTitles.filter((item) => {
       return item !== company;
     });
-    setListOfCompanies(updatedCompanyList);
+    setListOfCompaniesTitles(updatedCompanyList);
 
-    const updatedJobsInfo = getUpdatedJobsInfo(fullJobsInfoList, company);
-    setfullJobsInfoList(updatedJobsInfo);
+    const updatedJobsInfo = getUpdatedJobsInfo(fullInfoCompaniesList, company);
+    setFullInfoCompaniesList(updatedJobsInfo);
 
-    if (listOfCompanies.length === 1) {
+    if (listOfCompaniesTitles.length === 1) {
       console.log("working");
       setJobsListToFB(user, updatedCompanyList);
     }
   };
 
   const handleAddJobToList = (job) => {
-    const newFullList = { ...fullJobsInfoList };
+    const newFullList = { ...fullInfoCompaniesList };
     newFullList[job.company] = job;
-    setfullJobsInfoList(newFullList);
+    setFullInfoCompaniesList(newFullList);
 
-    if (listOfCompanies.includes(job.company)) {
+    if (listOfCompaniesTitles.includes(job.company)) {
       return;
       // Here should be POPUP window that we have already this company
     }
-    const newListOfCompanies = [...listOfCompanies, job.company];
-    setListOfCompanies(newListOfCompanies);
+    const newListOfCompanies = [...listOfCompaniesTitles, job.company];
+    setListOfCompaniesTitles(newListOfCompanies);
     showJobListPage();
   };
 
   const handleEditWindowToggler = () => {
     if (userWantsToEditItem) {
-      setEditingJob(null);
+      setJobUserWantsToEdit(null);
     }
     setUserWantsToEditItem(!userWantsToEditItem);
   };
 
   const handleEditJob = (jobInfo) => {
-    setEditingJob(jobInfo);
+    setJobUserWantsToEdit(jobInfo);
     handleEditWindowToggler();
   };
 
   const addCommentToTheJobInfo = (updatedJob) => {
-    let oldList = { ...fullJobsInfoList };
+    let oldList = { ...fullInfoCompaniesList };
     oldList[updatedJob.company] = updatedJob;
-    setfullJobsInfoList(oldList);
+    setFullInfoCompaniesList(oldList);
   };
 
   return (
@@ -136,17 +135,17 @@ const Main = ({ user }) => {
         <AddNewJob handleAddJobToList={handleAddJobToList} />
       ) : (
         <JobList
-          listOfCompanies={listOfCompanies}
-          fullJobsInfoList={fullJobsInfoList}
+          listOfCompaniesTitles={listOfCompaniesTitles}
+          fullInfoCompaniesList={fullInfoCompaniesList}
           userInputSearch={userInputSearch}
-          handleDeleteCompany={handleDeleteCompany}
+          handleDeleteCompanyFromList={handleDeleteCompanyFromList}
           editJob={handleEditJob}
         />
       )}
 
       {userWantsToEditItem && (
         <EditItem
-          editingJob={editingJob}
+          jobUserWantsToEdit={jobUserWantsToEdit}
           handleEditWindowToggler={handleEditWindowToggler}
           addCommentToTheJobInfo={addCommentToTheJobInfo}
         />
