@@ -13,7 +13,20 @@ const useSettings = () => {
     "Sent",
     "Reject",
   ]);
-  return [{ sourcesListOfVacancy, resultsListOfInterviews }];
+
+  const [cityOfCompanyWhereApplied, setCityOfCompanyWhereApplied] = useState([
+    "Montreal",
+    "Toronto",
+    "Vancouver",
+    "Ottawa",
+  ]);
+  return [
+    {
+      sourcesListOfVacancy,
+      resultsListOfInterviews,
+      cityOfCompanyWhereApplied,
+    },
+  ];
 };
 
 export default useSettings;

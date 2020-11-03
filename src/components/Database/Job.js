@@ -14,7 +14,6 @@ const Job = ({
       <p>{jobInfo.date}</p>
       <p>{jobInfo.source}</p>
       <p>{jobInfo.result}</p>
-      {/* <p>{jobInfo.comments}</p> */}
       <div className="icons">
         <i className="fas fa-edit"></i>
         <i

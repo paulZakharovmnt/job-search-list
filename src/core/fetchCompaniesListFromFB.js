@@ -3,6 +3,12 @@ import database from "./firebase";
 
 const UseFetchCompaniesListFromFB = (user) => {
   const [listOfJobs, setListOfJobs] = useState([]);
+
+  const updateListState = (list) => {
+    console.log(list);
+    setListOfJobs(list);
+  };
+
   useEffect(() => {
     database
       .collection("users")
@@ -17,7 +23,7 @@ const UseFetchCompaniesListFromFB = (user) => {
       });
   }, []);
 
-  return [listOfJobs, setListOfJobs];
+  return [listOfJobs, updateListState];
 };
 
 export default UseFetchCompaniesListFromFB;

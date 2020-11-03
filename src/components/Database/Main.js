@@ -8,15 +8,16 @@ import EditItem from "./EditItem/EditItem";
 import getUpdatedJobsInfo from "../../core/getUpdatedJobsInfo";
 import setJobsListToFB from "../../core/setJobsListToFB";
 import setJobsInfoToFB from "../../core/setJobsInfoToFB";
-import useSettings from "../../core/customHooks/useSettings";
+import Settings from "../Settings/Settings";
 
 const Main = ({ user }) => {
-  const [userAddingNewJob, setUserAddingNewJob] = useState(true);
   const [fullInfoCompaniesList, setFullInfoCompaniesList] = useState(null);
   const [listOfCompaniesTitles, setListOfCompaniesTitles] = useState([]);
-
-  const [userWantsToEditItem, setUserWantsToEditItem] = useState(false);
   const [jobUserWantsToEdit, setJobUserWantsToEdit] = useState(null);
+
+  const [userAddingNewJob, setUserAddingNewJob] = useState(true);
+  const [userWantsToEditItem, setUserWantsToEditItem] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
 
   const [userInputSearch, setUserInputSearch] = useState("");
 
@@ -28,17 +29,8 @@ const Main = ({ user }) => {
     setUserAddingNewJob(false);
   };
 
-  // const jobs = UseGetInfoFromFirebase(user);
-  // console.log(jobs[0]);
-
-  // const list = UseFetchCompaniesListFromFB(user);
-  // console.log(list[0]);
-
   useEffect(() => {
     getInfoFromFirebase();
-    // const list = fetchCompaniesListFromFB(user);
-    // const jobs = getInfoFromFirebase(user);
-    // console.log(list);
     console.log("get");
   }, []);
 
@@ -130,6 +122,8 @@ const Main = ({ user }) => {
         showJobListPage={showJobListPage}
         userInputSearch={userInputSearch}
         setUserInputSearch={setUserInputSearch}
+        showSettings={showSettings}
+        setShowSettings={setShowSettings}
       />
       {userAddingNewJob ? (
         <AddNewJob handleAddJobToList={handleAddJobToList} />
@@ -150,6 +144,8 @@ const Main = ({ user }) => {
           addCommentToTheJobInfo={addCommentToTheJobInfo}
         />
       )}
+
+      {showSettings && <Settings />}
     </div>
   );
 };

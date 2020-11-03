@@ -7,6 +7,8 @@ const Nav = ({
   showJobListPage,
   userInputSearch,
   setUserInputSearch,
+  setShowSettings,
+  showSettings,
 }) => {
   const handleLogOut = () => {
     fire.auth().signOut();
@@ -14,9 +16,6 @@ const Nav = ({
   return (
     <div className="nav">
       <h3> Welcome back, User</h3>
-      {/* <div className="add-btn" onClick={showJobAddScreen}>
-        Add new Job!
-      </div> */}
       <div
         onClick={showJobAddScreen}
         className="btn-flip"
@@ -29,6 +28,7 @@ const Nav = ({
       />
 
       <button onClick={showJobListPage}>Show List of Jobs</button>
+      <button onClick={() => setShowSettings(!showSettings)}>Settings</button>
       <button onClick={handleLogOut}>Logout</button>
     </div>
   );

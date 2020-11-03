@@ -10,7 +10,13 @@ const AddNewJob = ({ handleAddJobToList }) => {
   const [result, setResult] = useState("");
   const [comment, setComment] = useState("");
 
-  const [{ sourcesListOfVacancy, resultsListOfInterviews }] = useSettings();
+  const [
+    {
+      sourcesListOfVacancy,
+      resultsListOfInterviews,
+      cityOfCompanyWhereApplied,
+    },
+  ] = useSettings();
   console.log(sourcesListOfVacancy);
 
   const submitAllInputs = (event) => {
@@ -53,31 +59,21 @@ const AddNewJob = ({ handleAddJobToList }) => {
           </label>
         </div>
         {companyName.length > 2 && (
-          // <div class="custom-select-wrapper">
-          //   <div class="custom-select">
-          //     <div class="custom-select__trigger">
-          //       <span>Tesla</span>
-          //       <div class="arrow"></div>
-          //     </div>
-          //     <div class="custom-options">
-          //       <span class="custom-option selected" data-value="tesla">
-          //         Tesla
-          //       </span>
-          //       <span class="custom-option" data-value="volvo">
-          //         Volvo
-          //       </span>
-          //       <span class="custom-option" data-value="mercedes">
-          //         Mercedes
-          //       </span>
-          //     </div>
-          //   </div>
-          // </div>
           <div className="option-cont">
             <label className="result">
-              <input
+              <select
                 value={companyCity}
                 onChange={(event) => setCompanyCity(event.target.value)}
-              />
+              >
+                <option value="">--Please choose an option--</option>
+                {cityOfCompanyWhereApplied.map((city) => {
+                  return (
+                    <option key={city} value={city}>
+                      {city}
+                    </option>
+                  );
+                })}
+              </select>
               <div className="text">City where you applied</div>
             </label>
           </div>
@@ -101,6 +97,7 @@ const AddNewJob = ({ handleAddJobToList }) => {
               value={sourceWhereApplied}
               onChange={(event) => setSourceWhereApplied(event.target.value)}
             >
+              <option value="">--Please choose an option--</option>
               {sourcesListOfVacancy.map((source) => {
                 return (
                   <option key={source} value={source}>
@@ -108,9 +105,6 @@ const AddNewJob = ({ handleAddJobToList }) => {
                   </option>
                 );
               })}
-              {/* <option value="LinkedIn">LinkedIn</option>
-              <option value="Indeed">Indeed</option>
-              <option value="GlassDoor">GlassDoor</option> */}
             </select>
             <div className="text">Source where applied</div>
           </div>
@@ -157,83 +151,3 @@ const AddNewJob = ({ handleAddJobToList }) => {
 };
 
 export default AddNewJob;
-
-// <div className="add-job">
-//       <form
-//         className="add-form"
-//         onSubmit={(event) => submitAllInputs(event.target.value)}
-//       >
-//         <div className="company-cont">
-//           <label className="result">
-//             <input
-//               value={companyName}
-//               onChange={(event) => setCompanyName(event.target.value)}
-//             />
-//             <div className="text">Company Name</div>
-//           </label>
-//         </div>
-//         <div className="option-cont">
-//           <div className="left-cont">
-//             <label className="result">
-//               <input
-//                 value={result}
-//                 onChange={(event) => setResult(event.target.value)}
-//               />
-//               <div className="text"> Result </div>
-//             </label>
-
-//             <div className="comments">
-//               <textarea
-//                 className="text-area-comments"
-//                 value={comment}
-//                 onChange={(event) => setComment(event.target.value)}
-//                 required
-//               ></textarea>
-//               <p>Comments</p>
-//             </div>
-//           </div>
-
-//           <div className="right-cont">
-//             <label className="result">
-//               <input
-//                 value={companyCity}
-//                 onChange={(event) => setCompanyCity(event.target.value)}
-//               />
-//               <div className="text">City where you applied</div>
-//             </label>
-
-//             <div className="apply-date">
-//               <input
-//                 required
-//                 className="date-input"
-//                 value={applyDate}
-//                 type="date"
-//                 onChange={(event) => setApplyDate(event.target.value)}
-//               />
-//               <p>Apply date</p>
-//             </div>
-
-//             <div className="source">
-//               <select
-//                 value={sourceWhereApplied}
-//                 onChange={(event) => setSourceWhereApplied(event.target.value)}
-//               >
-//                 <option value="LinkedIn">LinkedIn</option>
-//                 <option value="Indeed">Indeed</option>
-//                 <option value="GlassDoor">GlassDoor</option>
-//               </select>
-//               <p>Source where applied</p>
-//             </div>
-//           </div>
-//         </div>
-
-//         <div className="submit-bottno-container">
-//           <div
-//             data-back="Add to List"
-//             data-front="Submit"
-//             className="submit-btn"
-//             onClick={submitAllInputs}
-//           ></div>
-//         </div>
-//       </form>
-//     </div>
