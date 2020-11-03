@@ -88,6 +88,12 @@ const Auth = ({ handleSetUser }) => {
       .collection("userData")
       .doc("listOfJobs")
       .set({});
+    // database
+    //   .collection("users")
+    //   .doc(id)
+    //   .collection("userData")
+    //   .doc("listOfJobs")
+    //   .set({});
   };
 
   const authListener = () => {

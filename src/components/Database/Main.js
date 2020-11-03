@@ -126,7 +126,7 @@ const Main = ({ user }) => {
         setShowSettings={setShowSettings}
       />
       {userAddingNewJob ? (
-        <AddNewJob handleAddJobToList={handleAddJobToList} />
+        <AddNewJob handleAddJobToList={handleAddJobToList} user={user} />
       ) : (
         <JobList
           listOfCompaniesTitles={listOfCompaniesTitles}
@@ -145,7 +145,7 @@ const Main = ({ user }) => {
         />
       )}
 
-      {showSettings && <Settings />}
+      {showSettings && <Settings user={user} />}
     </div>
   );
 };

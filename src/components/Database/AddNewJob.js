@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./AddNewJob.css";
 import useSettings from "../../core/customHooks/useSettings";
 
-const AddNewJob = ({ handleAddJobToList }) => {
+const AddNewJob = ({ handleAddJobToList, user }) => {
   const [companyName, setCompanyName] = useState("");
   const [companyCity, setCompanyCity] = useState("");
   const [applyDate, setApplyDate] = useState("");
@@ -16,8 +16,7 @@ const AddNewJob = ({ handleAddJobToList }) => {
       resultsListOfInterviews,
       cityOfCompanyWhereApplied,
     },
-  ] = useSettings();
-  console.log(sourcesListOfVacancy);
+  ] = useSettings(user);
 
   const submitAllInputs = (event) => {
     event.preventDefault();

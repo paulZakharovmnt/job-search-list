@@ -8,10 +8,19 @@
   z-index: 100;
 }
 
-.settings-container {
+.settings {
   background-color: brown;
-  width: 400px;
-  height: 400px;
+  width: 800px;
+  height: 600px;
   margin: 0 auto;
   margin-top: 100px;
+}
+
+.settings-container {
+  background-color: darksalmon;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
 }
