@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { fire } from "../../core/firebase";
 import LoginPage from "./LogInPage";
-import database from "../../core/firebase";
+import setDefaultNewUserSettings from "../../core/setDefaultNewUserSettings";
 import "./Auth.css";
 
 const Auth = ({ handleSetUser }) => {
-  //   const [user, setUser] = useState("");
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -52,7 +51,7 @@ const Auth = ({ handleSetUser }) => {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then((result) => {
-        createCollection(result.user.uid);
+        setDefaultNewUserSettings(result.user.uid);
         addUserName();
       })
       .catch((err) => {
@@ -75,28 +74,6 @@ const Auth = ({ handleSetUser }) => {
     });
   };
 
-  const createCollection = (id) => {
-    const defaoultCitiesToApplyForNewUser = [];
-    database
-      .collection("users")
-      .doc(id)
-      .collection("userData")
-      .doc("fullJobsInfo")
-      .set({});
-    database
-      .collection("users")
-      .doc(id)
-      .collection("userData")
-      .doc("listOfJobs")
-      .set({});
-    // database
-    //   .collection("users")
-    //   .doc(id)
-    //   .collection("userData")
-    //   .doc("listOfJobs")
-    //   .set({});
-  };
-
   const authListener = () => {
     fire.auth().onAuthStateChanged((user) => {
       if (user) {
@@ -109,9 +86,7 @@ const Auth = ({ handleSetUser }) => {
         };
         console.log(userInfo);
         handleSetUser(userInfo);
-        // setUser(user);
       } else {
-        // setUser("");
         handleSetUser("");
       }
     });
