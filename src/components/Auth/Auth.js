@@ -76,6 +76,7 @@ const Auth = ({ handleSetUser }) => {
   };
 
   const createCollection = (id) => {
+    // const defaoultCitiesToApplyForNewUser = [ ]
     database
       .collection("users")
       .doc(id)

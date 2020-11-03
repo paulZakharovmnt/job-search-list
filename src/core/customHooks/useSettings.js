@@ -15,52 +15,54 @@ const useSettings = (user) => {
     "Reject",
   ]);
 
-  const [cityOfCompanyWhereApplied, setCityOfCompanyWhereApplied] = useState(
-    []
-  );
+  const [cityOfCompanyWhereApplied, setCityOfCompanyWhereApplied] = useState([
+    "Montreal",
+    "Toronto",
+    "Vancouver",
+  ]);
 
-  useEffect(() => {
-    getCitiesListFromDatabse();
-    console.log("get sities");
-  }, []);
+  // useEffect(() => {
+  //   getCitiesListFromDatabse();
+  //   console.log("get sities");
+  // }, []);
 
-  useEffect(() => {
-    if (cityOfCompanyWhereApplied.length > 0) {
-      console.log("set cities");
-      setNewListOfCitiestoFireBase();
-    }
-  }, [cityOfCompanyWhereApplied]);
+  // useEffect(() => {
+  //   if (cityOfCompanyWhereApplied.length > 0) {
+  //     console.log("set cities");
+  //     setNewListOfCitiestoFireBase();
+  //   }
+  // }, [cityOfCompanyWhereApplied]);
 
-  const getCitiesListFromDatabse = () => {
-    database
-      .collection("users")
-      .doc(user.uid)
-      .collection("settings")
-      .doc("cities")
-      .onSnapshot((doc) => {
-        setCityOfCompanyWhereApplied(doc.data().cityOfCompanyWhereApplied);
-      });
-  };
+  // const getCitiesListFromDatabse = () => {
+  //   database
+  //     .collection("users")
+  //     .doc(user.uid)
+  //     .collection("settings")
+  //     .doc("cities")
+  //     .onSnapshot((doc) => {
+  //       setCityOfCompanyWhereApplied(doc.data().cityOfCompanyWhereApplied);
+  //     });
+  // };
 
-  const setNewListOfCitiestoFireBase = () => {
-    database
-      .collection("users")
-      .doc(user.uid)
-      .collection("userData")
-      .doc("listOfJobs")
-      .set({ cityOfCompanyWhereApplied });
-  };
+  // const setNewListOfCitiestoFireBase = () => {
+  //   database
+  //     .collection("users")
+  //     .doc(user.uid)
+  //     .collection("userData")
+  //     .doc("listOfJobs")
+  //     .set({ cityOfCompanyWhereApplied });
+  // };
 
-  const handleAddNewItemToList = (item) => {
-    console.log(item);
-    setCityOfCompanyWhereApplied([...cityOfCompanyWhereApplied, item]);
-  };
+  // const handleAddNewItemToList = (item) => {
+  //   console.log(item);
+  //   setCityOfCompanyWhereApplied([...cityOfCompanyWhereApplied, item]);
+  // };
   return [
     {
       sourcesListOfVacancy,
       resultsListOfInterviews,
       cityOfCompanyWhereApplied,
-      handleAddNewItemToList,
+      // handleAddNewItemToList,
     },
   ];
 };
