@@ -5,9 +5,9 @@ import useSettings from "../../core/customHooks/useSettings";
 const Settings = ({ user }) => {
   const [
     {
-      sourcesListOfVacancy,
+      sourcesListWhereUserIsApplying,
       resultsListOfInterviews,
-      cityOfCompanyWhereApplied,
+      citiesListWhereUserIsApplying,
       handleAddNewItemToList,
     },
   ] = useSettings(user);
@@ -20,7 +20,7 @@ const Settings = ({ user }) => {
         <div className="settings-container">
           <div className="source-list">
             <ul>
-              {sourcesListOfVacancy.map((source) => (
+              {sourcesListWhereUserIsApplying.map((source) => (
                 <li key={source}>{source}</li>
               ))}
             </ul>
@@ -38,7 +38,7 @@ const Settings = ({ user }) => {
             ))}
           </div>
           <div className="city-list">
-            {cityOfCompanyWhereApplied.map((city) => (
+            {citiesListWhereUserIsApplying.map((city) => (
               <li key={city}>{city}</li>
             ))}
           </div>

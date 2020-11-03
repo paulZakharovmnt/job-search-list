@@ -12,9 +12,9 @@ const AddNewJob = ({ handleAddJobToList, user }) => {
 
   const [
     {
-      sourcesListOfVacancy,
+      sourcesListWhereUserIsApplying,
       resultsListOfInterviews,
-      cityOfCompanyWhereApplied,
+      citiesListWhereUserIsApplying,
     },
   ] = useSettings(user);
 
@@ -65,7 +65,7 @@ const AddNewJob = ({ handleAddJobToList, user }) => {
                 onChange={(event) => setCompanyCity(event.target.value)}
               >
                 <option value="">--Please choose an option--</option>
-                {cityOfCompanyWhereApplied.map((city) => {
+                {citiesListWhereUserIsApplying.map((city) => {
                   return (
                     <option key={city} value={city}>
                       {city}
@@ -97,7 +97,7 @@ const AddNewJob = ({ handleAddJobToList, user }) => {
               onChange={(event) => setSourceWhereApplied(event.target.value)}
             >
               <option value="">--Please choose an option--</option>
-              {sourcesListOfVacancy.map((source) => {
+              {sourcesListWhereUserIsApplying.map((source) => {
                 return (
                   <option key={source} value={source}>
                     {source}

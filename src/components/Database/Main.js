@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import Nav from "../Nav/Nav";
 import AddNewJob from "./AddNewJob";
 import JobList from "./JobList";
-import database from "../../core/firebase";
 import EditItem from "./EditItem/EditItem";
 
 import getUpdatedJobsInfo from "../../core/getUpdatedJobsInfo";
 import setJobsListToFB from "../../core/setJobsListToFB";
 import setJobsInfoToFB from "../../core/setJobsInfoToFB";
+import fetchListOfCompanyNamesUserApplied from "../../core/getFromFBFuctions/fetchListOfCompanyNamesUserApplied";
+import fetchListOfCompanyInfoUserApplied from "../../core/getFromFBFuctions/fetchListOfCompanyInformantionUserApplied";
 import Settings from "../Settings/Settings";
 
 const Main = ({ user }) => {
@@ -30,7 +31,16 @@ const Main = ({ user }) => {
   };
 
   useEffect(() => {
-    getInfoFromFirebase();
+    fetchListOfCompanyInfoUserApplied(user).onSnapshot((doc) => {
+      setFullInfoCompaniesList(doc.data());
+    });
+    fetchListOfCompanyNamesUserApplied(user).onSnapshot((doc) => {
+      if (!doc.data().companyList) {
+        return;
+      }
+      setListOfCompaniesTitles(doc.data().companyList);
+    });
+
     console.log("get");
   }, []);
 
@@ -44,29 +54,6 @@ const Main = ({ user }) => {
       console.log("set Info");
     }
   }, [listOfCompaniesTitles, fullInfoCompaniesList]);
-
-  const getInfoFromFirebase = () => {
-    database
-      .collection("users")
-      .doc(user.uid)
-      .collection("userData")
-      .doc("fullJobsInfo")
-      .onSnapshot((doc) => {
-        setFullInfoCompaniesList(doc.data());
-      });
-
-    database
-      .collection("users")
-      .doc(user.uid)
-      .collection("userData")
-      .doc("listOfJobs")
-      .onSnapshot((doc) => {
-        if (!doc.data().companyList) {
-          return;
-        }
-        setListOfCompaniesTitles(doc.data().companyList);
-      });
-  };
 
   const handleDeleteCompanyFromList = (company) => {
     const updatedCompanyList = listOfCompaniesTitles.filter((item) => {
