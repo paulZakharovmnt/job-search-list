@@ -1,67 +1,56 @@
 import { useEffect, useState } from "react";
-import database from "../firebase";
+import getListOfCitiesFromFB from "../getFromFBFuctions/getListOfCitiesFromFB";
+import setUpdatedListOfCitiesToFB from "../setToFBFuctions/setUpdatedListOfCitiesToFB";
+import getListOfSourcesFromFB from "../getFromFBFuctions/getListOfSourcesFromFB";
+import getListOfResultsFromFB from "../getFromFBFuctions/getListOfResultsFromFB";
 
 const useSettings = (user) => {
-  const [sourcesListOfVacancy, setSourcesListOfVacancy] = useState([
-    "LinkedIn",
-    "Indeed",
-    "GlassDoor",
-    "Website of Company",
-  ]);
+  const [
+    sourcesListWhereUserIsApplying,
+    setSourcesListWhereUserIsApplying,
+  ] = useState([]);
 
-  const [resultsListOfInterviews, setResultsListOfInterviews] = useState([
-    "Offer",
-    "Sent",
-    "Reject",
-  ]);
+  const [resultsListOfInterviews, setResultsListOfInterviews] = useState([]);
 
-  const [cityOfCompanyWhereApplied, setCityOfCompanyWhereApplied] = useState([
-    // "Montreal",
-    // "Toronto",
-    // "Vancouver",
-  ]);
+  const [
+    citiesListWhereUserIsApplying,
+    setCitiesListWhereUserIsApplying,
+  ] = useState([]);
 
   useEffect(() => {
-    if (cityOfCompanyWhereApplied.length > 0) {
-      console.log("set cities");
-      setNewListOfCitiestoFireBase();
+    if (citiesListWhereUserIsApplying.length < 1) {
+      return;
     }
-  }, [cityOfCompanyWhereApplied]);
+    console.log("set cities");
+    setUpdatedListOfCitiesToFB(user, citiesListWhereUserIsApplying);
+  }, [citiesListWhereUserIsApplying]);
 
   useEffect(() => {
-    getCitiesListFromDatabse();
-    console.log("get sities");
+    getListOfCitiesFromFB(user).onSnapshot((doc) => {
+      setCitiesListWhereUserIsApplying(
+        doc.data().citiesListWhereUserIsApplying
+      );
+    });
+    getListOfResultsFromFB(user).onSnapshot((doc) => {
+      setResultsListOfInterviews(doc.data().resultsListOfInterviews);
+    });
+    getListOfSourcesFromFB(user).onSnapshot((doc) => {
+      setSourcesListWhereUserIsApplying(
+        doc.data().sourcesListWhereUserIsApplying
+      );
+    });
+    console.log("get cities");
   }, []);
 
-  const getCitiesListFromDatabse = () => {
-    database
-      .collection("users")
-      .doc(user.uid)
-      .collection("settings")
-      .doc("cities")
-      .onSnapshot((doc) => {
-        setCityOfCompanyWhereApplied(doc.data().cityOfCompanyWhereApplied);
-      });
-  };
-
-  const setNewListOfCitiestoFireBase = () => {
-    database
-      .collection("users")
-      .doc(user.uid)
-      .collection("settings")
-      .doc("cities")
-      .set({ cityOfCompanyWhereApplied });
-  };
-
   const handleAddNewItemToList = (item) => {
-    console.log(item);
-    setCityOfCompanyWhereApplied([...cityOfCompanyWhereApplied, item]);
+    setCitiesListWhereUserIsApplying([...citiesListWhereUserIsApplying, item]);
   };
+
   return [
     {
-      sourcesListOfVacancy,
+      sourcesListWhereUserIsApplying,
       resultsListOfInterviews,
-      cityOfCompanyWhereApplied,
+      citiesListWhereUserIsApplying,
       handleAddNewItemToList,
     },
   ];
