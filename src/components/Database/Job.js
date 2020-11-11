@@ -8,14 +8,17 @@ const Job = ({
 }) => {
   const jobInfo = fullInfoCompaniesList[company];
   return (
-    <li className="job" onClick={() => handleOpenEditJobWindowClick(jobInfo)}>
+    <li className="job">
       <h4 className="joblist-job-title">{company}</h4>
       <p className="joblist-job-title">{jobInfo.city}</p>
       <p className="joblist-job-title">{jobInfo.date}</p>
       <p className="joblist-job-title">{jobInfo.source}</p>
       <p className="joblist-job-title">{jobInfo.result}</p>
       <div className="icons">
-        <i className="job-edit-btn fas fa-edit"></i>
+        <i
+          onClick={() => handleOpenEditJobWindowClick(jobInfo)}
+          className="job-edit-btn fas fa-edit"
+        ></i>
         <i
           onClick={() => {
             handleDeleteCompanyFromList(company);
