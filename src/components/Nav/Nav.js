@@ -1,35 +1,68 @@
 import React from "react";
 import { fire } from "../../core/firebase";
 import "./Nav.css";
+import classNames from "classnames";
 
 const Nav = ({
-  showJobAddScreen,
-  showJobListPage,
+  showJobAddTab,
+  showJobsListTab,
   userInputSearch,
   setUserInputSearch,
   setShowSettings,
   showSettings,
+  showUserAddingNewJobTab,
 }) => {
+  const addJobBtnClassnames = classNames("nav-btn", {
+    opened: showUserAddingNewJobTab && !showSettings,
+  });
+  const listOfJobsBtnClassnames = classNames("nav-btn", {
+    opened: !showUserAddingNewJobTab && !showSettings,
+  });
+  const settingsBtnClassNames = classNames("nav-btn", {
+    opened: showSettings,
+  });
+
   const handleLogOut = () => {
     fire.auth().signOut();
   };
+
   return (
     <div className="nav">
-      <h3> Welcome back, User</h3>
-      <div
-        onClick={showJobAddScreen}
-        className="btn-flip"
-        data-back="New Job"
-        data-front="Add"
-      ></div>
-      <input
-        value={userInputSearch}
-        onChange={(event) => setUserInputSearch(event.target.value)}
-      />
+      <div className="nav-container-1">
+        <div className="nav-brn-container">
+          <button className={addJobBtnClassnames} onClick={showJobAddTab}>
+            Add New Job
+          </button>
+          <button className={listOfJobsBtnClassnames} onClick={showJobsListTab}>
+            List of Jobs
+          </button>
+          <button
+            className={settingsBtnClassNames}
+            onClick={() => setShowSettings(!showSettings)}
+          >
+            Settings
+          </button>
+        </div>
+      </div>
+      <div className="nav-container-2">
+        {!showUserAddingNewJobTab && (
+          <input
+            className="inpit-search"
+            placeholder="search..."
+            value={userInputSearch}
+            onChange={(event) => setUserInputSearch(event.target.value)}
+          />
+        )}
+      </div>
+      <div className="nav-container-3">
+        <div className="user-btn-container">
+          <h3> Hi, User</h3>
 
-      <button onClick={showJobListPage}>Show List of Jobs</button>
-      <button onClick={() => setShowSettings(!showSettings)}>Settings</button>
-      <button onClick={handleLogOut}>Logout</button>
+          <button className="nav-btn" onClick={handleLogOut}>
+            Logout
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

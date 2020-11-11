@@ -1,46 +1,55 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Settings.css";
-import useSettings from "../../core/customHooks/useSettings";
+import Selector from "./OptionsTabs/Selector";
+import Options from "./OptionsTabs/Options";
+import { CSSTransition } from "react-transition-group";
+import SettingTab from "./SettingTab";
+import classNames from "classnames";
 
-const Settings = ({ user }) => {
-  const [
-    {
-      sourcesListWhereUserIsApplying,
-      resultsListOfInterviews,
-      citiesListWhereUserIsApplying,
-      handleAddNewItemToList,
-    },
-  ] = useSettings(user);
+const Settings = ({ user, setShowSettings }) => {
+  const [showingSettingTab, setShowingSettingTab] = useState(null);
 
-  const [userInputAddNewItem, setUserInputAddNewItem] = useState("");
+  const [showSettingsFolder, setShowSettingsFolder] = useState(false);
+
+  const settingsTabs = ["Personal Info", "Language", "Selectors"];
+  const handleSelectTabToRenderClick = (tab) => {
+    setShowSettingsFolder(true);
+    setShowingSettingTab(tab);
+  };
 
   return (
     <div className="black-background">
       <div className="settings">
-        <div className="settings-container">
-          <div className="source-list">
-            <ul>
-              {sourcesListWhereUserIsApplying.map((source) => (
-                <li key={source}>{source}</li>
-              ))}
-            </ul>
-            <button onClick={() => handleAddNewItemToList(userInputAddNewItem)}>
-              {" "}
-              Add new item to list
+        <div className="settings-header">
+          <h2>Settings</h2>
+          <i
+            className="close-settings-btn fas fa-times"
+            onClick={() => setShowSettings(false)}
+          ></i>
+        </div>
+        <div className="settings-nav">
+          {settingsTabs.map((tab) => (
+            <button
+              className={
+                tab === showingSettingTab ? "tab-btn activated" : "tab-btn"
+              }
+              value={tab}
+              key={tab}
+              onClick={() => handleSelectTabToRenderClick(tab)}
+            >
+              {tab}
             </button>
-            <input
-              onChange={(event) => setUserInputAddNewItem(event.target.value)}
-            />
-          </div>
-          <div className="result-list">
-            {resultsListOfInterviews.map((result) => (
-              <li key={result}>{result}</li>
-            ))}
-          </div>
-          <div className="city-list">
-            {citiesListWhereUserIsApplying.map((city) => (
-              <li key={city}>{city}</li>
-            ))}
+          ))}
+        </div>
+        <div className="settings-container">
+          <div className="tabs-container">
+            {showSettingsFolder && (
+              <SettingTab
+                showingSettingTab={showingSettingTab}
+                showSettingsFolder={showSettingsFolder}
+                user={user}
+              />
+            )}
           </div>
         </div>
       </div>

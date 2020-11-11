@@ -9,6 +9,7 @@ const EditItem = ({
   const [userWantsToAddComment, setUserWantsToAddComment] = useState(false);
   const [commentDate, setCommentDate] = useState("");
   const [newComment, setNewComment] = useState("");
+  const [showAddingCommentError, setShowAddingCommentError] = useState(false);
 
   let showComments = Object.entries(jobUserWantsToEdit.comments).map((arr) => {
     return (
@@ -27,11 +28,18 @@ const EditItem = ({
 
   const handleAddNewComment = (event) => {
     event.preventDefault();
+    if (!commentDate) {
+      setShowAddingCommentError(true);
+      return;
+    }
+    setShowAddingCommentError(false);
     let updatedJob = jobUserWantsToEdit;
     updatedJob.comments[commentDate] = newComment;
-
     addCommentToTheJobInfo(updatedJob);
+
     setUserWantsToAddComment(!userWantsToAddComment);
+    setCommentDate("");
+    setNewComment("");
   };
 
   return (
@@ -64,34 +72,40 @@ const EditItem = ({
               <p>{jobUserWantsToEdit.result}</p>
             </div>
           </div>
-          <div className="comments-header-container">
+          <div className="comments-container">
             <h4>Comments: </h4>
             {showComments}
 
             <button
+              className="add-comment-btn"
               onClick={() => setUserWantsToAddComment(!userWantsToAddComment)}
             >
               Add Comment
             </button>
+
+            {userWantsToAddComment && (
+              <div className="add-comment-input">
+                <form>
+                  <input
+                    onChange={(event) => setCommentDate(event.target.value)}
+                    value={commentDate}
+                    type="date"
+                  />
+                  <input
+                    value={newComment}
+                    onChange={(event) => setNewComment(event.target.value)}
+                  />
+                  {showAddingCommentError && (
+                    <p className="add-error-message">
+                      Please Choose the Date of new comment
+                    </p>
+                  )}
+                  <button onClick={handleAddNewComment}>Add</button>
+                </form>
+              </div>
+            )}
           </div>
         </div>
-
-        {userWantsToAddComment && (
-          <div className="add-comment">
-            <form>
-              <input
-                onChange={(event) => setCommentDate(event.target.value)}
-                value={commentDate}
-                type="date"
-              />
-              <input
-                value={newComment}
-                onChange={(event) => setNewComment(event.target.value)}
-              />
-              <button onClick={handleAddNewComment}>Add</button>
-            </form>
-          </div>
-        )}
       </div>
     </div>
   );

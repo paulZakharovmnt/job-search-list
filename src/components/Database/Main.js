@@ -4,31 +4,23 @@ import AddNewJob from "./AddNewJob";
 import JobList from "./JobList";
 import EditItem from "./EditItem/EditItem";
 
-import getUpdatedJobsInfo from "../../core/getUpdatedJobsInfo";
-import setJobsListToFB from "../../core/setJobsListToFB";
-import setJobsInfoToFB from "../../core/setJobsInfoToFB";
+import deleteSelectedJobInfoFromList from "../../core/deleteSelectedJobInfoFromList";
+import setCompanyNamesListToFB from "../../core/setToFBFuctions/setCompanyNamesListToFB";
+import setJobsInformationListToFB from "../../core/setToFBFuctions/setJobsInformationListToFB";
 import fetchListOfCompanyNamesUserApplied from "../../core/getFromFBFuctions/fetchListOfCompanyNamesUserApplied";
 import fetchListOfCompanyInfoUserApplied from "../../core/getFromFBFuctions/fetchListOfCompanyInformantionUserApplied";
 import Settings from "../Settings/Settings";
 
 const Main = ({ user }) => {
   const [fullInfoCompaniesList, setFullInfoCompaniesList] = useState(null);
-  const [listOfCompaniesTitles, setListOfCompaniesTitles] = useState([]);
+  const [listOfCompaniesNames, setListOfCompaniesTitles] = useState([]);
   const [jobUserWantsToEdit, setJobUserWantsToEdit] = useState(null);
 
-  const [userAddingNewJob, setUserAddingNewJob] = useState(true);
-  const [userWantsToEditItem, setUserWantsToEditItem] = useState(false);
+  const [showUserAddingNewJobTab, setShowUserAddingNewJobTab] = useState(false);
+  const [showEditJobWindow, setShowEditJobWindow] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
 
   const [userInputSearch, setUserInputSearch] = useState("");
-
-  const showJobAddScreen = () => {
-    setUserAddingNewJob(true);
-  };
-
-  const showJobListPage = () => {
-    setUserAddingNewJob(false);
-  };
 
   useEffect(() => {
     fetchListOfCompanyInfoUserApplied(user).onSnapshot((doc) => {
@@ -45,55 +37,70 @@ const Main = ({ user }) => {
   }, []);
 
   useEffect(() => {
-    if (listOfCompaniesTitles.length > 0) {
+    if (listOfCompaniesNames.length > 0) {
       console.log("set CompanyList");
-      setJobsListToFB(user, listOfCompaniesTitles);
+      setCompanyNamesListToFB(user, listOfCompaniesNames);
     }
     if (fullInfoCompaniesList) {
-      setJobsInfoToFB(user, fullInfoCompaniesList);
+      setJobsInformationListToFB(user, fullInfoCompaniesList);
       console.log("set Info");
     }
-  }, [listOfCompaniesTitles, fullInfoCompaniesList]);
+  }, [listOfCompaniesNames, fullInfoCompaniesList]);
 
   const handleDeleteCompanyFromList = (company) => {
-    const updatedCompanyList = listOfCompaniesTitles.filter((item) => {
-      return item !== company;
-    });
-    setListOfCompaniesTitles(updatedCompanyList);
+    const companiesListWithoutDeletedCompanyName = listOfCompaniesNames.filter(
+      (item) => {
+        return item !== company;
+      }
+    );
+    setListOfCompaniesTitles(companiesListWithoutDeletedCompanyName);
 
-    const updatedJobsInfo = getUpdatedJobsInfo(fullInfoCompaniesList, company);
-    setFullInfoCompaniesList(updatedJobsInfo);
+    const listOfCompaniesInfoWithoutDeletedCompany = deleteSelectedJobInfoFromList(
+      fullInfoCompaniesList,
+      company
+    );
+    setFullInfoCompaniesList(listOfCompaniesInfoWithoutDeletedCompany);
 
-    if (listOfCompaniesTitles.length === 1) {
-      console.log("working");
-      setJobsListToFB(user, updatedCompanyList);
+    if (listOfCompaniesNames.length === 1) {
+      setCompanyNamesListToFB(user, companiesListWithoutDeletedCompanyName);
     }
   };
 
-  const handleAddJobToList = (job) => {
-    const newFullList = { ...fullInfoCompaniesList };
-    newFullList[job.company] = job;
-    setFullInfoCompaniesList(newFullList);
+  const handleAddJobToListSubmit = (job) => {
+    const listOfCompaniesInfoWithNewAddedCompany = { ...fullInfoCompaniesList };
+    listOfCompaniesInfoWithNewAddedCompany[job.company] = job;
+    setFullInfoCompaniesList(listOfCompaniesInfoWithNewAddedCompany);
 
-    if (listOfCompaniesTitles.includes(job.company)) {
+    if (listOfCompaniesNames.includes(job.company)) {
       return;
       // Here should be POPUP window that we have already this company
     }
-    const newListOfCompanies = [...listOfCompaniesTitles, job.company];
-    setListOfCompaniesTitles(newListOfCompanies);
-    showJobListPage();
+    const listOfCompaniesNamesWithNewAddedCompany = [
+      ...listOfCompaniesNames,
+      job.company,
+    ];
+    setListOfCompaniesTitles(listOfCompaniesNamesWithNewAddedCompany);
+    showJobsListTab();
   };
 
-  const handleEditWindowToggler = () => {
-    if (userWantsToEditItem) {
-      setJobUserWantsToEdit(null);
-    }
-    setUserWantsToEditItem(!userWantsToEditItem);
+  const showJobAddTab = () => {
+    setShowUserAddingNewJobTab(true);
+    setShowSettings(false);
   };
 
-  const handleEditJob = (jobInfo) => {
+  const showJobsListTab = () => {
+    setShowUserAddingNewJobTab(false);
+    setShowSettings(false);
+  };
+
+  const closeEditJobWindow = () => {
+    setShowEditJobWindow(false);
+    setJobUserWantsToEdit(null);
+  };
+
+  const handleOpenEditJobWindowClick = (jobInfo) => {
     setJobUserWantsToEdit(jobInfo);
-    handleEditWindowToggler();
+    setShowEditJobWindow(true);
   };
 
   const addCommentToTheJobInfo = (updatedJob) => {
@@ -105,34 +112,40 @@ const Main = ({ user }) => {
   return (
     <div>
       <Nav
-        showJobAddScreen={showJobAddScreen}
-        showJobListPage={showJobListPage}
+        showJobAddTab={showJobAddTab}
+        showJobsListTab={showJobsListTab}
         userInputSearch={userInputSearch}
         setUserInputSearch={setUserInputSearch}
         showSettings={showSettings}
         setShowSettings={setShowSettings}
+        showUserAddingNewJobTab={showUserAddingNewJobTab}
       />
-      {userAddingNewJob ? (
-        <AddNewJob handleAddJobToList={handleAddJobToList} user={user} />
+      {showUserAddingNewJobTab ? (
+        <AddNewJob
+          handleAddJobToListSubmit={handleAddJobToListSubmit}
+          user={user}
+        />
       ) : (
         <JobList
-          listOfCompaniesTitles={listOfCompaniesTitles}
+          listOfCompaniesNames={listOfCompaniesNames}
           fullInfoCompaniesList={fullInfoCompaniesList}
           userInputSearch={userInputSearch}
           handleDeleteCompanyFromList={handleDeleteCompanyFromList}
-          editJob={handleEditJob}
+          handleOpenEditJobWindowClick={handleOpenEditJobWindowClick}
         />
       )}
 
-      {userWantsToEditItem && (
+      {showEditJobWindow && (
         <EditItem
           jobUserWantsToEdit={jobUserWantsToEdit}
-          handleEditWindowToggler={handleEditWindowToggler}
+          closeEditJobWindow={closeEditJobWindow}
           addCommentToTheJobInfo={addCommentToTheJobInfo}
         />
       )}
 
-      {showSettings && <Settings user={user} />}
+      {showSettings && (
+        <Settings user={user} setShowSettings={setShowSettings} />
+      )}
     </div>
   );
 };
