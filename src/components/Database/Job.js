@@ -4,23 +4,23 @@ const Job = ({
   company,
   fullInfoCompaniesList,
   handleDeleteCompanyFromList,
-  editJob,
+  handleOpenEditJobWindowClick,
 }) => {
   const jobInfo = fullInfoCompaniesList[company];
   return (
-    <li className="job" onClick={() => editJob(jobInfo)}>
-      <h4>{company}</h4>
-      <p>{jobInfo.city}</p>
-      <p>{jobInfo.date}</p>
-      <p>{jobInfo.source}</p>
-      <p>{jobInfo.result}</p>
+    <li className="job" onClick={() => handleOpenEditJobWindowClick(jobInfo)}>
+      <h4 className="joblist-job-title">{company}</h4>
+      <p className="joblist-job-title">{jobInfo.city}</p>
+      <p className="joblist-job-title">{jobInfo.date}</p>
+      <p className="joblist-job-title">{jobInfo.source}</p>
+      <p className="joblist-job-title">{jobInfo.result}</p>
       <div className="icons">
-        <i className="fas fa-edit"></i>
+        <i className="job-edit-btn fas fa-edit"></i>
         <i
           onClick={() => {
             handleDeleteCompanyFromList(company);
           }}
-          className="fas fa-trash-alt"
+          className="job-delete-btn fas fa-trash-alt"
         ></i>
       </div>
     </li>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./AddNewJob.css";
 import useSettings from "../../core/customHooks/useSettings";
 
-const AddNewJob = ({ handleAddJobToList, user }) => {
+const AddNewJob = ({ handleAddJobToListSubmit, user }) => {
   const [companyName, setCompanyName] = useState("");
   const [companyCity, setCompanyCity] = useState("");
   const [applyDate, setApplyDate] = useState("");
@@ -21,10 +21,8 @@ const AddNewJob = ({ handleAddJobToList, user }) => {
   const submitAllInputs = (event) => {
     event.preventDefault();
 
-    let newComment = {};
-    newComment[applyDate] = comment;
-
-    console.log(newComment);
+    let firstUsersCommentInJobInfo = {};
+    firstUsersCommentInJobInfo[applyDate] = comment;
 
     const fullJobInfo = {
       company: companyName,
@@ -32,9 +30,10 @@ const AddNewJob = ({ handleAddJobToList, user }) => {
       source: sourceWhereApplied,
       date: applyDate,
       result: result,
-      comments: newComment,
+      comments: firstUsersCommentInJobInfo,
     };
-    handleAddJobToList(fullJobInfo);
+
+    handleAddJobToListSubmit(fullJobInfo);
 
     setCompanyName("");
     setCompanyCity("");

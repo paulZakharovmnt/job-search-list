@@ -3,7 +3,7 @@ import "./EditItem.css";
 
 const EditItem = ({
   jobUserWantsToEdit,
-  handleEditWindowToggler,
+  closeEditJobWindow,
   addCommentToTheJobInfo,
 }) => {
   const [userWantsToAddComment, setUserWantsToAddComment] = useState(false);
@@ -39,7 +39,7 @@ const EditItem = ({
       <div className="edit-window">
         <div className="edit-header">
           <h1>Company info</h1>
-          <button onClick={handleEditWindowToggler}>Close</button>
+          <button onClick={closeEditJobWindow}>Close</button>
         </div>
         <div className="company-data-container">
           <div className="detailed-company-information">

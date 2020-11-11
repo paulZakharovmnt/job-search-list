@@ -3,16 +3,13 @@ import Job from "./Job";
 import "./JobList.css";
 
 const JobList = ({
-  listOfCompaniesTitles,
+  listOfCompaniesNames,
   fullInfoCompaniesList,
   userInputSearch,
   handleDeleteCompanyFromList,
-  editJob,
+  handleOpenEditJobWindowClick,
 }) => {
-  // if (!listOfCompanies) {
-  //   return null;
-  // }
-  const filteredJObList = listOfCompaniesTitles.filter((company) => {
+  const filteredJobList = listOfCompaniesNames.filter((company) => {
     return company.toLowerCase().includes(userInputSearch.toLowerCase());
   });
   return (
@@ -23,17 +20,16 @@ const JobList = ({
         <p>Date</p>
         <p>Source</p>
         <p>Result</p>
-        <p>Comment</p>
         <p>Edit/Delete</p>
       </li>
-      {filteredJObList.map((company) => {
+      {filteredJobList.map((company) => {
         return (
           <Job
             company={company}
             fullInfoCompaniesList={fullInfoCompaniesList}
             key={company}
             handleDeleteCompanyFromList={handleDeleteCompanyFromList}
-            editJob={editJob}
+            handleOpenEditJobWindowClick={handleOpenEditJobWindowClick}
           />
         );
       })}

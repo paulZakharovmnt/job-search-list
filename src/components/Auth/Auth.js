@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { fire } from "../../core/firebase";
 import LoginPage from "./LogInPage";
-import setDefaultNewUserSettings from "../../core/setDefaultNewUserSettings";
+import setDefaultNewUserSettingsToFB from "../../core/setDefaultNewUserSettingsToFB";
 import "./Auth.css";
 
 const Auth = ({ handleSetUser }) => {
@@ -13,6 +13,10 @@ const Auth = ({ handleSetUser }) => {
   const [passwordError, setPasswordError] = useState("");
 
   const [hasAccount, setHasAccount] = useState(true);
+
+  useEffect(() => {
+    authListener();
+  }, []);
 
   const clearInputs = () => {
     setEmail("");
@@ -31,7 +35,6 @@ const Auth = ({ handleSetUser }) => {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .catch((err) => {
-        console.log(err);
         switch (err.code) {
           case "auth/invalid-email":
           case "auth/user-disabled":
@@ -51,11 +54,10 @@ const Auth = ({ handleSetUser }) => {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then((result) => {
-        setDefaultNewUserSettings(result.user.uid);
+        setDefaultNewUserSettingsToFB(result.user.uid);
         addUserName();
       })
       .catch((err) => {
-        console.log(err);
         switch (err.code) {
           case "auth/email-already-in-use":
           case "auth/invalid-email":
@@ -78,23 +80,17 @@ const Auth = ({ handleSetUser }) => {
     fire.auth().onAuthStateChanged((user) => {
       if (user) {
         clearInputs();
-        console.log(user);
         let userInfo = {
           email: user.email,
           uid: user.uid,
           displayName: user.displayName,
         };
-        console.log(userInfo);
         handleSetUser(userInfo);
       } else {
         handleSetUser("");
       }
     });
   };
-
-  useEffect(() => {
-    authListener();
-  }, []);
 
   return (
     <div>
