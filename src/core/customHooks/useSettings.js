@@ -1,57 +1,112 @@
 import { useEffect, useState } from "react";
 import getListOfCitiesFromFB from "../getFromFBFuctions/getListOfCitiesFromFB";
 import setUpdatedListOfCitiesToFB from "../setToFBFuctions/setUpdatedListOfCitiesToFB";
+import setUpdatedListOfSourcesToFB from "../setToFBFuctions/setUpdatedListOfSourcesToFB";
+import setUpdatedListOfResultsToFB from "../setToFBFuctions/setUpdatedListOfResultsToFB";
 import getListOfSourcesFromFB from "../getFromFBFuctions/getListOfSourcesFromFB";
 import getListOfResultsFromFB from "../getFromFBFuctions/getListOfResultsFromFB";
 
 const useSettings = (user) => {
   const [
-    sourcesListWhereUserIsApplying,
-    setSourcesListWhereUserIsApplying,
+    listOfSourcesFromSelectorMenu,
+    setListOfSourcesFromSelectorMenu,
   ] = useState([]);
 
-  const [resultsListOfInterviews, setResultsListOfInterviews] = useState([]);
+  const [
+    listOfResultsFromSelectorMenu,
+    setListOfResultsFromSelectorMenu,
+  ] = useState([]);
 
   const [
-    citiesListWhereUserIsApplying,
-    setCitiesListWhereUserIsApplying,
+    listOfCitiesFromSelectorMenu,
+    setListOfCitiesFromSelectorMenu,
   ] = useState([]);
 
   useEffect(() => {
-    if (citiesListWhereUserIsApplying.length < 1) {
+    if (listOfSourcesFromSelectorMenu.length < 1) {
       return;
     }
-    console.log("set cities");
-    setUpdatedListOfCitiesToFB(user, citiesListWhereUserIsApplying);
-  }, [citiesListWhereUserIsApplying]);
+    setUpdatedListOfSourcesToFB(user, listOfSourcesFromSelectorMenu);
+  }, [listOfSourcesFromSelectorMenu]);
+
+  useEffect(() => {
+    if (listOfResultsFromSelectorMenu.length < 1) {
+      return;
+    }
+    setUpdatedListOfResultsToFB(user, listOfResultsFromSelectorMenu);
+  }, [listOfResultsFromSelectorMenu]);
+
+  useEffect(() => {
+    if (listOfCitiesFromSelectorMenu.length < 1) {
+      return;
+    }
+    setUpdatedListOfCitiesToFB(user, listOfCitiesFromSelectorMenu);
+  }, [listOfCitiesFromSelectorMenu]);
 
   useEffect(() => {
     getListOfCitiesFromFB(user).onSnapshot((doc) => {
-      setCitiesListWhereUserIsApplying(
-        doc.data().citiesListWhereUserIsApplying
-      );
+      setListOfCitiesFromSelectorMenu(doc.data().listOfCitiesFromSelectorMenu);
     });
     getListOfResultsFromFB(user).onSnapshot((doc) => {
-      setResultsListOfInterviews(doc.data().resultsListOfInterviews);
-    });
-    getListOfSourcesFromFB(user).onSnapshot((doc) => {
-      setSourcesListWhereUserIsApplying(
-        doc.data().sourcesListWhereUserIsApplying
+      setListOfResultsFromSelectorMenu(
+        doc.data().listOfResultsFromSelectorMenu
       );
     });
-    console.log("get cities");
+    getListOfSourcesFromFB(user).onSnapshot((doc) => {
+      setListOfSourcesFromSelectorMenu(
+        doc.data().listOfSourcesFromSelectorMenu
+      );
+    });
   }, []);
 
-  const handleAddNewItemToList = (item) => {
-    setCitiesListWhereUserIsApplying([...citiesListWhereUserIsApplying, item]);
+  const handleAddNewCityToListSubmit = (city) => {
+    setListOfCitiesFromSelectorMenu([...listOfCitiesFromSelectorMenu, city]);
+  };
+  const handleAddNewResultToListSubmit = (result) => {
+    setListOfResultsFromSelectorMenu([
+      ...listOfResultsFromSelectorMenu,
+      result,
+    ]);
+  };
+  const handleAddNewSourceToListSubmit = (source) => {
+    setListOfSourcesFromSelectorMenu([
+      ...listOfSourcesFromSelectorMenu,
+      source,
+    ]);
   };
 
+  const handleDeleteCityFromList = (city) => {
+    setListOfCitiesFromSelectorMenu(
+      listOfCitiesFromSelectorMenu.filter(
+        (cityFromList) => cityFromList !== city
+      )
+    );
+  };
+  const handleDeleteResultFromList = (result) => {
+    setListOfResultsFromSelectorMenu(
+      listOfResultsFromSelectorMenu.filter(
+        (resultFromList) => resultFromList !== result
+      )
+    );
+  };
+  const handleDeleteSourceFromList = (source) => {
+    setListOfSourcesFromSelectorMenu(
+      listOfSourcesFromSelectorMenu.filter(
+        (sourceFromList) => sourceFromList !== source
+      )
+    );
+  };
   return [
     {
-      sourcesListWhereUserIsApplying,
-      resultsListOfInterviews,
-      citiesListWhereUserIsApplying,
-      handleAddNewItemToList,
+      listOfSourcesFromSelectorMenu,
+      listOfResultsFromSelectorMenu,
+      listOfCitiesFromSelectorMenu,
+      handleAddNewCityToListSubmit,
+      handleAddNewResultToListSubmit,
+      handleAddNewSourceToListSubmit,
+      handleDeleteCityFromList,
+      handleDeleteResultFromList,
+      handleDeleteSourceFromList,
     },
   ];
 };
