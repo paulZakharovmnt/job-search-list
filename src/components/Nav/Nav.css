@@ -1,115 +1,144 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat);
+
 .nav {
-  background-color: #adadaf;
+  /* background-color: #adadaf; */
+  /* background-color: brown; */
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 30px;
-}
-
-.btn-flip {
-  opacity: 1;
-  outline: 0;
-  color: #fff;
-  line-height: 40px;
-  position: relative;
-  text-align: center;
-  letter-spacing: 1px;
-  display: inline-block;
-  text-decoration: none;
-  font-family: "Open Sans";
-  text-transform: uppercase;
-}
-
-.btn-flip::after {
-  top: 0;
-  left: 0;
-  opacity: 0;
+  /* padding: 10px 30px; */
   width: 100%;
-  color: #adadaf;
-  display: block;
-  transition: 0.5s;
-  position: absolute;
-  background: #323237;
-  content: attr(data-back);
-  transform: translateY(-50%) rotateX(90deg);
+  height: 80px;
 }
 
-.btn-flip::before {
-  top: 0;
-  left: 0;
-  opacity: 1;
-  color: #323237;
-  display: block;
+.nav-container-1 {
+  /* background-color: burlywood; */
+  width: 40%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  /* justify-content: center; */
+  align-items: center;
+  margin-left: 10px;
+  height: 100%;
   padding: 0 30px;
-  line-height: 40px;
-  transition: 0.5s;
-  position: relative;
-  background: #adadaf;
-  content: attr(data-front);
-  transform: translateY(0) rotateX(0);
+}
+.nav-container-2 {
+  /* background-color: cadetblue; */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 35%;
+  height: 100%;
+}
+.nav-container-3 {
+  /* background-color: chartreuse; */
+  margin-right: 10px;
+  width: 25%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 30px;
 }
 
-.btn-flip:hover::after {
-  opacity: 1;
-  transform: translateY(0) rotateX(0);
+.nav-brn-container {
+  /* background-color: blueviolet; */
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.btn-flip:hover::before {
-  opacity: 0;
-  transform: translateY(50%) rotateX(90deg);
+.user-btn-container {
+  /* background-color: blueviolet; */
+  height: 100%;
+  width: 320px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
-/* .add-btn {
-  color: #fff;
-  cursor: pointer;
- 
+
+.nav-btn {
+  border: none;
+  /* background-color: blueviolet; */
+  background-color: transparent;
+  color: grey;
+  width: 140px;
+  height: 40px;
   font-size: 16px;
-  font-weight: 400;
-  line-height: 45px;
-  margin: 0 0 2em;
-  max-width: 160px;
+  font-family: "Montserrat", sans-serif;
   position: relative;
-  text-decoration: none;
-  text-transform: uppercase;
-  width: 250px;
+  outline: none;
+  border: 3px solid grey;
+  border-radius: 3px;
+  transition: color 0.5s, transform 0.2s, background-color 0.2s;
 }
 
-.add-btn:hover {
-  text-decoration: none;
+.nav-btn:active {
+  transform: translateY(3px);
 }
 
-.btn-2 {
-  letter-spacing: 0;
+.nav-btn:hover {
+  background-color: transparent;
+  box-shadow: none;
+  color: white;
 }
 
-.btn-2:hover,
-.btn-2:active {
-  letter-spacing: 5px;
+.nav-btn::before {
+  content: "";
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  width: 100%;
+  height: 100%;
+
+  transition: opacity 0.3s, border 0.3s;
 }
 
-.btn-2:after,
-.btn-2:before {
-  backface-visibility: hidden;
-  border: 1px solid rgb(255, 255, 255, 0);
-  bottom: 0px;
-  content: " ";
-  display: block;
-  margin: 0 auto;
-  position: relative;
-  transition: all 280ms ease-in-out;
-  width: 0;
+.nav-btn:hover::before {
+  opacity: 0;
 }
 
-.btn-2:hover:after,
-.btn-2:hover:before {
-  backface-visibility: hidden;
-  border-color: #fff;
-  transition: width 350ms ease-in-out;
-  width: 70%;
+.nav-btn::after {
+  content: "";
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  border: 3px solid white;
+  opacity: 0;
+  z-index: 1;
+  transform: scaleX(1.2) scaleY(1.4);
+  transition: transform 0.3s, opacity 0.3s;
+}
+.nav-btn:hover::after {
+  opacity: 1;
+  transform: scaleX(1) scaleY(1);
 }
 
-.btn-2:hover:before {
-  bottom: auto;
-  top: 0;
-  width: 70%;
-} */
+.nav-btn.opened {
+  color: white;
+}
+
+.nav-btn.opened::before {
+  border: 3px solid white;
+}
+
+.inpit-search {
+  border: 3px grey solid;
+  border-radius: 3px;
+  background-color: inherit;
+  color: white;
+  height: 20px;
+  font-size: 18px;
+  padding: 5px;
+}

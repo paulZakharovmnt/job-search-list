@@ -121,45 +121,6 @@
   left: 5px;
   transform: rotate(45deg);
 }
-
-/* .option-cont {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px 0 20px;
-}
-
-
-.left-cont {
-  width: 100%;
-}
-
-.right-cont {
-  width: 100%;
-}
-
-.apply-date,
-.source {
-  padding: 9px;
-}
-
-.result {
-  padding-bottom: 30px;
-}
-
-.text-area-comments {
-  width: 250px;
-  height: 100px;
-  color: #333333;
-  font-size: 14px;
-  transition: all 0.3s ease-in;
-}
-
-.text-area-comments:focus {
-  width: 350px;
-} */
-
 .submit-btn {
   opacity: 1;
   outline: 0;
@@ -215,77 +176,9 @@
   transform: translateY(-50%) rotateX(90deg);
 }
 
-/* .submit-btn {
-  background-color: #333333;
-  border: 2px solid white;
-  border-radius: 27px;
-  color: white;
-  cursor: pointer;
-  font-size: 20px;
-  margin-top: 20px;
-  padding: 15px 30px;
-  text-transform: uppercase;
-  transition: all 200ms;
-}
-
-.submit-btn:hover,
-.submit-btn:focus {
-  background-color: white;
-  color: #333333;
-  outline: 0;
-} */
-
-/* .add-job input {
-  background-color: transparent;
-  border: 0;
-  border-bottom: 2px solid #4a4a4a;
-  color: black;
-  font-size: 20px;
-  letter-spacing: -1px;
-  outline: 0;
-  padding: 5px 10px;
-  text-align: center;
-  transition: all 0.3s;
-  width: 200px;
-}
-
-.add-job input:focus {
-  max-width: 100%;
-  width: 300px;
-}
-
-.add-job input:focus + p {
-  color: #f0f0f0;
-  font-size: 13px;
-  transform: translateY(-74px);
-}
-
-.add-job input:valid + p {
-  font-size: 13px;
-  /* transform: translateY(-74px); */
-/* }  */
-/* 
-.add-job {
-    display: block;
-    letter-spacing: 4px;
-    padding-top: 30px;
-    text-align: center;
-  } */
-
-/* p {
-  color: #9b9b9b;
-  cursor: text;
-  font-size: 16px;
-  line-height: 20px;
-  text-transform: uppercase;
-  transform: translateY(-40px);
-  transition: all 0.3s;
-} */
-
 .result {
   display: block;
   letter-spacing: 4px;
-  /* padding-top: 30px; */
   text-align: center;
 }
 
@@ -295,7 +188,6 @@
   font-size: 16px;
   line-height: 20px;
   text-transform: uppercase;
-  /* transform: translateY(-34px); */
   transition: all 0.3s;
 }
 
@@ -317,14 +209,3 @@
   max-width: 100%;
   width: 350px;
 }
-/* 
-.result input:focus + .text {
-  color: #f0f0f0;
-  font-size: 13px;
-  transform: translateY(-74px);
-}
-
-.result input:valid + .text {
-  font-size: 13px;
-  transform: translateY(-74px);
-} */

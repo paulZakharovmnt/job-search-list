@@ -15,36 +15,25 @@
   margin-top: 200px;
 }
 .company-data-container {
-  /* background-color: cornsilk; */
+  height: 90%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-
-  /* background-color: cadetblue;
-  height: 100%; */
 }
 .edit-header {
-  /* background-color: brown;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  padding: 0 50px; */
+  height: 10%;
 }
 .detailed-company-information {
-  /* background-color: darkcyan; */
   width: 50%;
   height: 100%;
   border-right: 2px rgba(0, 0, 0, 0.589) solid;
-  /* background-color: burlywood;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center; */
 }
 .info-cont {
-  /* background-color: darkorange; */
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -52,22 +41,49 @@
   padding: 10px 20px;
 }
 
-.comments-header-container {
-  /* background-color: darkorchid; */
+.comments-container {
   width: 50%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   height: 100%;
 }
 
 .comment-info {
-  /* background-color: darkgoldenrod; */
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+  padding: 0 10px;
+  width: 90%;
   border-bottom: 1px rgba(255, 255, 255, 0.644) solid;
+}
+
+.comment-date {
+  width: 30%;
+}
+
+.comment-date h4 {
+  margin: 0;
+}
+
+.comment-text {
+  width: 70%;
+}
+
+.comment-text h4 {
+  margin: 0;
+}
+
+.add-comment-btn {
+  margin-top: 10px;
+}
+
+.add-comment-input {
+  margin-top: 10px;
+}
+
+.add-error-message {
+  color: red;
 }

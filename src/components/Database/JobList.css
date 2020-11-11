@@ -9,27 +9,61 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 0 30px;
   margin-bottom: 10px;
   border: 2px solid rgb(209, 209, 209);
   transition: all 0.2s ease-in;
+  opacity: 0.6;
 }
 
-.job h4,
-p {
+.joblist-job-title {
   margin: 5px;
-}
-.job:hover {
-  padding-top: 10px;
-  padding-bottom: 10px;
+  width: 16.6%;
 }
 
+.job:hover {
+  opacity: 1;
+}
+
+.icons {
+  height: 100%;
+  width: 16.6%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 .job-header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   background-color: grey;
-  padding: 0 30px;
   margin-bottom: 10px;
+}
+
+.job-header p {
+  width: 16.6%;
+}
+
+.job-edit-btn {
+  margin-left: 70px;
+  font-size: 26px;
+  cursor: pointer;
+  color: rgba(102, 100, 100, 0.801);
+  transition: all 0.2s ease-in;
+}
+
+.job-delete-btn {
+  margin-right: 70px;
+  font-size: 26px;
+  cursor: pointer;
+  color: rgba(102, 100, 100, 0.801);
+  transition: all 0.2s ease-in;
+}
+
+.job-delete-btn:hover {
+  color: rgb(187, 6, 6);
+}
+
+.job-edit-btn:hover {
+  color: black;
 }
