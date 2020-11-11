@@ -80,12 +80,11 @@ const Auth = ({ handleSetUser }) => {
     fire.auth().onAuthStateChanged((user) => {
       if (user) {
         clearInputs();
-        let userInfo = {
+        handleSetUser({
           email: user.email,
           uid: user.uid,
           displayName: user.displayName,
-        };
-        handleSetUser(userInfo);
+        });
       } else {
         handleSetUser("");
       }
