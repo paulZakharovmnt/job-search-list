@@ -12,11 +12,20 @@ const AddNewJob = ({ handleAddJobToListSubmit, user }) => {
 
   const [
     {
-      sourcesListWhereUserIsApplying,
-      resultsListOfInterviews,
-      citiesListWhereUserIsApplying,
+      listOfSourcesFromSelectorMenu,
+      listOfResultsFromSelectorMenu,
+      listOfCitiesFromSelectorMenu,
     },
   ] = useSettings(user);
+
+  const clearAllInputs = () => {
+    setCompanyName("");
+    setCompanyCity("");
+    setApplyDate("");
+    setSourceWhereApplied("");
+    setResult("");
+    setComment("");
+  };
 
   const submitAllInputs = (event) => {
     event.preventDefault();
@@ -34,11 +43,7 @@ const AddNewJob = ({ handleAddJobToListSubmit, user }) => {
     };
 
     handleAddJobToListSubmit(fullJobInfo);
-
-    setCompanyName("");
-    setCompanyCity("");
-    setResult("");
-    setComment("");
+    clearAllInputs();
   };
 
   return (
@@ -63,8 +68,10 @@ const AddNewJob = ({ handleAddJobToListSubmit, user }) => {
                 value={companyCity}
                 onChange={(event) => setCompanyCity(event.target.value)}
               >
-                <option value="">--Please choose an option--</option>
-                {citiesListWhereUserIsApplying.map((city) => {
+                <option value="">
+                  --Please choose a City where you applied--
+                </option>
+                {listOfCitiesFromSelectorMenu.map((city) => {
                   return (
                     <option key={city} value={city}>
                       {city}
@@ -95,8 +102,10 @@ const AddNewJob = ({ handleAddJobToListSubmit, user }) => {
               value={sourceWhereApplied}
               onChange={(event) => setSourceWhereApplied(event.target.value)}
             >
-              <option value="">--Please choose an option--</option>
-              {sourcesListWhereUserIsApplying.map((source) => {
+              <option value="">
+                --Please choose a source where you applied--
+              </option>
+              {listOfSourcesFromSelectorMenu.map((source) => {
                 return (
                   <option key={source} value={source}>
                     {source}
@@ -111,13 +120,28 @@ const AddNewJob = ({ handleAddJobToListSubmit, user }) => {
         {sourceWhereApplied && (
           <div className="option-cont">
             {" "}
-            <label className="result">
+            <select
+              value={result}
+              onChange={(event) => setResult(event.target.value)}
+            >
+              <option value="">
+                -- Please choose a Result of Interview --
+              </option>
+              {listOfResultsFromSelectorMenu.map((result) => {
+                return (
+                  <option key={result} value={result}>
+                    {result}
+                  </option>
+                );
+              })}
+            </select>
+            {/* <label className="result">
               <input
                 value={result}
                 onChange={(event) => setResult(event.target.value)}
               />
               <div className="text"> Result </div>
-            </label>
+            </label> */}
           </div>
         )}
 
