@@ -3,3 +3,6 @@
 3. Add delete func
 4. Add edit func with popup
 5. add settings???
+
+
+6. Change naming in useSettings (listOfResults - too bad. Should be resultOptions or something)
