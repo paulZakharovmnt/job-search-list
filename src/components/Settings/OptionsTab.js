@@ -1,22 +1,19 @@
 import React from "react";
-import useSettings from "../../core/customHooks/useSettings";
-import AddInput from "./OptionsTabs/AddInput";
+import AddInput from "./AddInput";
 
-const OptionsTab = ({ renderingOptionTab, user }) => {
-  const [
-    {
-      listOfSourcesFromSelectorMenu,
-      listOfResultsFromSelectorMenu,
-      listOfCitiesFromSelectorMenu,
-      handleAddNewCityToListSubmit,
-      handleAddNewResultToListSubmit,
-      handleAddNewSourceToListSubmit,
-      handleDeleteCityFromList,
-      handleDeleteResultFromList,
-      handleDeleteSourceFromList,
-    },
-  ] = useSettings(user);
-
+const OptionsTab = ({
+  renderingOptionTab,
+  user,
+  listOfSourcesFromSelectorMenu,
+  listOfResultsFromSelectorMenu,
+  listOfCitiesFromSelectorMenu,
+  handleAddNewCityToListSubmit,
+  handleAddNewResultToListSubmit,
+  handleAddNewSourceToListSubmit,
+  handleDeleteCityFromList,
+  handleDeleteResultFromList,
+  handleDeleteSourceFromList,
+}) => {
   if (renderingOptionTab === "Cities") {
     return (
       <div className="selector-contaner2">

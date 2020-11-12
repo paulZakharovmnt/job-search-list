@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { fire } from "../../core/firebase";
 import LoginPage from "./LogInPage";
-import setDefaultNewUserSettingsToFB from "../../core/setDefaultNewUserSettingsToFB";
+import setDefaultNewUserSettingsToFB from "../../core/setToFBFuctions/setDefaultNewUserSettingsToFB";
 import "./Auth.css";
 
 const Auth = ({ handleSetUser }) => {

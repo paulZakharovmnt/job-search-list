@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "./Settings.css";
-import Selector from "./OptionsTabs/Selector";
-import Options from "./OptionsTabs/Options";
-import { CSSTransition } from "react-transition-group";
 import SettingTab from "./SettingTab";
-import classNames from "classnames";
 
-const Settings = ({ user, setShowSettings }) => {
+const SettingsWindow = ({ user, setShowSettings }) => {
   const [showingSettingTab, setShowingSettingTab] = useState(null);
 
   const [showSettingsFolder, setShowSettingsFolder] = useState(false);
 
   const settingsTabs = ["Personal Info", "Language", "Selectors"];
+
   const handleSelectTabToRenderClick = (tab) => {
     setShowSettingsFolder(true);
     setShowingSettingTab(tab);
@@ -57,4 +54,4 @@ const Settings = ({ user, setShowSettings }) => {
   );
 };
 
-export default Settings;
+export default SettingsWindow;

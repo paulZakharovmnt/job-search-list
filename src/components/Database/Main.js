@@ -9,18 +9,23 @@ import setCompanyNamesListToFB from "../../core/setToFBFuctions/setCompanyNamesL
 import setJobsInformationListToFB from "../../core/setToFBFuctions/setJobsInformationListToFB";
 import fetchListOfCompanyNamesUserApplied from "../../core/getFromFBFuctions/fetchListOfCompanyNamesUserApplied";
 import fetchListOfCompanyInfoUserApplied from "../../core/getFromFBFuctions/fetchListOfCompanyInformantionUserApplied";
-import Settings from "../Settings/Settings";
+import SettingsWindow from "../Settings/SettingsWindow";
+
+// ApplicationsById
+// ApplicationsAllIds
+
+// item, info, data, doc, result
 
 const Main = ({ user }) => {
   const [fullInfoCompaniesList, setFullInfoCompaniesList] = useState(null);
   const [listOfCompaniesNames, setListOfCompaniesTitles] = useState([]);
-  const [jobUserWantsToEdit, setJobUserWantsToEdit] = useState(null);
+  const [jobUserWantsToEdit, setJobUserWantsToEdit] = useState(null); // currentlyUpdatedJob
 
-  const [showUserAddingNewJobTab, setShowUserAddingNewJobTab] = useState(false);
+  const [showUserAddingNewJobTab, setShowUserAddingNewJobTab] = useState(false); // remove User
   const [showEditJobWindow, setShowEditJobWindow] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
 
-  const [userInputSearch, setUserInputSearch] = useState("");
+  const [userInputSearch, setUserInputSearch] = useState(""); // searchInputValue
 
   useEffect(() => {
     fetchListOfCompanyInfoUserApplied(user).onSnapshot((doc) => {
@@ -32,26 +37,20 @@ const Main = ({ user }) => {
       }
       setListOfCompaniesTitles(doc.data().companyList);
     });
-
-    console.log("get");
   }, []);
 
   useEffect(() => {
     if (listOfCompaniesNames.length > 0) {
-      console.log("set CompanyList");
       setCompanyNamesListToFB(user, listOfCompaniesNames);
     }
     if (fullInfoCompaniesList) {
       setJobsInformationListToFB(user, fullInfoCompaniesList);
-      console.log("set Info");
     }
   }, [listOfCompaniesNames, fullInfoCompaniesList]);
 
   const handleDeleteCompanyFromList = (company) => {
     const companiesListWithoutDeletedCompanyName = listOfCompaniesNames.filter(
-      (item) => {
-        return item !== company;
-      }
+      (item) => item !== company // item
     );
     setListOfCompaniesTitles(companiesListWithoutDeletedCompanyName);
 
@@ -67,13 +66,13 @@ const Main = ({ user }) => {
   };
 
   const handleAddJobToListSubmit = (job) => {
-    const listOfCompaniesInfoWithNewAddedCompany = { ...fullInfoCompaniesList };
+    const listOfCompaniesInfoWithNewAddedCompany = { ...fullInfoCompaniesList }; // copy
     listOfCompaniesInfoWithNewAddedCompany[job.company] = job;
     setFullInfoCompaniesList(listOfCompaniesInfoWithNewAddedCompany);
 
     if (listOfCompaniesNames.includes(job.company)) {
       return;
-      // Here should be POPUP window that we have already this company
+      // TODO: Here should be POPUP window that we have already this company
     }
     const listOfCompaniesNamesWithNewAddedCompany = [
       ...listOfCompaniesNames,
@@ -136,7 +135,7 @@ const Main = ({ user }) => {
       )}
 
       {showEditJobWindow && (
-        <EditItem
+        <EditItem // item
           jobUserWantsToEdit={jobUserWantsToEdit}
           closeEditJobWindow={closeEditJobWindow}
           addCommentToTheJobInfo={addCommentToTheJobInfo}
@@ -144,7 +143,7 @@ const Main = ({ user }) => {
       )}
 
       {showSettings && (
-        <Settings user={user} setShowSettings={setShowSettings} />
+        <SettingsWindow user={user} setShowSettings={setShowSettings} />
       )}
     </div>
   );

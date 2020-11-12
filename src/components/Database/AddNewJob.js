@@ -1,6 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./AddNewJob.css";
 import useSettings from "../../core/customHooks/useSettings";
+import combineAllJobInputsInOneVariable from "../../core/combineAllJobInputsInOneVariable";
+import getListOfSourcesFromFB from "../../core/getFromFBFuctions/getListOfSourcesFromFB";
+import getListOfCitiesFromFB from "../../core/getFromFBFuctions/getListOfCitiesFromFB";
+import getListOfResultsFromFB from "../../core/getFromFBFuctions/getListOfResultsFromFB";
 
 const AddNewJob = ({ handleAddJobToListSubmit, user }) => {
   const [companyName, setCompanyName] = useState("");
@@ -10,6 +14,10 @@ const AddNewJob = ({ handleAddJobToListSubmit, user }) => {
   const [result, setResult] = useState("");
   const [comment, setComment] = useState("");
 
+  // const [listOfCities, setListOfCities] = useState([]);
+  // const [listOfSources, setListOfSources] = useState([]);
+  // const [listOfResults, setListOfResults] = useState([]);
+
   const [
     {
       listOfSourcesFromSelectorMenu,
@@ -17,6 +25,19 @@ const AddNewJob = ({ handleAddJobToListSubmit, user }) => {
       listOfCitiesFromSelectorMenu,
     },
   ] = useSettings(user);
+
+  // useEffect(() => {
+  //   getListOfSourcesFromFB(user).onSnapshot((doc) => {
+  //     setListOfSources(doc.data().listOfSourcesFromSelectorMenu);
+  //   });
+  //   getListOfCitiesFromFB(user).onSnapshot((doc) => {
+  //     setListOfCities(doc.data().listOfCitiesFromSelectorMenu);
+  //   });
+  //   getListOfResultsFromFB(user).onSnapshot((doc) => {
+  //     setListOfResults(doc.data().listOfResultsFromSelectorMenu);
+  //   });
+
+  // }, []);
 
   const clearAllInputs = () => {
     setCompanyName("");
@@ -27,22 +48,19 @@ const AddNewJob = ({ handleAddJobToListSubmit, user }) => {
     setComment("");
   };
 
-  const submitAllInputs = (event) => {
+  const handleCombineAllInputsInJobInfoSubmit = (event) => {
     event.preventDefault();
 
-    let firstUsersCommentInJobInfo = {};
-    firstUsersCommentInJobInfo[applyDate] = comment;
+    const combinedAllJobInputs = combineAllJobInputsInOneVariable(
+      companyName,
+      companyCity,
+      applyDate,
+      sourceWhereApplied,
+      result,
+      comment
+    );
 
-    const fullJobInfo = {
-      company: companyName,
-      city: companyCity,
-      source: sourceWhereApplied,
-      date: applyDate,
-      result: result,
-      comments: firstUsersCommentInJobInfo,
-    };
-
-    handleAddJobToListSubmit(fullJobInfo);
+    handleAddJobToListSubmit(combinedAllJobInputs);
     clearAllInputs();
   };
 
@@ -50,7 +68,9 @@ const AddNewJob = ({ handleAddJobToListSubmit, user }) => {
     <div className="add-job">
       <form
         className="add-form"
-        onSubmit={(event) => submitAllInputs(event.target.value)}
+        onSubmit={(event) =>
+          handleCombineAllInputsInJobInfoSubmit(event.target.value)
+        }
       >
         <div className="company-cont">
           <label className="result">
@@ -72,6 +92,9 @@ const AddNewJob = ({ handleAddJobToListSubmit, user }) => {
                   --Please choose a City where you applied--
                 </option>
                 {listOfCitiesFromSelectorMenu.map((city) => {
+                  {
+                    /* {listOfCities.map((city) => { */
+                  }
                   return (
                     <option key={city} value={city}>
                       {city}
@@ -106,6 +129,9 @@ const AddNewJob = ({ handleAddJobToListSubmit, user }) => {
                 --Please choose a source where you applied--
               </option>
               {listOfSourcesFromSelectorMenu.map((source) => {
+                {
+                  /* {listOfSources.map((source) => { */
+                }
                 return (
                   <option key={source} value={source}>
                     {source}
@@ -128,6 +154,7 @@ const AddNewJob = ({ handleAddJobToListSubmit, user }) => {
                 -- Please choose a Result of Interview --
               </option>
               {listOfResultsFromSelectorMenu.map((result) => {
+                // {listOfResults.map((result) => {
                 return (
                   <option key={result} value={result}>
                     {result}
@@ -135,13 +162,6 @@ const AddNewJob = ({ handleAddJobToListSubmit, user }) => {
                 );
               })}
             </select>
-            {/* <label className="result">
-              <input
-                value={result}
-                onChange={(event) => setResult(event.target.value)}
-              />
-              <div className="text"> Result </div>
-            </label> */}
           </div>
         )}
 
@@ -163,7 +183,7 @@ const AddNewJob = ({ handleAddJobToListSubmit, user }) => {
               data-back="Add to List"
               data-front="Submit"
               className="submit-btn"
-              onClick={submitAllInputs}
+              onClick={handleCombineAllInputsInJobInfoSubmit}
             ></div>
           </div>
         )}

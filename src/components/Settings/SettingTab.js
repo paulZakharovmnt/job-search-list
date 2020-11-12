@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import OptionsTab from "./OptionsTab";
+import useSettings from "../../core/customHooks/useSettings";
 import { CSSTransition } from "react-transition-group";
 
 const SettingTab = ({ showingSettingTab, user, showSettingsFolder }) => {
@@ -16,6 +17,20 @@ const SettingTab = ({ showingSettingTab, user, showSettingsFolder }) => {
     setRenderingOptionTab(tab);
     setShowOptionsTab(true);
   };
+
+  const [
+    {
+      listOfSourcesFromSelectorMenu,
+      listOfResultsFromSelectorMenu,
+      listOfCitiesFromSelectorMenu,
+      handleAddNewCityToListSubmit,
+      handleAddNewResultToListSubmit,
+      handleAddNewSourceToListSubmit,
+      handleDeleteCityFromList,
+      handleDeleteResultFromList,
+      handleDeleteSourceFromList,
+    },
+  ] = useSettings(user);
 
   if (showingSettingTab === "Selectors") {
     return (
@@ -53,7 +68,19 @@ const SettingTab = ({ showingSettingTab, user, showSettingsFolder }) => {
             ))}
           </div>
           {showOptionsTab && (
-            <OptionsTab renderingOptionTab={renderingOptionTab} user={user} />
+            <OptionsTab
+              renderingOptionTab={renderingOptionTab}
+              user={user}
+              listOfSourcesFromSelectorMenu={listOfSourcesFromSelectorMenu}
+              listOfResultsFromSelectorMenu={listOfResultsFromSelectorMenu}
+              listOfCitiesFromSelectorMenu={listOfCitiesFromSelectorMenu}
+              handleAddNewCityToListSubmit={handleAddNewCityToListSubmit}
+              handleAddNewResultToListSubmit={handleAddNewResultToListSubmit}
+              handleAddNewSourceToListSubmit={handleAddNewSourceToListSubmit}
+              handleDeleteCityFromList={handleDeleteCityFromList}
+              handleDeleteResultFromList={handleDeleteResultFromList}
+              handleDeleteSourceFromList={handleDeleteSourceFromList}
+            />
           )}
         </div>
       </CSSTransition>

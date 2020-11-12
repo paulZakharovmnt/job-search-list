@@ -1,4 +1,4 @@
-import database from "./firebase";
+import database from "../firebase";
 
 const setDefaultNewUserSettingsToFB = (userId) => {
   const listOfSourcesFromSelectorMenu = ["LinkedIn", "Indeed", "GlassDoor"];
