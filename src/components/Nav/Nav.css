@@ -1,31 +1,25 @@
 @import url(https://fonts.googleapis.com/css?family=Montserrat);
 
 .nav {
-  /* background-color: #adadaf; */
-  /* background-color: brown; */
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  /* padding: 10px 30px; */
   width: 100%;
   height: 80px;
 }
 
 .nav-container-1 {
-  /* background-color: burlywood; */
   width: 40%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  /* justify-content: center; */
   align-items: center;
   margin-left: 10px;
   height: 100%;
   padding: 0 30px;
 }
 .nav-container-2 {
-  /* background-color: cadetblue; */
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -34,7 +28,6 @@
   height: 100%;
 }
 .nav-container-3 {
-  /* background-color: chartreuse; */
   margin-right: 10px;
   width: 25%;
   height: 100%;
@@ -46,7 +39,6 @@
 }
 
 .nav-brn-container {
-  /* background-color: blueviolet; */
   height: 100%;
   width: 100%;
   display: flex;
@@ -56,7 +48,6 @@
 }
 
 .user-btn-container {
-  /* background-color: blueviolet; */
   height: 100%;
   width: 320px;
   display: flex;
@@ -67,7 +58,6 @@
 
 .nav-btn {
   border: none;
-  /* background-color: blueviolet; */
   background-color: transparent;
   color: grey;
   width: 140px;
