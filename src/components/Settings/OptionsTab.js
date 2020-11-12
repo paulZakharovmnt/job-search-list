@@ -1,5 +1,6 @@
 import React from "react";
 import AddInput from "./AddInput";
+import "./OptionsTab.css";
 
 const OptionsTab = ({
   renderingOptionTab,
