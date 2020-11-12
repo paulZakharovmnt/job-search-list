@@ -1,0 +1,69 @@
+.selector-box {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.selector-contaner1 {
+  width: 45%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.selector-contaner1 h2 {
+  margin-bottom: 0;
+}
+
+.selector-btn-container {
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 40px;
+}
+
+.option-selector {
+  color: #333333;
+  border: 3px solid #333333;
+}
+
+.activated {
+  color: white;
+}
+
+.arrow-btn-selector {
+  opacity: 0;
+  font-size: 34px;
+  color: white;
+  transition: all 0.2s ease-in;
+}
+
+.arrow-btn-selector.selected {
+  opacity: 1;
+}
+
+/* ANIMATION */
+
+.setting-tab-appear {
+  opacity: 0;
+}
+.setting-tab-appear-done {
+  opacity: 1;
+  transition: all 0.3s ease-in;
+}
+
+.setting-tab-appear-exit {
+  opacity: 1;
+}
+
+.setting-tab-appear-exit-active {
+  opacity: 0;
+  transition: all 0.3s ease-in;
+}
