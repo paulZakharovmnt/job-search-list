@@ -89,9 +89,6 @@ const AddNewJob = ({ handleAddJobToListSubmit, user }) => {
                   --Please choose a City where you applied--
                 </option>
                 {listOfCitiesFromSelectorMenu.map((city) => {
-                  {
-                    /* {listOfCities.map((city) => { */
-                  }
                   return (
                     <option key={city} value={city}>
                       {city}
@@ -126,9 +123,6 @@ const AddNewJob = ({ handleAddJobToListSubmit, user }) => {
                 --Please choose a source where you applied--
               </option>
               {listOfSourcesFromSelectorMenu.map((source) => {
-                {
-                  /* {listOfSources.map((source) => { */
-                }
                 return (
                   <option key={source} value={source}>
                     {source}
