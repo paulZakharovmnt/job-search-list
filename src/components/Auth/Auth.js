@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { fire } from "../../core/firebase";
 import LoginPage from "./LogInPage";
 import setDefaultNewUserSettingsToFB from "../../core/setToFBFunctions/setDefaultNewUserSettingsToFB";
@@ -40,6 +40,8 @@ const Auth = ({ handleSetUser }) => {
           case "auth/wrong-password":
             setPasswordError(err.message);
             break;
+          default:
+            return;
         }
       });
   };
@@ -62,6 +64,8 @@ const Auth = ({ handleSetUser }) => {
           case "auth/weak-password":
             setPasswordError(err.message);
             break;
+          default:
+            return;
         }
       });
   };
@@ -72,7 +76,7 @@ const Auth = ({ handleSetUser }) => {
     });
   };
 
-  const authListener = () => {
+  const authListener = useCallback(() => {
     fire.auth().onAuthStateChanged((user) => {
       if (user) {
         clearInputs();
@@ -85,7 +89,7 @@ const Auth = ({ handleSetUser }) => {
         handleSetUser("");
       }
     });
-  };
+  }, [handleSetUser]);
 
   useEffect(() => {
     authListener();
