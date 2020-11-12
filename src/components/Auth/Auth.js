@@ -14,10 +14,6 @@ const Auth = ({ handleSetUser }) => {
 
   const [hasAccount, setHasAccount] = useState(true);
 
-  useEffect(() => {
-    authListener();
-  }, []);
-
   const clearInputs = () => {
     setEmail("");
     setPassword("");
@@ -90,6 +86,10 @@ const Auth = ({ handleSetUser }) => {
       }
     });
   };
+
+  useEffect(() => {
+    authListener();
+  }, [authListener]);
 
   return (
     <div>
