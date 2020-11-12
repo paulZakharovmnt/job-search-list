@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import getListOfCitiesFromFB from "../getFromFBFuctions/getListOfCitiesFromFB";
-import setUpdatedListOfCitiesToFB from "../setToFBFuctions/setUpdatedListOfCitiesToFB";
-import setUpdatedListOfSourcesToFB from "../setToFBFuctions/setUpdatedListOfSourcesToFB";
-import setUpdatedListOfResultsToFB from "../setToFBFuctions/setUpdatedListOfResultsToFB";
-import getListOfSourcesFromFB from "../getFromFBFuctions/getListOfSourcesFromFB";
-import getListOfResultsFromFB from "../getFromFBFuctions/getListOfResultsFromFB";
+import getListOfCitiesFromFB from "../getFromFBFunctions/getListOfCitiesFromFB";
+import setUpdatedListOfCitiesToFB from "../setToFBFunctions/setUpdatedListOfCitiesToFB";
+import setUpdatedListOfSourcesToFB from "../setToFBFunctions/setUpdatedListOfSourcesToFB";
+import setUpdatedListOfResultsToFB from "../setToFBFunctions/setUpdatedListOfResultsToFB";
+import getListOfSourcesFromFB from "../getFromFBFunctions/getListOfSourcesFromFB";
+import getListOfResultsFromFB from "../getFromFBFunctions/getListOfResultsFromFB";
 
 const useSettings = (user) => {
   const [
