@@ -14,10 +14,6 @@ const AddNewJob = ({ handleAddJobToListSubmit, user }) => {
   const [result, setResult] = useState("");
   const [comment, setComment] = useState("");
 
-  // const [listOfCities, setListOfCities] = useState([]);
-  // const [listOfSources, setListOfSources] = useState([]);
-  // const [listOfResults, setListOfResults] = useState([]);
-
   const [
     {
       listOfSourcesFromSelectorMenu,
@@ -25,19 +21,6 @@ const AddNewJob = ({ handleAddJobToListSubmit, user }) => {
       listOfCitiesFromSelectorMenu,
     },
   ] = useSettings(user);
-
-  // useEffect(() => {
-  //   getListOfSourcesFromFB(user).onSnapshot((doc) => {
-  //     setListOfSources(doc.data().listOfSourcesFromSelectorMenu);
-  //   });
-  //   getListOfCitiesFromFB(user).onSnapshot((doc) => {
-  //     setListOfCities(doc.data().listOfCitiesFromSelectorMenu);
-  //   });
-  //   getListOfResultsFromFB(user).onSnapshot((doc) => {
-  //     setListOfResults(doc.data().listOfResultsFromSelectorMenu);
-  //   });
-
-  // }, []);
 
   const clearAllInputs = () => {
     setCompanyName("");
@@ -92,9 +75,6 @@ const AddNewJob = ({ handleAddJobToListSubmit, user }) => {
                   --Please choose a City where you applied--
                 </option>
                 {listOfCitiesFromSelectorMenu.map((city) => {
-                  {
-                    /* {listOfCities.map((city) => { */
-                  }
                   return (
                     <option key={city} value={city}>
                       {city}
@@ -129,9 +109,6 @@ const AddNewJob = ({ handleAddJobToListSubmit, user }) => {
                 --Please choose a source where you applied--
               </option>
               {listOfSourcesFromSelectorMenu.map((source) => {
-                {
-                  /* {listOfSources.map((source) => { */
-                }
                 return (
                   <option key={source} value={source}>
                     {source}
@@ -154,7 +131,6 @@ const AddNewJob = ({ handleAddJobToListSubmit, user }) => {
                 -- Please choose a Result of Interview --
               </option>
               {listOfResultsFromSelectorMenu.map((result) => {
-                // {listOfResults.map((result) => {
                 return (
                   <option key={result} value={result}>
                     {result}
