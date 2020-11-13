@@ -4,19 +4,19 @@ import "./Nav.css";
 import classNames from "classnames";
 
 const Nav = ({
-  showJobAddTab,
-  showJobsListTab,
-  userInputSearch,
-  setUserInputSearch,
+  toggleShowJobAddTabClick,
+  toggleShowJobsListTabClick,
+  searchInputValue,
+  setSearchInputValue,
   setShowSettings,
   showSettings,
-  showUserAddingNewJobTab,
+  showAddNewJobTab,
 }) => {
   const addJobBtnClassnames = classNames("nav-btn", {
-    opened: showUserAddingNewJobTab && !showSettings,
+    opened: showAddNewJobTab && !showSettings,
   });
   const listOfJobsBtnClassnames = classNames("nav-btn", {
-    opened: !showUserAddingNewJobTab && !showSettings,
+    opened: !showAddNewJobTab && !showSettings,
   });
   const settingsBtnClassNames = classNames("nav-btn", {
     opened: showSettings,
@@ -30,10 +30,16 @@ const Nav = ({
     <div className="nav">
       <div className="nav-container-1">
         <div className="nav-brn-container">
-          <button className={addJobBtnClassnames} onClick={showJobAddTab}>
+          <button
+            className={addJobBtnClassnames}
+            onClick={toggleShowJobAddTabClick}
+          >
             Add New Job
           </button>
-          <button className={listOfJobsBtnClassnames} onClick={showJobsListTab}>
+          <button
+            className={listOfJobsBtnClassnames}
+            onClick={toggleShowJobsListTabClick}
+          >
             List of Jobs
           </button>
           <button
@@ -45,12 +51,12 @@ const Nav = ({
         </div>
       </div>
       <div className="nav-container-2">
-        {!showUserAddingNewJobTab && (
+        {!showAddNewJobTab && (
           <input
             className="inpit-search"
             placeholder="search..."
-            value={userInputSearch}
-            onChange={(event) => setUserInputSearch(event.target.value)}
+            value={searchInputValue}
+            onChange={(event) => setSearchInputValue(event.target.value)}
           />
         )}
       </div>

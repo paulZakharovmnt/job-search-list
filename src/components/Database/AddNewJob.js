@@ -9,7 +9,7 @@ const AddNewJob = ({ handleAddJobToListSubmit, user }) => {
   const [applyDate, setApplyDate] = useState("");
   const [sourceWhereApplied, setSourceWhereApplied] = useState("");
   const [result, setResult] = useState("");
-  const [comment, setComment] = useState("");
+  const [comments, setComments] = useState("");
 
   // const [listOfCities, setListOfCities] = useState([]);
   // const [listOfSources, setListOfSources] = useState([]);
@@ -42,10 +42,10 @@ const AddNewJob = ({ handleAddJobToListSubmit, user }) => {
     setApplyDate("");
     setSourceWhereApplied("");
     setResult("");
-    setComment("");
+    setComments("");
   };
 
-  const handleCombineAllInputsInJobInfoSubmit = (event) => {
+  const handleCombineAllInputsInApplicationSubmit = (event) => {
     event.preventDefault();
 
     const combinedAllJobInputs = combineAllJobInputsInOneVariable(
@@ -54,7 +54,7 @@ const AddNewJob = ({ handleAddJobToListSubmit, user }) => {
       applyDate,
       sourceWhereApplied,
       result,
-      comment
+      comments
     );
 
     handleAddJobToListSubmit(combinedAllJobInputs);
@@ -66,7 +66,7 @@ const AddNewJob = ({ handleAddJobToListSubmit, user }) => {
       <form
         className="add-form"
         onSubmit={(event) =>
-          handleCombineAllInputsInJobInfoSubmit(event.target.value)
+          handleCombineAllInputsInApplicationSubmit(event.target.value)
         }
       >
         <div className="company-cont">
@@ -166,8 +166,8 @@ const AddNewJob = ({ handleAddJobToListSubmit, user }) => {
           <div className="comments">
             <textarea
               className="text-area-comments"
-              value={comment}
-              onChange={(event) => setComment(event.target.value)}
+              value={comments}
+              onChange={(event) => setComments(event.target.value)}
               required
             ></textarea>
             <div className="text">Comments</div>
@@ -180,7 +180,7 @@ const AddNewJob = ({ handleAddJobToListSubmit, user }) => {
               data-back="Add to List"
               data-front="Submit"
               className="submit-btn"
-              onClick={handleCombineAllInputsInJobInfoSubmit}
+              onClick={handleCombineAllInputsInApplicationSubmit}
             ></div>
           </div>
         )}

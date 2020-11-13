@@ -2,7 +2,7 @@ import React from "react";
 import AddInput from "./AddInput";
 
 const OptionsTab = ({
-  renderingOptionTab,
+  optionTabToRender,
   user,
   listOfSourcesFromSelectorMenu,
   listOfResultsFromSelectorMenu,
@@ -14,7 +14,7 @@ const OptionsTab = ({
   handleDeleteResultFromList,
   handleDeleteSourceFromList,
 }) => {
-  if (renderingOptionTab === "Cities") {
+  if (optionTabToRender === "Cities") {
     return (
       <div className="selector-contaner2">
         <h4>Delete or Add new city in the List:</h4>
@@ -30,14 +30,14 @@ const OptionsTab = ({
           ))}
         </ul>
         <AddInput
-          addNewItemFunction={handleAddNewCityToListSubmit}
+          addNewOptionToList={handleAddNewCityToListSubmit}
           user={user}
         />
       </div>
     );
   }
 
-  if (renderingOptionTab === "Sources") {
+  if (optionTabToRender === "Sources") {
     return (
       <div className="selector-contaner2">
         <h4>Delete or Add new source in the List:</h4>
@@ -53,14 +53,14 @@ const OptionsTab = ({
           ))}
         </ul>
         <AddInput
-          addNewItemFunction={handleAddNewSourceToListSubmit}
+          addNewOptionToList={handleAddNewSourceToListSubmit}
           user={user}
         />
       </div>
     );
   }
 
-  if (renderingOptionTab === "Results") {
+  if (optionTabToRender === "Results") {
     return (
       <div className="selector-contaner2">
         <h4>Delete or Add new result in the List:</h4>
@@ -76,7 +76,7 @@ const OptionsTab = ({
           ))}
         </ul>
         <AddInput
-          addNewItemFunction={handleAddNewResultToListSubmit}
+          addNewOptionToList={handleAddNewResultToListSubmit}
           user={user}
         />
       </div>

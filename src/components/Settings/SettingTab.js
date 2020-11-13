@@ -3,19 +3,19 @@ import OptionsTab from "./OptionsTab";
 import useSettings from "../../core/customHooks/useSettings";
 import { CSSTransition } from "react-transition-group";
 
-const SettingTab = ({ showingSettingTab, user, showSettingsFolder }) => {
+const SettingTab = ({ tabNameToRender, user }) => {
   const optionTabs = ["Cities", "Sources", "Results"];
-  const [renderingOptionTab, setRenderingOptionTab] = useState(null);
-  const [showOptionsTab, setShowOptionsTab] = useState(false);
+  const [optionTabToRender, setOptionTabToRender] = useState(null);
+  const [showOptionTab, setShowOptionTab] = useState(false);
 
   useEffect(() => {
-    setShowOptionsTab(false);
-    setRenderingOptionTab(null);
-  }, [showingSettingTab]);
+    setShowOptionTab(false);
+    setOptionTabToRender(null);
+  }, [tabNameToRender]);
 
-  const handleRenderTabUserSelectedClick = (tab) => {
-    setRenderingOptionTab(tab);
-    setShowOptionsTab(true);
+  const handleRenderSelectedTabClick = (tab) => {
+    setOptionTabToRender(tab);
+    setShowOptionTab(true);
   };
 
   const [
@@ -32,7 +32,7 @@ const SettingTab = ({ showingSettingTab, user, showSettingsFolder }) => {
     },
   ] = useSettings(user);
 
-  if (showingSettingTab === "Selectors") {
+  if (tabNameToRender === "Selectors") {
     return (
       <CSSTransition
         in={true}
@@ -40,7 +40,7 @@ const SettingTab = ({ showingSettingTab, user, showSettingsFolder }) => {
         exit={true}
         timeout={300}
         classNames="setting-tab"
-        key={showingSettingTab}
+        key={tabNameToRender}
       >
         <div className="selector-box">
           <div className="selector-contaner1">
@@ -49,17 +49,17 @@ const SettingTab = ({ showingSettingTab, user, showSettingsFolder }) => {
               <div key={option} className="selector-btn-container">
                 <button
                   className={
-                    option === renderingOptionTab
+                    option === optionTabToRender
                       ? "option-selector tab-btn activated"
                       : "option-selector tab-btn"
                   }
-                  onClick={() => handleRenderTabUserSelectedClick(option)}
+                  onClick={() => handleRenderSelectedTabClick(option)}
                 >
                   {option}
                 </button>
                 <i
                   className={
-                    option === renderingOptionTab
+                    option === optionTabToRender
                       ? "fas fa-angle-double-right arrow-btn-selector selected"
                       : "fas fa-angle-double-right arrow-btn-selector"
                   }
@@ -67,9 +67,9 @@ const SettingTab = ({ showingSettingTab, user, showSettingsFolder }) => {
               </div>
             ))}
           </div>
-          {showOptionsTab && (
+          {showOptionTab && (
             <OptionsTab
-              renderingOptionTab={renderingOptionTab}
+              optionTabToRender={optionTabToRender}
               user={user}
               listOfSourcesFromSelectorMenu={listOfSourcesFromSelectorMenu}
               listOfResultsFromSelectorMenu={listOfResultsFromSelectorMenu}
@@ -87,7 +87,7 @@ const SettingTab = ({ showingSettingTab, user, showSettingsFolder }) => {
     );
   }
 
-  if (showingSettingTab === "Personal Info") {
+  if (tabNameToRender === "Personal Info") {
     return (
       <CSSTransition
         in={true}
@@ -95,13 +95,13 @@ const SettingTab = ({ showingSettingTab, user, showSettingsFolder }) => {
         exit={true}
         timeout={650}
         classNames="setting-tab"
-        key={showingSettingTab}
+        key={tabNameToRender}
       >
         <div>Personal Info</div>
       </CSSTransition>
     );
   }
-  if (showingSettingTab === "Language") {
+  if (tabNameToRender === "Language") {
     return <div>Language</div>;
   }
 };
