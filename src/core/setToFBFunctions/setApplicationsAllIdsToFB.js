@@ -1,6 +1,6 @@
 import database from "../firebase";
 
-const setCompanyNamesListToFB = (user, companyList) => {
+const setApplicationsAllIdsToFB = (user, companyList) => {
   database
     .collection("users")
     .doc(user.uid)
@@ -9,4 +9,4 @@ const setCompanyNamesListToFB = (user, companyList) => {
     .set({ companyList });
 };
 
-export default setCompanyNamesListToFB;
+export default setApplicationsAllIdsToFB;

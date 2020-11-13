@@ -2,16 +2,16 @@ import React, { useEffect, useState } from "react";
 import "./Settings.css";
 import SettingTab from "./SettingTab";
 
-const SettingsWindow = ({ user, setShowSettings }) => {
-  const [showingSettingTab, setShowingSettingTab] = useState(null);
+const SettingsModal = ({ user, setShowSettings }) => {
+  const [tabNameToRender, setTabNameToRender] = useState(null);
 
-  const [showSettingsFolder, setShowSettingsFolder] = useState(false);
+  const [showSettingTab, setShowSettingTab] = useState(false);
 
-  const settingsTabs = ["Personal Info", "Language", "Selectors"];
+  const settingTabs = ["Personal Info", "Language", "Selectors"];
 
   const handleSelectTabToRenderClick = (tab) => {
-    setShowSettingsFolder(true);
-    setShowingSettingTab(tab);
+    setShowSettingTab(true);
+    setTabNameToRender(tab);
   };
 
   return (
@@ -25,10 +25,10 @@ const SettingsWindow = ({ user, setShowSettings }) => {
           ></i>
         </div>
         <div className="settings-nav">
-          {settingsTabs.map((tab) => (
+          {settingTabs.map((tab) => (
             <button
               className={
-                tab === showingSettingTab ? "tab-btn activated" : "tab-btn"
+                tab === tabNameToRender ? "tab-btn activated" : "tab-btn"
               }
               value={tab}
               key={tab}
@@ -40,10 +40,10 @@ const SettingsWindow = ({ user, setShowSettings }) => {
         </div>
         <div className="settings-container">
           <div className="tabs-container">
-            {showSettingsFolder && (
+            {showSettingTab && (
               <SettingTab
-                showingSettingTab={showingSettingTab}
-                showSettingsFolder={showSettingsFolder}
+                tabNameToRender={tabNameToRender}
+                showSettingTab={showSettingTab}
                 user={user}
               />
             )}
@@ -54,4 +54,4 @@ const SettingsWindow = ({ user, setShowSettings }) => {
   );
 };
 
-export default SettingsWindow;
+export default SettingsModal;
