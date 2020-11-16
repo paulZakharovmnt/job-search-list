@@ -11,21 +11,16 @@ import fetchListOfCompanyNamesUserApplied from "../../core/getFromFBFuctions/fet
 import fetchListOfCompanyInfoUserApplied from "../../core/getFromFBFuctions/fetchListOfCompanyInformantionUserApplied";
 import SettingsWindow from "../Settings/SettingsWindow";
 
-// ApplicationsById
-// ApplicationsAllIds
-
-// item, info, data, doc, result
-
 const Main = ({ user }) => {
   const [fullInfoCompaniesList, setFullInfoCompaniesList] = useState(null);
   const [listOfCompaniesNames, setListOfCompaniesTitles] = useState([]);
-  const [jobUserWantsToEdit, setJobUserWantsToEdit] = useState(null); // currentlyUpdatedJob
+  const [jobUserWantsToEdit, setJobUserWantsToEdit] = useState(null);
 
-  const [showUserAddingNewJobTab, setShowUserAddingNewJobTab] = useState(false); // remove User
+  const [showUserAddingNewJobTab, setShowUserAddingNewJobTab] = useState(false);
   const [showEditJobWindow, setShowEditJobWindow] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
 
-  const [userInputSearch, setUserInputSearch] = useState(""); // searchInputValue
+  const [userInputSearch, setUserInputSearch] = useState("");
 
   useEffect(() => {
     fetchListOfCompanyInfoUserApplied(user).onSnapshot((doc) => {
@@ -50,7 +45,7 @@ const Main = ({ user }) => {
 
   const handleDeleteCompanyFromList = (company) => {
     const companiesListWithoutDeletedCompanyName = listOfCompaniesNames.filter(
-      (item) => item !== company // item
+      (item) => item !== company
     );
     setListOfCompaniesTitles(companiesListWithoutDeletedCompanyName);
 
@@ -66,7 +61,7 @@ const Main = ({ user }) => {
   };
 
   const handleAddJobToListSubmit = (job) => {
-    const listOfCompaniesInfoWithNewAddedCompany = { ...fullInfoCompaniesList }; // copy
+    const listOfCompaniesInfoWithNewAddedCompany = { ...fullInfoCompaniesList };
     listOfCompaniesInfoWithNewAddedCompany[job.company] = job;
     setFullInfoCompaniesList(listOfCompaniesInfoWithNewAddedCompany);
 
@@ -135,7 +130,7 @@ const Main = ({ user }) => {
       )}
 
       {showEditJobWindow && (
-        <EditItem // item
+        <EditItem
           jobUserWantsToEdit={jobUserWantsToEdit}
           closeEditJobWindow={closeEditJobWindow}
           addCommentToTheJobInfo={addCommentToTheJobInfo}

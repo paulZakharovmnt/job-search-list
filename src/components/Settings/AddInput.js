@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import classNames from "classnames";
 import { CSSTransition } from "react-transition-group";
+import "./AddInput.css";
 
 const AddInput = ({ addNewItemFunction }) => {
   const [userInputToAddNewItem, setUerInputToAddNewItem] = useState("");
