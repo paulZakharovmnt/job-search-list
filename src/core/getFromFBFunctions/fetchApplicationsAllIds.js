@@ -1,10 +1,11 @@
 import database from "../firebase";
-const fetchListOfCompanyInfoUserApplied = (user) => {
+
+const fetchApplicationsAllIds = (user) => {
   return database
     .collection("users")
     .doc(user.uid)
     .collection("userData")
-    .doc("fullJobsInfo");
+    .doc("listOfJobs");
 };
 
-export default fetchListOfCompanyInfoUserApplied;
+export default fetchApplicationsAllIds;

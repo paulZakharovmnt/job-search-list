@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import "./EditItem.css";
 
 const EditItem = ({
-  jobUserWantsToEdit,
-  closeEditJobWindow,
-  addCommentToTheJobInfo,
+  currentlyUpdatedJob,
+  closeEditJobModal,
+  handleAddNewCommentToApplicationSubmit,
 }) => {
-  const [userWantsToAddComment, setUserWantsToAddComment] = useState(false);
+  const [showAddNewCommentInput, setShowAddNewCommentInput] = useState(false);
+  const [showAddCommentError, setShowAddCommentError] = useState(false);
   const [commentDate, setCommentDate] = useState("");
   const [newComment, setNewComment] = useState("");
-  const [showAddingCommentError, setShowAddingCommentError] = useState(false);
 
-  let showComments = Object.entries(jobUserWantsToEdit.comments).map((arr) => {
+  let showComments = Object.entries(currentlyUpdatedJob.comments).map((arr) => {
     return (
       <div className="comment-info" key={arr[0]}>
         <div className="comment-date">
@@ -26,18 +26,19 @@ const EditItem = ({
     );
   });
 
-  const handleAddNewComment = (event) => {
+  const handleCombineNewCommentInputsSubmit = (event) => {
     event.preventDefault();
     if (!commentDate) {
-      setShowAddingCommentError(true);
+      setShowAddCommentError(true);
       return;
     }
-    setShowAddingCommentError(false);
-    let updatedJob = jobUserWantsToEdit;
-    updatedJob.comments[commentDate] = newComment;
-    addCommentToTheJobInfo(updatedJob);
+    setShowAddCommentError(false);
+    let updatedJobCopy = currentlyUpdatedJob;
+    updatedJobCopy.comments[commentDate] = newComment;
 
-    setUserWantsToAddComment(!userWantsToAddComment);
+    handleAddNewCommentToApplicationSubmit(updatedJobCopy);
+
+    setShowAddNewCommentInput(!showAddNewCommentInput);
     setCommentDate("");
     setNewComment("");
   };
@@ -47,29 +48,29 @@ const EditItem = ({
       <div className="edit-window">
         <div className="edit-header">
           <h1>Company info</h1>
-          <button onClick={closeEditJobWindow}>Close</button>
+          <button onClick={closeEditJobModal}>Close</button>
         </div>
         <div className="company-data-container">
           <div className="detailed-company-information">
             <div className="info-cont">
               <h4>Company name:</h4>
-              <p>{jobUserWantsToEdit.company}</p>
+              <p>{currentlyUpdatedJob.company}</p>
             </div>
             <div className="info-cont">
               <h4>City:</h4>
-              <p>{jobUserWantsToEdit.city}</p>
+              <p>{currentlyUpdatedJob.city}</p>
             </div>
             <div className="info-cont">
               <h4>Date applied:</h4>
-              <p>{jobUserWantsToEdit.date}</p>
+              <p>{currentlyUpdatedJob.date}</p>
             </div>
             <div className="info-cont">
               <h4>Source: </h4>
-              <p>{jobUserWantsToEdit.source}</p>
+              <p>{currentlyUpdatedJob.source}</p>
             </div>
             <div className="info-cont">
               <h4>Result: </h4>
-              <p>{jobUserWantsToEdit.result}</p>
+              <p>{currentlyUpdatedJob.result}</p>
             </div>
           </div>
           <div className="comments-container">
@@ -78,12 +79,12 @@ const EditItem = ({
 
             <button
               className="add-comment-btn"
-              onClick={() => setUserWantsToAddComment(!userWantsToAddComment)}
+              onClick={() => setShowAddNewCommentInput(!showAddNewCommentInput)}
             >
               Add Comment
             </button>
 
-            {userWantsToAddComment && (
+            {showAddNewCommentInput && (
               <div className="add-comment-input">
                 <form>
                   <input
@@ -95,12 +96,14 @@ const EditItem = ({
                     value={newComment}
                     onChange={(event) => setNewComment(event.target.value)}
                   />
-                  {showAddingCommentError && (
+                  {showAddCommentError && (
                     <p className="add-error-message">
                       Please Choose the Date of new comment
                     </p>
                   )}
-                  <button onClick={handleAddNewComment}>Add</button>
+                  <button onClick={handleCombineNewCommentInputsSubmit}>
+                    Add
+                  </button>
                 </form>
               </div>
             )}

@@ -2,11 +2,11 @@ import React from "react";
 
 const Job = ({
   company,
-  fullInfoCompaniesList,
-  handleDeleteCompanyFromList,
-  handleOpenEditJobWindowClick,
+  applicationsById,
+  handleDeleteApplicationClick,
+  handleOpenEditJobModalClick,
 }) => {
-  const jobInfo = fullInfoCompaniesList[company];
+  const jobInfo = applicationsById[company];
   return (
     <li className="job">
       <h4 className="joblist-job-title">{company}</h4>
@@ -16,12 +16,12 @@ const Job = ({
       <p className="joblist-job-title">{jobInfo.result}</p>
       <div className="icons">
         <i
-          onClick={() => handleOpenEditJobWindowClick(jobInfo)}
+          onClick={() => handleOpenEditJobModalClick(jobInfo)}
           className="job-edit-btn fas fa-edit"
         ></i>
         <i
           onClick={() => {
-            handleDeleteCompanyFromList(company);
+            handleDeleteApplicationClick(company);
           }}
           className="job-delete-btn fas fa-trash-alt"
         ></i>

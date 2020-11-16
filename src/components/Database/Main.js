@@ -5,140 +5,141 @@ import JobList from "./JobList";
 import EditItem from "./EditItem/EditItem";
 
 import deleteSelectedJobInfoFromList from "../../core/deleteSelectedJobInfoFromList";
-import setCompanyNamesListToFB from "../../core/setToFBFunctions/setCompanyNamesListToFB";
-import setJobsInformationListToFB from "../../core/setToFBFunctions/setJobsInformationListToFB";
-import fetchListOfCompanyNamesUserApplied from "../../core/getFromFBFunctions/fetchListOfCompanyNamesUserApplied";
-import fetchListOfCompanyInfoUserApplied from "../../core/getFromFBFunctions/fetchListOfCompanyInformantionUserApplied";
-import SettingsWindow from "../Settings/SettingsWindow";
+import setApplicationsAllIdsToFB from "../../core/setToFBFunctions/setApplicationsAllIdsToFB";
+import setApplicationsByIdToFB from "../../core/setToFBFunctions/setApplicationsByIdToFB";
+import fetchApplicationsAllIds from "../../core/getFromFBFunctions/fetchApplicationsAllIds";
+import fetchApplicationsById from "../../core/getFromFBFunctions/fetchApplicationsById";
+import SettingsModal from "../Settings/SettingsModal";
+
+// item, info, data, doc, result
 
 const Main = ({ user }) => {
-  const [fullInfoCompaniesList, setFullInfoCompaniesList] = useState(null);
-  const [listOfCompaniesNames, setListOfCompaniesTitles] = useState([]);
-  const [jobUserWantsToEdit, setJobUserWantsToEdit] = useState(null);
+  const [applicationsById, setApplicationsById] = useState(null);
+  const [applicationsAllIds, setApplicationsAllIds] = useState([]);
+  const [currentlyUpdatedJob, setCurrentlyUpdatedJob] = useState(null);
 
-  const [showUserAddingNewJobTab, setShowUserAddingNewJobTab] = useState(false);
-  const [showEditJobWindow, setShowEditJobWindow] = useState(false);
+  const [showAddNewJobTab, setShowAddNewJobTab] = useState(false);
+  const [showEditJobModal, setShowEditJobModal] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
 
-  const [userInputSearch, setUserInputSearch] = useState("");
+  const [searchInputValue, setSearchInputValue] = useState("");
 
   useEffect(() => {
-    fetchListOfCompanyInfoUserApplied(user).onSnapshot((doc) => {
-      setFullInfoCompaniesList(doc.data());
+    fetchApplicationsById(user).onSnapshot((doc) => {
+      setApplicationsById(doc.data());
     });
-    fetchListOfCompanyNamesUserApplied(user).onSnapshot((doc) => {
+    fetchApplicationsAllIds(user).onSnapshot((doc) => {
       if (!doc.data().companyList) {
         return;
       }
-      setListOfCompaniesTitles(doc.data().companyList);
+      setApplicationsAllIds(doc.data().companyList);
     });
   }, [user]);
 
   useEffect(() => {
-    if (listOfCompaniesNames.length > 0) {
-      setCompanyNamesListToFB(user, listOfCompaniesNames);
+    if (applicationsAllIds.length > 0) {
+      setApplicationsAllIdsToFB(user, applicationsAllIds);
     }
-    if (fullInfoCompaniesList) {
-      setJobsInformationListToFB(user, fullInfoCompaniesList);
+    if (applicationsById) {
+      setApplicationsByIdToFB(user, applicationsById);
     }
-  }, [listOfCompaniesNames, fullInfoCompaniesList, user]);
+  }, [applicationsAllIds, applicationsById]);
 
-  const handleDeleteCompanyFromList = (company) => {
-    const companiesListWithoutDeletedCompanyName = listOfCompaniesNames.filter(
-      (item) => item !== company
+  const handleDeleteApplicationClick = (company) => {
+    const filteredApplicationsAllIds = applicationsAllIds.filter(
+      (applicationId) => applicationId !== company // item
     );
-    setListOfCompaniesTitles(companiesListWithoutDeletedCompanyName);
+    setApplicationsAllIds(filteredApplicationsAllIds);
 
-    const listOfCompaniesInfoWithoutDeletedCompany = deleteSelectedJobInfoFromList(
-      fullInfoCompaniesList,
+    const applicationsByIdWithoutDeletedCompany = deleteSelectedJobInfoFromList(
+      applicationsById,
       company
     );
-    setFullInfoCompaniesList(listOfCompaniesInfoWithoutDeletedCompany);
+    setApplicationsById(applicationsByIdWithoutDeletedCompany);
 
-    if (listOfCompaniesNames.length === 1) {
-      setCompanyNamesListToFB(user, companiesListWithoutDeletedCompanyName);
+    if (applicationsAllIds.length === 1) {
+      setApplicationsAllIdsToFB(user, filteredApplicationsAllIds);
     }
   };
 
   const handleAddJobToListSubmit = (job) => {
-    const listOfCompaniesInfoWithNewAddedCompany = { ...fullInfoCompaniesList };
-    listOfCompaniesInfoWithNewAddedCompany[job.company] = job;
-    setFullInfoCompaniesList(listOfCompaniesInfoWithNewAddedCompany);
+    const applicationsByIdCopy = { ...applicationsById }; // copy
+    applicationsByIdCopy[job.company] = job;
+    setApplicationsById(applicationsByIdCopy);
 
-    if (listOfCompaniesNames.includes(job.company)) {
+    if (applicationsAllIds.includes(job.company)) {
       return;
       // TODO: Here should be POPUP window that we have already this company
     }
-    const listOfCompaniesNamesWithNewAddedCompany = [
-      ...listOfCompaniesNames,
-      job.company,
-    ];
-    setListOfCompaniesTitles(listOfCompaniesNamesWithNewAddedCompany);
-    showJobsListTab();
+    const applicationsAllIdsCopy = [...applicationsAllIds, job.company];
+    setApplicationsAllIds(applicationsAllIdsCopy);
+    toggleShowJobsListTabClick();
   };
 
-  const showJobAddTab = () => {
-    setShowUserAddingNewJobTab(true);
+  const toggleShowJobAddTabClick = () => {
+    setShowAddNewJobTab(true);
     setShowSettings(false);
   };
 
-  const showJobsListTab = () => {
-    setShowUserAddingNewJobTab(false);
+  const toggleShowJobsListTabClick = () => {
+    setShowAddNewJobTab(false);
     setShowSettings(false);
   };
 
-  const closeEditJobWindow = () => {
-    setShowEditJobWindow(false);
-    setJobUserWantsToEdit(null);
+  const closeEditJobModal = () => {
+    setShowEditJobModal(false);
+    setCurrentlyUpdatedJob(null);
   };
 
-  const handleOpenEditJobWindowClick = (jobInfo) => {
-    setJobUserWantsToEdit(jobInfo);
-    setShowEditJobWindow(true);
+  const handleOpenEditJobModalClick = (jobInfo) => {
+    setCurrentlyUpdatedJob(jobInfo);
+    setShowEditJobModal(true);
   };
 
-  const addCommentToTheJobInfo = (updatedJob) => {
-    let oldList = { ...fullInfoCompaniesList };
-    oldList[updatedJob.company] = updatedJob;
-    setFullInfoCompaniesList(oldList);
+  const handleAddNewCommentToApplicationSubmit = (updatedJobCopy) => {
+    let applicationsByIdCopy = { ...applicationsById };
+    applicationsByIdCopy[updatedJobCopy.company] = updatedJobCopy;
+    setApplicationsById(applicationsByIdCopy);
   };
 
   return (
     <div>
       <Nav
-        showJobAddTab={showJobAddTab}
-        showJobsListTab={showJobsListTab}
-        userInputSearch={userInputSearch}
-        setUserInputSearch={setUserInputSearch}
+        toggleShowJobAddTabClick={toggleShowJobAddTabClick}
+        toggleShowJobsListTabClick={toggleShowJobsListTabClick}
+        searchInputValue={searchInputValue}
+        setSearchInputValue={setSearchInputValue}
         showSettings={showSettings}
         setShowSettings={setShowSettings}
-        showUserAddingNewJobTab={showUserAddingNewJobTab}
+        showAddNewJobTab={showAddNewJobTab}
       />
-      {showUserAddingNewJobTab ? (
+      {showAddNewJobTab ? (
         <AddNewJob
           handleAddJobToListSubmit={handleAddJobToListSubmit}
           user={user}
         />
       ) : (
         <JobList
-          listOfCompaniesNames={listOfCompaniesNames}
-          fullInfoCompaniesList={fullInfoCompaniesList}
-          userInputSearch={userInputSearch}
-          handleDeleteCompanyFromList={handleDeleteCompanyFromList}
-          handleOpenEditJobWindowClick={handleOpenEditJobWindowClick}
+          applicationsAllIds={applicationsAllIds}
+          applicationsById={applicationsById}
+          searchInputValue={searchInputValue}
+          handleDeleteApplicationClick={handleDeleteApplicationClick}
+          handleOpenEditJobModalClick={handleOpenEditJobModalClick}
         />
       )}
 
-      {showEditJobWindow && (
-        <EditItem
-          jobUserWantsToEdit={jobUserWantsToEdit}
-          closeEditJobWindow={closeEditJobWindow}
-          addCommentToTheJobInfo={addCommentToTheJobInfo}
+      {showEditJobModal && (
+        <EditItem // item
+          currentlyUpdatedJob={currentlyUpdatedJob}
+          closeEditJobModal={closeEditJobModal}
+          handleAddNewCommentToApplicationSubmit={
+            handleAddNewCommentToApplicationSubmit
+          }
         />
       )}
 
       {showSettings && (
-        <SettingsWindow user={user} setShowSettings={setShowSettings} />
+        <SettingsModal user={user} setShowSettings={setShowSettings} />
       )}
     </div>
   );
