@@ -27,21 +27,21 @@ const useSettings = (user) => {
       return;
     }
     setUpdatedListOfSourcesToFB(user, listOfSourcesFromSelectorMenu);
-  }, [listOfSourcesFromSelectorMenu]);
+  }, [listOfSourcesFromSelectorMenu, user]);
 
   useEffect(() => {
     if (listOfResultsFromSelectorMenu.length < 1) {
       return;
     }
     setUpdatedListOfResultsToFB(user, listOfResultsFromSelectorMenu);
-  }, [listOfResultsFromSelectorMenu]);
+  }, [listOfResultsFromSelectorMenu, user]);
 
   useEffect(() => {
     if (listOfCitiesFromSelectorMenu.length < 1) {
       return;
     }
     setUpdatedListOfCitiesToFB(user, listOfCitiesFromSelectorMenu);
-  }, [listOfCitiesFromSelectorMenu]);
+  }, [listOfCitiesFromSelectorMenu, user]);
 
   useEffect(() => {
     getListOfCitiesFromFB(user).onSnapshot((doc) => {
@@ -57,7 +57,7 @@ const useSettings = (user) => {
         doc.data().listOfSourcesFromSelectorMenu
       );
     });
-  }, []);
+  }, [user]);
 
   const handleAddNewCityToListSubmit = (city) => {
     setListOfCitiesFromSelectorMenu([...listOfCitiesFromSelectorMenu, city]);

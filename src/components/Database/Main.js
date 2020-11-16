@@ -32,7 +32,7 @@ const Main = ({ user }) => {
       }
       setListOfCompaniesTitles(doc.data().companyList);
     });
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     if (listOfCompaniesNames.length > 0) {
@@ -41,7 +41,7 @@ const Main = ({ user }) => {
     if (fullInfoCompaniesList) {
       setJobsInformationListToFB(user, fullInfoCompaniesList);
     }
-  }, [listOfCompaniesNames, fullInfoCompaniesList]);
+  }, [listOfCompaniesNames, fullInfoCompaniesList, user]);
 
   const handleDeleteCompanyFromList = (company) => {
     const companiesListWithoutDeletedCompanyName = listOfCompaniesNames.filter(

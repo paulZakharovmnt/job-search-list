@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./AddNewJob.css";
 import useSettings from "../../core/customHooks/useSettings";
 import combineAllJobInputsInOneVariable from "../../core/combineAllJobInputsInOneVariable";
