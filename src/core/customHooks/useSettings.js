@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import getListOfCitiesFromFB from "../getFromFBFuctions/getListOfCitiesFromFB";
-import setUpdatedListOfCitiesToFB from "../setToFBFuctions/setUpdatedListOfCitiesToFB";
-import setUpdatedListOfSourcesToFB from "../setToFBFuctions/setUpdatedListOfSourcesToFB";
-import setUpdatedListOfResultsToFB from "../setToFBFuctions/setUpdatedListOfResultsToFB";
-import getListOfSourcesFromFB from "../getFromFBFuctions/getListOfSourcesFromFB";
-import getListOfResultsFromFB from "../getFromFBFuctions/getListOfResultsFromFB";
+import getListOfCitiesFromFB from "../getFromFBFunctions/getListOfCitiesFromFB";
+import setUpdatedListOfCitiesToFB from "../setToFBFunctions/setUpdatedListOfCitiesToFB";
+import setUpdatedListOfSourcesToFB from "../setToFBFunctions/setUpdatedListOfSourcesToFB";
+import setUpdatedListOfResultsToFB from "../setToFBFunctions/setUpdatedListOfResultsToFB";
+import getListOfSourcesFromFB from "../getFromFBFunctions/getListOfSourcesFromFB";
+import getListOfResultsFromFB from "../getFromFBFunctions/getListOfResultsFromFB";
 
 const useSettings = (user) => {
   const [
@@ -27,21 +27,21 @@ const useSettings = (user) => {
       return;
     }
     setUpdatedListOfSourcesToFB(user, listOfSourcesFromSelectorMenu);
-  }, [listOfSourcesFromSelectorMenu]);
+  }, [listOfSourcesFromSelectorMenu, user]);
 
   useEffect(() => {
     if (listOfResultsFromSelectorMenu.length < 1) {
       return;
     }
     setUpdatedListOfResultsToFB(user, listOfResultsFromSelectorMenu);
-  }, [listOfResultsFromSelectorMenu]);
+  }, [listOfResultsFromSelectorMenu, user]);
 
   useEffect(() => {
     if (listOfCitiesFromSelectorMenu.length < 1) {
       return;
     }
     setUpdatedListOfCitiesToFB(user, listOfCitiesFromSelectorMenu);
-  }, [listOfCitiesFromSelectorMenu]);
+  }, [listOfCitiesFromSelectorMenu, user]);
 
   useEffect(() => {
     getListOfCitiesFromFB(user).onSnapshot((doc) => {
@@ -57,7 +57,7 @@ const useSettings = (user) => {
         doc.data().listOfSourcesFromSelectorMenu
       );
     });
-  }, []);
+  }, [user]);
 
   const handleAddNewCityToListSubmit = (city) => {
     setListOfCitiesFromSelectorMenu([...listOfCitiesFromSelectorMenu, city]);

@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./AddNewJob.css";
 import useSettings from "../../core/customHooks/useSettings";
 import combineAllJobInputsInOneVariable from "../../core/combineAllJobInputsInOneVariable";
-import getListOfSourcesFromFB from "../../core/getFromFBFuctions/getListOfSourcesFromFB";
-import getListOfCitiesFromFB from "../../core/getFromFBFuctions/getListOfCitiesFromFB";
-import getListOfResultsFromFB from "../../core/getFromFBFuctions/getListOfResultsFromFB";
 
 const AddNewJob = ({ handleAddJobToListSubmit, user }) => {
   const [companyName, setCompanyName] = useState("");

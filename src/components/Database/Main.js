@@ -5,10 +5,10 @@ import JobList from "./JobList";
 import EditItem from "./EditItem/EditItem";
 
 import deleteSelectedJobInfoFromList from "../../core/deleteSelectedJobInfoFromList";
-import setCompanyNamesListToFB from "../../core/setToFBFuctions/setCompanyNamesListToFB";
-import setJobsInformationListToFB from "../../core/setToFBFuctions/setJobsInformationListToFB";
-import fetchListOfCompanyNamesUserApplied from "../../core/getFromFBFuctions/fetchListOfCompanyNamesUserApplied";
-import fetchListOfCompanyInfoUserApplied from "../../core/getFromFBFuctions/fetchListOfCompanyInformantionUserApplied";
+import setCompanyNamesListToFB from "../../core/setToFBFunctions/setCompanyNamesListToFB";
+import setJobsInformationListToFB from "../../core/setToFBFunctions/setJobsInformationListToFB";
+import fetchListOfCompanyNamesUserApplied from "../../core/getFromFBFunctions/fetchListOfCompanyNamesUserApplied";
+import fetchListOfCompanyInfoUserApplied from "../../core/getFromFBFunctions/fetchListOfCompanyInformantionUserApplied";
 import SettingsWindow from "../Settings/SettingsWindow";
 
 const Main = ({ user }) => {
@@ -32,7 +32,7 @@ const Main = ({ user }) => {
       }
       setListOfCompaniesTitles(doc.data().companyList);
     });
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     if (listOfCompaniesNames.length > 0) {
@@ -41,7 +41,7 @@ const Main = ({ user }) => {
     if (fullInfoCompaniesList) {
       setJobsInformationListToFB(user, fullInfoCompaniesList);
     }
-  }, [listOfCompaniesNames, fullInfoCompaniesList]);
+  }, [listOfCompaniesNames, fullInfoCompaniesList, user]);
 
   const handleDeleteCompanyFromList = (company) => {
     const companiesListWithoutDeletedCompanyName = listOfCompaniesNames.filter(
