@@ -3,8 +3,10 @@ import { fire } from "../../core/firebase";
 import LoginPage from "./LogInPage";
 import setDefaultNewUserSettingsToFB from "../../core/setToFBFunctions/setDefaultNewUserSettingsToFB";
 import "./Auth.css";
+import { useDispatch } from "react-redux";
+import { setUserToState } from "../../redux/actions/actions";
 
-const Auth = ({ handleSetUser }) => {
+const Auth = () => {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,6 +15,7 @@ const Auth = ({ handleSetUser }) => {
   const [passwordError, setPasswordError] = useState("");
 
   const [hasAccount, setHasAccount] = useState(true);
+  const dispatch = useDispatch();
 
   const clearInputs = () => {
     setEmail("");
@@ -80,16 +83,18 @@ const Auth = ({ handleSetUser }) => {
     fire.auth().onAuthStateChanged((user) => {
       if (user) {
         clearInputs();
-        handleSetUser({
-          email: user.email,
-          uid: user.uid,
-          displayName: user.displayName,
-        });
+        dispatch(
+          setUserToState({
+            email: user.email,
+            uid: user.uid,
+            displayName: user.displayName,
+          })
+        );
       } else {
-        handleSetUser("");
+        dispatch(setUserToState(null));
       }
     });
-  }, [handleSetUser]);
+  }, []);
 
   useEffect(() => {
     authListener();
