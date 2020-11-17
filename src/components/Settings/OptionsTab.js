@@ -1,38 +1,40 @@
 import React from "react";
 import AddInput from "./AddInput";
 import "./OptionsTab.css";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  deleteCityFromSelector,
+  deleteSourceFromSelector,
+  deleteResultFromSelector,
+  addCitySelector,
+  addSourceSelector,
+  addResultSelector,
+} from "../../redux/actions/actions";
 
-const OptionsTab = ({
-  optionTabToRender,
-  user,
-  listOfSourcesFromSelectorMenu,
-  listOfResultsFromSelectorMenu,
-  listOfCitiesFromSelectorMenu,
-  handleAddNewCityToListSubmit,
-  handleAddNewResultToListSubmit,
-  handleAddNewSourceToListSubmit,
-  handleDeleteCityFromList,
-  handleDeleteResultFromList,
-  handleDeleteSourceFromList,
-}) => {
+const OptionsTab = ({ optionTabToRender }) => {
+  const listOfCities = useSelector((state) => state.listOfCities);
+  const listOfSources = useSelector((state) => state.listOfSources);
+  const listOfResults = useSelector((state) => state.listOfResults);
+
+  const dispatch = useDispatch();
+
   if (optionTabToRender === "Cities") {
     return (
       <div className="selector-contaner2">
         <h4>Delete or Add new city in the List:</h4>
         <ul className="list-of-items">
-          {listOfCitiesFromSelectorMenu.map((city) => (
+          {listOfCities.map((city) => (
             <div key={city} className="list-contaniner">
               <li>{city}</li>
               <i
-                onClick={() => handleDeleteCityFromList(city)}
+                onClick={() => dispatch(deleteCityFromSelector(city))}
                 className="delete-item-btn fas fa-trash-alt"
               ></i>
             </div>
           ))}
         </ul>
         <AddInput
-          addNewOptionToList={handleAddNewCityToListSubmit}
-          user={user}
+          addNewOptionToList={(cityName) => dispatch(addCitySelector(cityName))}
         />
       </div>
     );
@@ -43,19 +45,20 @@ const OptionsTab = ({
       <div className="selector-contaner2">
         <h4>Delete or Add new source in the List:</h4>
         <ul className="list-of-items">
-          {listOfSourcesFromSelectorMenu.map((source) => (
+          {listOfSources.map((source) => (
             <div key={source} className="list-contaniner">
               <li>{source}</li>
               <i
-                onClick={() => handleDeleteSourceFromList(source)}
+                onClick={() => dispatch(deleteSourceFromSelector(source))}
                 className="delete-item-btn fas fa-trash-alt"
               ></i>
             </div>
           ))}
         </ul>
         <AddInput
-          addNewOptionToList={handleAddNewSourceToListSubmit}
-          user={user}
+          addNewOptionToList={(sourceName) =>
+            dispatch(addSourceSelector(sourceName))
+          }
         />
       </div>
     );
@@ -66,19 +69,20 @@ const OptionsTab = ({
       <div className="selector-contaner2">
         <h4>Delete or Add new result in the List:</h4>
         <ul className="list-of-items">
-          {listOfResultsFromSelectorMenu.map((result) => (
+          {listOfResults.map((result) => (
             <div key={result} className="list-contaniner">
               <li>{result}</li>
               <i
-                onClick={() => handleDeleteResultFromList(result)}
+                onClick={() => dispatch(deleteResultFromSelector(result))}
                 className="delete-item-btn fas fa-trash-alt"
               ></i>
             </div>
           ))}
         </ul>
         <AddInput
-          addNewOptionToList={handleAddNewResultToListSubmit}
-          user={user}
+          addNewOptionToList={(resultName) =>
+            dispatch(addResultSelector(resultName))
+          }
         />
       </div>
     );
