@@ -26,12 +26,14 @@ const OptionsTab = ({ optionTabToRender }) => {
     }
     setUpdatedListOfCitiesToFB(user, listOfCities);
   }, [listOfCities, user]);
+
   useEffect(() => {
     if (listOfSources.length < 1) {
       return;
     }
     setUpdatedListOfSourcesToFB(user, listOfSources);
   }, [listOfSources, user]);
+
   useEffect(() => {
     if (listOfResults.length < 1) {
       return;
