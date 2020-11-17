@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "./AddNewJob.css";
-import useSettings from "../../core/customHooks/useSettings";
+import { useSelector } from "react-redux";
 import combineAllJobInputsInOneVariable from "../../core/combineAllJobInputsInOneVariable";
 
-const AddNewJob = ({ handleAddJobToListSubmit, user }) => {
+const AddNewJob = ({ handleAddJobToListSubmit }) => {
   const [companyName, setCompanyName] = useState("");
   const [companyCity, setCompanyCity] = useState("");
   const [applyDate, setApplyDate] = useState("");
@@ -11,13 +11,9 @@ const AddNewJob = ({ handleAddJobToListSubmit, user }) => {
   const [result, setResult] = useState("");
   const [comments, setComments] = useState("");
 
-  const [
-    {
-      listOfSourcesFromSelectorMenu,
-      listOfResultsFromSelectorMenu,
-      listOfCitiesFromSelectorMenu,
-    },
-  ] = useSettings(user);
+  const listOfCities = useSelector((state) => state.listOfCities);
+  const listOfSources = useSelector((state) => state.listOfSources);
+  const listOfResults = useSelector((state) => state.listOfResults);
 
   const clearAllInputs = () => {
     setCompanyName("");
@@ -71,7 +67,7 @@ const AddNewJob = ({ handleAddJobToListSubmit, user }) => {
                 <option value="">
                   --Please choose a City where you applied--
                 </option>
-                {listOfCitiesFromSelectorMenu.map((city) => {
+                {listOfCities.map((city) => {
                   return (
                     <option key={city} value={city}>
                       {city}
@@ -105,7 +101,7 @@ const AddNewJob = ({ handleAddJobToListSubmit, user }) => {
               <option value="">
                 --Please choose a source where you applied--
               </option>
-              {listOfSourcesFromSelectorMenu.map((source) => {
+              {listOfSources.map((source) => {
                 return (
                   <option key={source} value={source}>
                     {source}
@@ -127,7 +123,7 @@ const AddNewJob = ({ handleAddJobToListSubmit, user }) => {
               <option value="">
                 -- Please choose a Result of Interview --
               </option>
-              {listOfResultsFromSelectorMenu.map((result) => {
+              {listOfResults.map((result) => {
                 return (
                   <option key={result} value={result}>
                     {result}

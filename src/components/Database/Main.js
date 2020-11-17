@@ -9,13 +9,22 @@ import setApplicationsAllIdsToFB from "../../core/setToFBFunctions/setApplicatio
 import setApplicationsByIdToFB from "../../core/setToFBFunctions/setApplicationsByIdToFB";
 import fetchApplicationsAllIds from "../../core/getFromFBFunctions/fetchApplicationsAllIds";
 import fetchApplicationsById from "../../core/getFromFBFunctions/fetchApplicationsById";
+import getListOfCitiesFromFB from "../../core/getFromFBFunctions/getListOfCitiesFromFB";
+import getListOfResultsFromFB from "../../core/getFromFBFunctions/getListOfResultsFromFB";
+import getListOfSourcesFromFB from "../../core/getFromFBFunctions/getListOfSourcesFromFB";
 import SettingsModal from "../Settings/SettingsModal";
-
-// item, info, data, doc, result
+import { useSelector, useDispatch } from "react-redux";
+import {
+  setApplicationsAllIds,
+  setApplicationsById,
+  setCitySelectorOption,
+  setSourceSelectorOption,
+  setResultSelectorOption,
+} from "../../redux/actions/actions";
 
 const Main = ({ user }) => {
-  const [applicationsById, setApplicationsById] = useState(null);
-  const [applicationsAllIds, setApplicationsAllIds] = useState([]);
+  const applicationsById = useSelector((state) => state.applicationsById);
+  const applicationsAllIds = useSelector((state) => state.applicationsAllIds);
   const [currentlyUpdatedJob, setCurrentlyUpdatedJob] = useState(null);
 
   const [showAddNewJobTab, setShowAddNewJobTab] = useState(false);
@@ -24,16 +33,36 @@ const Main = ({ user }) => {
 
   const [searchInputValue, setSearchInputValue] = useState("");
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    fetchApplicationsById(user).onSnapshot((doc) => {
-      setApplicationsById(doc.data());
+    fetchApplicationsById(user).onSnapshot((response) => {
+      dispatch(setApplicationsById(response.data()));
     });
-    fetchApplicationsAllIds(user).onSnapshot((doc) => {
-      if (!doc.data().companyList) {
+    fetchApplicationsAllIds(user).onSnapshot((response) => {
+      if (!response.data().companyList) {
         return;
       }
-      setApplicationsAllIds(doc.data().companyList);
+      dispatch(setApplicationsAllIds(response.data().companyList));
     });
+
+    getListOfCitiesFromFB(user).onSnapshot((response) =>
+      dispatch(
+        setCitySelectorOption(response.data().listOfCitiesFromSelectorMenu)
+      )
+    );
+
+    getListOfResultsFromFB(user).onSnapshot((response) =>
+      dispatch(
+        setResultSelectorOption(response.data().listOfResultsFromSelectorMenu)
+      )
+    );
+
+    getListOfSourcesFromFB(user).onSnapshot((response) =>
+      dispatch(
+        setSourceSelectorOption(response.data().listOfSourcesFromSelectorMenu)
+      )
+    );
   }, [user]);
 
   useEffect(() => {
@@ -43,36 +72,35 @@ const Main = ({ user }) => {
     if (applicationsById) {
       setApplicationsByIdToFB(user, applicationsById);
     }
-  }, [applicationsAllIds, applicationsById]);
+  }, [applicationsAllIds, applicationsById, user]);
 
   const handleDeleteApplicationClick = (company) => {
     const filteredApplicationsAllIds = applicationsAllIds.filter(
-      (applicationId) => applicationId !== company // item
+      (applicationId) => applicationId !== company
     );
-    setApplicationsAllIds(filteredApplicationsAllIds);
+    dispatch(setApplicationsAllIds(filteredApplicationsAllIds));
 
     const applicationsByIdWithoutDeletedCompany = deleteSelectedJobInfoFromList(
       applicationsById,
       company
     );
-    setApplicationsById(applicationsByIdWithoutDeletedCompany);
-
+    dispatch(setApplicationsById(applicationsByIdWithoutDeletedCompany));
     if (applicationsAllIds.length === 1) {
       setApplicationsAllIdsToFB(user, filteredApplicationsAllIds);
     }
   };
 
   const handleAddJobToListSubmit = (job) => {
-    const applicationsByIdCopy = { ...applicationsById }; // copy
+    const applicationsByIdCopy = { ...applicationsById };
     applicationsByIdCopy[job.company] = job;
-    setApplicationsById(applicationsByIdCopy);
+    dispatch(setApplicationsById(applicationsByIdCopy));
 
     if (applicationsAllIds.includes(job.company)) {
       return;
       // TODO: Here should be POPUP window that we have already this company
     }
     const applicationsAllIdsCopy = [...applicationsAllIds, job.company];
-    setApplicationsAllIds(applicationsAllIdsCopy);
+    dispatch(setApplicationsAllIds(applicationsAllIdsCopy));
     toggleShowJobsListTabClick();
   };
 
@@ -99,7 +127,7 @@ const Main = ({ user }) => {
   const handleAddNewCommentToApplicationSubmit = (updatedJobCopy) => {
     let applicationsByIdCopy = { ...applicationsById };
     applicationsByIdCopy[updatedJobCopy.company] = updatedJobCopy;
-    setApplicationsById(applicationsByIdCopy);
+    dispatch(setApplicationsById(applicationsByIdCopy));
   };
 
   return (
@@ -129,7 +157,7 @@ const Main = ({ user }) => {
       )}
 
       {showEditJobModal && (
-        <EditItem // item
+        <EditItem
           currentlyUpdatedJob={currentlyUpdatedJob}
           closeEditJobModal={closeEditJobModal}
           handleAddNewCommentToApplicationSubmit={
@@ -138,9 +166,7 @@ const Main = ({ user }) => {
         />
       )}
 
-      {showSettings && (
-        <SettingsModal user={user} setShowSettings={setShowSettings} />
-      )}
+      {showSettings && <SettingsModal setShowSettings={setShowSettings} />}
     </div>
   );
 };

@@ -1,20 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import "./App.css";
 import Auth from "./components/Auth/Auth";
 import Main from "./components/Database/Main";
+import { useSelector } from "react-redux";
 
 const App = () => {
-  const [user, setUser] = useState("");
+  const user = useSelector((state) => state.user);
 
-  const handleSetUser = (user) => {
-    setUser(user);
-  };
-
-  return (
-    <div className="App">
-      {user ? <Main user={user} /> : <Auth handleSetUser={handleSetUser} />}
-    </div>
-  );
+  return <div className="App">{!user ? <Auth /> : <Main user={user} />}</div>;
 };
 
 export default App;

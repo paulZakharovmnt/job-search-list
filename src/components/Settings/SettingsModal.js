@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Settings.css";
 import SettingTab from "./SettingTab";
 
-const SettingsModal = ({ user, setShowSettings }) => {
+const SettingsModal = ({ setShowSettings }) => {
   const [tabNameToRender, setTabNameToRender] = useState(null);
 
   const [showSettingTab, setShowSettingTab] = useState(false);
@@ -44,7 +44,6 @@ const SettingsModal = ({ user, setShowSettings }) => {
               <SettingTab
                 tabNameToRender={tabNameToRender}
                 showSettingTab={showSettingTab}
-                user={user}
               />
             )}
           </div>
