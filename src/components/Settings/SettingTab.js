@@ -19,20 +19,6 @@ const SettingTab = ({ tabNameToRender, user }) => {
     setShowOptionTab(true);
   };
 
-  const [
-    {
-      listOfSourcesFromSelectorMenu,
-      listOfResultsFromSelectorMenu,
-      listOfCitiesFromSelectorMenu,
-      handleAddNewCityToListSubmit,
-      handleAddNewResultToListSubmit,
-      handleAddNewSourceToListSubmit,
-      handleDeleteCityFromList,
-      handleDeleteResultFromList,
-      handleDeleteSourceFromList,
-    },
-  ] = useSettings(user);
-
   if (tabNameToRender === "Selectors") {
     return (
       <CSSTransition
@@ -69,19 +55,7 @@ const SettingTab = ({ tabNameToRender, user }) => {
             ))}
           </div>
           {showOptionTab && (
-            <OptionsTab
-              optionTabToRender={optionTabToRender}
-              user={user}
-              listOfSourcesFromSelectorMenu={listOfSourcesFromSelectorMenu}
-              listOfResultsFromSelectorMenu={listOfResultsFromSelectorMenu}
-              listOfCitiesFromSelectorMenu={listOfCitiesFromSelectorMenu}
-              handleAddNewCityToListSubmit={handleAddNewCityToListSubmit}
-              handleAddNewResultToListSubmit={handleAddNewResultToListSubmit}
-              handleAddNewSourceToListSubmit={handleAddNewSourceToListSubmit}
-              handleDeleteCityFromList={handleDeleteCityFromList}
-              handleDeleteResultFromList={handleDeleteResultFromList}
-              handleDeleteSourceFromList={handleDeleteSourceFromList}
-            />
+            <OptionsTab optionTabToRender={optionTabToRender} />
           )}
         </div>
       </CSSTransition>
