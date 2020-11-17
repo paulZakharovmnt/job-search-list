@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AddInput from "./AddInput";
 import "./OptionsTab.css";
+import setUpdatedListOfCitiesToFB from "../../core/setToFBFunctions/setUpdatedListOfCitiesToFB";
+import setUpdatedListOfSourcesToFB from "../../core/setToFBFunctions/setUpdatedListOfSourcesToFB";
+import setUpdatedListOfResultsToFB from "../../core/setToFBFunctions/setUpdatedListOfResultsToFB";
 import { useSelector, useDispatch } from "react-redux";
 import {
   deleteCityFromSelector,
@@ -15,6 +18,26 @@ const OptionsTab = ({ optionTabToRender }) => {
   const listOfCities = useSelector((state) => state.listOfCities);
   const listOfSources = useSelector((state) => state.listOfSources);
   const listOfResults = useSelector((state) => state.listOfResults);
+  const user = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (listOfCities.length < 1) {
+      return;
+    }
+    setUpdatedListOfCitiesToFB(user, listOfCities);
+  }, [listOfCities, user]);
+  useEffect(() => {
+    if (listOfSources.length < 1) {
+      return;
+    }
+    setUpdatedListOfSourcesToFB(user, listOfSources);
+  }, [listOfSources, user]);
+  useEffect(() => {
+    if (listOfResults.length < 1) {
+      return;
+    }
+    setUpdatedListOfResultsToFB(user, listOfResults);
+  }, [listOfResults, user]);
 
   const dispatch = useDispatch();
 
