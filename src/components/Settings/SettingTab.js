@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import OptionsTab from "./OptionsTab";
-import useSettings from "../../core/customHooks/useSettings";
 import { CSSTransition } from "react-transition-group";
 import "./SettingTab.css";
 
-const SettingTab = ({ tabNameToRender, user }) => {
+const SettingTab = ({ tabNameToRender }) => {
   const optionTabs = ["Cities", "Sources", "Results"];
   const [optionTabToRender, setOptionTabToRender] = useState(null);
   const [showOptionTab, setShowOptionTab] = useState(false);
