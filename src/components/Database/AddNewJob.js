@@ -1,15 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./AddNewJob.css";
 import useSettings from "../../core/customHooks/useSettings";
 import combineAllJobInputsInOneVariable from "../../core/combineAllJobInputsInOneVariable";
 
-const AddNewJob = ({ handleAddJobToListSubmit, user }) => {
+const AddNewJob = ({
+  handleAddJobToListSubmit,
+  user,
+  applicationsAllIds,
+  applicationsById,
+  handleOpenEditJobModalClick,
+}) => {
   const [companyName, setCompanyName] = useState("");
   const [companyCity, setCompanyCity] = useState("");
   const [applyDate, setApplyDate] = useState("");
   const [sourceWhereApplied, setSourceWhereApplied] = useState("");
   const [result, setResult] = useState("");
   const [comments, setComments] = useState("");
+
+  const [applicationAlreadyExists, setApplicationAlreadyExists] = useState(
+    false
+  );
 
   const [
     {
@@ -18,6 +28,12 @@ const AddNewJob = ({ handleAddJobToListSubmit, user }) => {
       listOfCitiesFromSelectorMenu,
     },
   ] = useSettings(user);
+
+  useEffect(() => {
+    if (applicationsAllIds.includes(companyName)) {
+      setApplicationAlreadyExists(true);
+    }
+  }, [companyName]);
 
   const clearAllInputs = () => {
     setCompanyName("");
@@ -61,6 +77,28 @@ const AddNewJob = ({ handleAddJobToListSubmit, user }) => {
             <div className="text">Company Name</div>
           </label>
         </div>
+        {applicationAlreadyExists && (
+          <div>
+            <h2>
+              Application with such company name already exists. What do you
+              want to do?
+            </h2>
+
+            <button
+              onClick={(event) =>
+                handleOpenEditJobModalClick(
+                  event,
+                  applicationsById[companyName]
+                )
+              }
+            >
+              Open application
+            </button>
+            <button onClick={() => setApplicationAlreadyExists(false)}>
+              Continue Adding
+            </button>
+          </div>
+        )}
         {companyName.length > 2 && (
           <div className="option-cont">
             <label className="result">
