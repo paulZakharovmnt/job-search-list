@@ -67,10 +67,6 @@ const Main = ({ user }) => {
     applicationsByIdCopy[job.company] = job;
     setApplicationsById(applicationsByIdCopy);
 
-    if (applicationsAllIds.includes(job.company)) {
-      return;
-      // TODO: Here should be POPUP window that we have already this company
-    }
     const applicationsAllIdsCopy = [...applicationsAllIds, job.company];
     setApplicationsAllIds(applicationsAllIdsCopy);
     toggleShowJobsListTabClick();
@@ -91,7 +87,8 @@ const Main = ({ user }) => {
     setCurrentlyUpdatedJob(null);
   };
 
-  const handleOpenEditJobModalClick = (jobInfo) => {
+  const handleOpenEditJobModalClick = (event, jobInfo) => {
+    event.preventDefault();
     setCurrentlyUpdatedJob(jobInfo);
     setShowEditJobModal(true);
   };
@@ -117,6 +114,9 @@ const Main = ({ user }) => {
         <AddNewJob
           handleAddJobToListSubmit={handleAddJobToListSubmit}
           user={user}
+          applicationsAllIds={applicationsAllIds}
+          applicationsById={applicationsById}
+          handleOpenEditJobModalClick={handleOpenEditJobModalClick}
         />
       ) : (
         <JobList
