@@ -1,18 +1,24 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import "./App.css";
 import Auth from "./components/Auth/Auth";
 import Main from "./components/Database/Main";
+import AuthContext from "./context/auth-context/auth-context";
+import ApplicationsState from "./context/applications-context/ApplicationsState";
 
 const App = () => {
-  const [user, setUser] = useState("");
+  const { user } = useContext(AuthContext);
 
-  const handleSetUser = (user) => {
-    setUser(user);
-  };
+  console.log(user);
 
   return (
     <div className="App">
-      {user ? <Main user={user} /> : <Auth handleSetUser={handleSetUser} />}
+      {!user ? (
+        <Auth />
+      ) : (
+        <ApplicationsState>
+          <Main user={user} />
+        </ApplicationsState>
+      )}
     </div>
   );
 };
