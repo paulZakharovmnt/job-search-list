@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useContext } from "react";
 import { fire } from "../../core/firebase";
 import LoginPage from "./LogInPage";
 import setDefaultNewUserSettingsToFB from "../../core/setToFBFunctions/setDefaultNewUserSettingsToFB";
+import AuthContext from "../../context/auth-context/auth-context";
 import "./Auth.css";
 
 const Auth = ({ handleSetUser }) => {
@@ -13,6 +14,8 @@ const Auth = ({ handleSetUser }) => {
   const [passwordError, setPasswordError] = useState("");
 
   const [hasAccount, setHasAccount] = useState(true);
+
+  const { setLoggedInUser, logoutUser } = useContext(AuthContext);
 
   const clearInputs = () => {
     setEmail("");
@@ -80,13 +83,13 @@ const Auth = ({ handleSetUser }) => {
     fire.auth().onAuthStateChanged((user) => {
       if (user) {
         clearInputs();
-        handleSetUser({
+        setLoggedInUser({
           email: user.email,
           uid: user.uid,
           displayName: user.displayName,
         });
       } else {
-        handleSetUser("");
+        logoutUser();
       }
     });
   }, [handleSetUser]);
