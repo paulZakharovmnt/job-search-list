@@ -6,17 +6,17 @@ const Job = ({
   handleDeleteApplicationClick,
   handleOpenEditJobModalClick,
 }) => {
-  const jobInfo = applicationsById[company];
+  const application = applicationsById[company];
   return (
     <li className="job">
       <h4 className="joblist-job-title">{company}</h4>
-      <p className="joblist-job-title">{jobInfo.city}</p>
-      <p className="joblist-job-title">{jobInfo.date}</p>
-      <p className="joblist-job-title">{jobInfo.source}</p>
-      <p className="joblist-job-title">{jobInfo.result}</p>
+      <p className="joblist-job-title">{application.city}</p>
+      <p className="joblist-job-title">{application.date}</p>
+      <p className="joblist-job-title">{application.source}</p>
+      <p className="joblist-job-title">{application.result}</p>
       <div className="icons">
         <i
-          onClick={() => handleOpenEditJobModalClick(jobInfo)}
+          onClick={(event) => handleOpenEditJobModalClick(event, application)}
           className="job-edit-btn fas fa-edit"
         ></i>
         <i
