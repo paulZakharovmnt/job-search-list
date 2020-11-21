@@ -4,13 +4,16 @@ import AddNewJob from "./AddNewJob";
 import JobList from "./JobList";
 import EditItem from "./EditItem/EditItem";
 
-import deleteSelectedJobInfoFromList from "../../core/deleteSelectedJobInfoFromList";
 import setApplicationsAllIdsToFB from "../../core/setToFBFunctions/setApplicationsAllIdsToFB";
 import setApplicationsByIdToFB from "../../core/setToFBFunctions/setApplicationsByIdToFB";
 import fetchApplicationsAllIds from "../../core/getFromFBFunctions/fetchApplicationsAllIds";
 import fetchApplicationsById from "../../core/getFromFBFunctions/fetchApplicationsById";
+import getListOfSourcesFromFB from "../../core/getFromFBFunctions/getListOfSourcesFromFB";
+import getListOfResultsFromFB from "../../core/getFromFBFunctions/getListOfResultsFromFB";
+import getListOfCitiesFromFB from "../../core/getFromFBFunctions/getListOfCitiesFromFB";
 import SettingsModal from "../Settings/SettingsModal";
 import applicationContext from "../../context/applications-context/application-context";
+import settingsContext from "../../context/settings-context/settings-context";
 
 const Main = ({ user }) => {
   const [currentlyUpdatedJob, setCurrentlyUpdatedJob] = useState(null);
@@ -30,16 +33,32 @@ const Main = ({ user }) => {
     deleteApplication,
   } = useContext(applicationContext);
 
+  const {
+    setCitiesOptionFromFB,
+    setResultsOptionFromFB,
+    setSourcesOptionFromFB,
+  } = useContext(settingsContext);
+
   useEffect(() => {
     fetchApplicationsById(user).onSnapshot((doc) => {
       setApplicationsByIdFromFB(doc.data());
     });
+
     fetchApplicationsAllIds(user).onSnapshot((doc) => {
       if (!doc.data().companyList) {
         return;
       }
-
       setApplicationAllIdsFromFB(doc.data().companyList);
+    });
+
+    getListOfCitiesFromFB(user).onSnapshot((response) => {
+      setCitiesOptionFromFB(response.data().listOfCitiesFromSelectorMenu);
+    });
+    getListOfResultsFromFB(user).onSnapshot((response) => {
+      setResultsOptionFromFB(response.data().listOfResultsFromSelectorMenu);
+    });
+    getListOfSourcesFromFB(user).onSnapshot((response) => {
+      setSourcesOptionFromFB(response.data().listOfSourcesFromSelectorMenu);
     });
   }, [user]);
 
@@ -102,7 +121,6 @@ const Main = ({ user }) => {
       {showAddNewJobTab ? (
         <AddNewJob
           handleAddJobToListSubmit={handleAddJobToListSubmit}
-          user={user}
           applicationsAllIds={applicationsAllIds}
           applicationsById={applicationsById}
           handleOpenEditJobModalClick={handleOpenEditJobModalClick}
@@ -125,9 +143,7 @@ const Main = ({ user }) => {
         />
       )}
 
-      {showSettings && (
-        <SettingsModal user={user} setShowSettings={setShowSettings} />
-      )}
+      {showSettings && <SettingsModal setShowSettings={setShowSettings} />}
     </div>
   );
 };
