@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Settings.css";
 import SettingTab from "./SettingTab";
 
-const SettingsModal = ({ user, setShowSettings }) => {
+const SettingsModal = ({ setShowSettings }) => {
   const [tabNameToRender, setTabNameToRender] = useState(null);
 
   const [showSettingTab, setShowSettingTab] = useState(false);
@@ -19,6 +19,7 @@ const SettingsModal = ({ user, setShowSettings }) => {
       <div className="settings">
         <div className="settings-header">
           <h2>Settings</h2>
+          <button onClick={() => setShowSettings(false)}>Close</button>
           <i
             className="close-settings-btn fas fa-times"
             onClick={() => setShowSettings(false)}
@@ -44,7 +45,6 @@ const SettingsModal = ({ user, setShowSettings }) => {
               <SettingTab
                 tabNameToRender={tabNameToRender}
                 showSettingTab={showSettingTab}
-                user={user}
               />
             )}
           </div>
