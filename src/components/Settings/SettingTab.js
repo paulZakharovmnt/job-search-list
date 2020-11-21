@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import OptionsTab from "./OptionsTab";
-import useSettings from "../../core/customHooks/useSettings";
 import { CSSTransition } from "react-transition-group";
 import "./SettingTab.css";
 
-const SettingTab = ({ tabNameToRender, user }) => {
+const SettingTab = ({ tabNameToRender }) => {
   const optionTabs = ["Cities", "Sources", "Results"];
   const [optionTabToRender, setOptionTabToRender] = useState(null);
   const [showOptionTab, setShowOptionTab] = useState(false);
@@ -18,20 +17,6 @@ const SettingTab = ({ tabNameToRender, user }) => {
     setOptionTabToRender(tab);
     setShowOptionTab(true);
   };
-
-  const [
-    {
-      listOfSourcesFromSelectorMenu,
-      listOfResultsFromSelectorMenu,
-      listOfCitiesFromSelectorMenu,
-      handleAddNewCityToListSubmit,
-      handleAddNewResultToListSubmit,
-      handleAddNewSourceToListSubmit,
-      handleDeleteCityFromList,
-      handleDeleteResultFromList,
-      handleDeleteSourceFromList,
-    },
-  ] = useSettings(user);
 
   if (tabNameToRender === "Selectors") {
     return (
@@ -69,19 +54,7 @@ const SettingTab = ({ tabNameToRender, user }) => {
             ))}
           </div>
           {showOptionTab && (
-            <OptionsTab
-              optionTabToRender={optionTabToRender}
-              user={user}
-              listOfSourcesFromSelectorMenu={listOfSourcesFromSelectorMenu}
-              listOfResultsFromSelectorMenu={listOfResultsFromSelectorMenu}
-              listOfCitiesFromSelectorMenu={listOfCitiesFromSelectorMenu}
-              handleAddNewCityToListSubmit={handleAddNewCityToListSubmit}
-              handleAddNewResultToListSubmit={handleAddNewResultToListSubmit}
-              handleAddNewSourceToListSubmit={handleAddNewSourceToListSubmit}
-              handleDeleteCityFromList={handleDeleteCityFromList}
-              handleDeleteResultFromList={handleDeleteResultFromList}
-              handleDeleteSourceFromList={handleDeleteSourceFromList}
-            />
+            <OptionsTab optionTabToRender={optionTabToRender} />
           )}
         </div>
       </CSSTransition>
