@@ -1,0 +1,74 @@
+.add-new-item-container {
+  border: 2px solid black;
+  border-radius: 26px;
+  width: 30%;
+  margin-left: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: width 0.3s ease-in-out;
+}
+
+.add-new-item-container h4 {
+  margin: 0;
+}
+
+.add-item-btn {
+  font-size: 30px;
+  color: green;
+  cursor: pointer;
+
+  transition: color 0.2s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.add-new-item-container:hover .add-item-btn {
+  color: rgb(28, 196, 28);
+  animation-name: spin-add-btn;
+  animation-duration: 1s;
+}
+
+.add-new-item-container.adding {
+  width: 75%;
+}
+
+.input-appear-enter {
+  opacity: 0;
+  transition: all 1s ease-in;
+}
+
+.input-appear-enter-active {
+  opacity: 1;
+}
+
+.input-appear-exit {
+  opacity: 1;
+  transition: all 0.2s ease-out;
+}
+.input-appear-exit-active {
+  opacity: 0;
+}
+
+.add-item-input {
+  display: flex;
+  flex-direction: row;
+}
+
+.add-item-btn.active {
+  transform: rotate(45deg);
+  color: rgb(179, 44, 44);
+}
+.add-item-btn.active:hover {
+  color: rgb(250, 15, 15);
+}
+
+@keyframes spin-add-btn {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
