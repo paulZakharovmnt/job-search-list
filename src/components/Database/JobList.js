@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import Job from "./Job";
 import "./JobList.css";
+import applicationContext from "../../context/applications-context/application-context";
 
 const JobList = ({
-  applicationsAllIds,
-  applicationsById,
   searchInputValue,
   handleDeleteApplicationClick,
   handleOpenEditJobModalClick,
 }) => {
-  const filteredJobList = applicationsAllIds.filter((company) => {
+  const { applicationsAllIds, applicationsById } = useContext(
+    applicationContext
+  );
+
+  const filteredApplications = applicationsAllIds.filter((company) => {
     return company.toLowerCase().includes(searchInputValue.toLowerCase());
   });
   return (
@@ -22,7 +25,7 @@ const JobList = ({
         <p>Result</p>
         <p>Edit/Delete</p>
       </li>
-      {filteredJobList.map((company) => {
+      {filteredApplications.map((company) => {
         return (
           <Job
             company={company}

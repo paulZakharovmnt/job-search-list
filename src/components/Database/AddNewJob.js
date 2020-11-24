@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "./AddNewJob.css";
-import useSettings from "../../core/customHooks/useSettings";
+import settingsContext from "../../context/settings-context/settings-context";
 import combineAllJobInputsInOneVariable from "../../core/combineAllJobInputsInOneVariable";
 
 const AddNewJob = ({
   handleAddJobToListSubmit,
-  user,
   applicationsAllIds,
   applicationsById,
   handleOpenEditJobModalClick,
@@ -21,13 +20,9 @@ const AddNewJob = ({
     false
   );
 
-  const [
-    {
-      listOfSourcesFromSelectorMenu,
-      listOfResultsFromSelectorMenu,
-      listOfCitiesFromSelectorMenu,
-    },
-  ] = useSettings(user);
+  const { listOfCities, listOfResults, listOfSources } = useContext(
+    settingsContext
+  );
 
   useEffect(() => {
     if (applicationsAllIds.includes(companyName)) {
@@ -109,7 +104,7 @@ const AddNewJob = ({
                 <option value="">
                   --Please choose a City where you applied--
                 </option>
-                {listOfCitiesFromSelectorMenu.map((city) => {
+                {listOfCities.map((city) => {
                   return (
                     <option key={city} value={city}>
                       {city}
@@ -143,7 +138,7 @@ const AddNewJob = ({
               <option value="">
                 --Please choose a source where you applied--
               </option>
-              {listOfSourcesFromSelectorMenu.map((source) => {
+              {listOfSources.map((source) => {
                 return (
                   <option key={source} value={source}>
                     {source}
@@ -165,7 +160,7 @@ const AddNewJob = ({
               <option value="">
                 -- Please choose a Result of Interview --
               </option>
-              {listOfResultsFromSelectorMenu.map((result) => {
+              {listOfResults.map((result) => {
                 return (
                   <option key={result} value={result}>
                     {result}

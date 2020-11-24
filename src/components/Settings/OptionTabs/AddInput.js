@@ -16,6 +16,7 @@ const AddInput = ({ addNewOptionToList }) => {
 
   return (
     <div className={addingInputContainerClasses}>
+      <button onClick={() => setShowAddInput(!showAddInput)}>Add new</button>
       <i
         className={addBtnClasses}
         onClick={() => setShowAddInput(!showAddInput)}

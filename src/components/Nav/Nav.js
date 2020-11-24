@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import { fire } from "../../core/firebase";
 import "./Nav.css";
 import classNames from "classnames";
+import AuthContext from "../../context/auth-context/auth-context";
 
 const Nav = ({
   toggleShowJobAddTabClick,
@@ -12,6 +13,8 @@ const Nav = ({
   showSettings,
   showAddNewJobTab,
 }) => {
+  const { logoutUser } = useContext(AuthContext);
+
   const addJobBtnClassnames = classNames("nav-btn", {
     opened: showAddNewJobTab && !showSettings,
   });
@@ -24,6 +27,7 @@ const Nav = ({
 
   const handleLogOut = () => {
     fire.auth().signOut();
+    logoutUser();
   };
 
   return (
