@@ -30,6 +30,7 @@ const Main = ({ user }) => {
     setApplicationAllIdsFromFB,
     setApplicationsByIdFromFB,
     addApplicationToState,
+    updateApplication,
     deleteApplication,
   } = useContext(applicationContext);
 
@@ -69,7 +70,7 @@ const Main = ({ user }) => {
     if (applicationsById) {
       setApplicationsByIdToFB(user, applicationsById);
     }
-  }, [applicationsAllIds, applicationsById]);
+  }, [user, applicationsAllIds, applicationsById]);
 
   const handleDeleteApplicationClick = (company) => {
     deleteApplication(company);
@@ -102,9 +103,7 @@ const Main = ({ user }) => {
   };
 
   const handleAddNewCommentToApplicationSubmit = (updatedJobCopy) => {
-    // let applicationsByIdCopy = { ...applicationsById };
-    // applicationsByIdCopy[updatedJobCopy.company] = updatedJobCopy;
-    // setApplicationsById(applicationsByIdCopy);
+    updateApplication(updatedJobCopy);
   };
 
   return (
