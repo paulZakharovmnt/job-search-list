@@ -9,8 +9,6 @@ import SettingsState from "./context/settings-context/SettingsState";
 const App = () => {
   const { user } = useContext(AuthContext);
 
-  console.log(user);
-
   return (
     <div className="App">
       {!user ? (
