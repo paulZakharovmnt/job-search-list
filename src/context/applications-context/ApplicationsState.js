@@ -48,6 +48,13 @@ const ApplicationsState = (props) => {
     });
   };
 
+  const updateApplication = (updatedApplication) => {
+    dispatchApplicationsById({
+      type: ADD_NEW_APPLICATION,
+      payload: updatedApplication,
+    });
+  };
+
   const deleteApplication = (application) => {
     dispatchApplicationsById({
       type: DELETE_APPLICATION,
@@ -68,6 +75,7 @@ const ApplicationsState = (props) => {
         setApplicationsByIdFromFB,
         setApplicationAllIdsFromFB,
         addApplicationToState,
+        updateApplication,
         deleteApplication,
       }}
     >
