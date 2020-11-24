@@ -28,7 +28,7 @@ const AddNewJob = ({
     if (applicationsAllIds.includes(companyName)) {
       setApplicationAlreadyExists(true);
     }
-  }, [companyName]);
+  }, [companyName, applicationsAllIds]);
 
   const clearAllInputs = () => {
     setCompanyName("");
