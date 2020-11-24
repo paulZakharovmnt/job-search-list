@@ -19,7 +19,6 @@ const SettingsModal = ({ setShowSettings }) => {
       <div className="settings">
         <div className="settings-header">
           <h2>Settings</h2>
-          <button onClick={() => setShowSettings(false)}>Close</button>
           <i
             className="close-settings-btn fas fa-times"
             onClick={() => setShowSettings(false)}

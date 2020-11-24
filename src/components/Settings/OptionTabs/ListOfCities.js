@@ -9,7 +9,6 @@ const ListOfCities = ({ listOfCities, addCityToList, deleteCity }) => {
         {listOfCities.map((city) => (
           <div key={city} className="list-contaniner">
             <li>{city}</li>
-            <button onClick={() => deleteCity(city)}>Delete</button>
             <i
               onClick={() => deleteCity(city)}
               className="delete-item-btn fas fa-trash-alt"
