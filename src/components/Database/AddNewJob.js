@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import "./AddNewJob.css";
 import settingsContext from "../../context/settings-context/settings-context";
+import authContext from "../../context/auth-context/auth-context";
 import combineAllJobInputsInOneVariable from "../../core/combineAllJobInputsInOneVariable";
 
 const AddNewJob = ({
@@ -23,6 +24,7 @@ const AddNewJob = ({
   const { listOfCities, listOfResults, listOfSources } = useContext(
     settingsContext
   );
+  const { showFrenchLanguage } = useContext(authContext);
 
   useEffect(() => {
     if (applicationsAllIds.includes(companyName)) {
@@ -69,15 +71,28 @@ const AddNewJob = ({
               value={companyName}
               onChange={(event) => setCompanyName(event.target.value)}
             />
-            <div className="text">Company Name</div>
+            <div className="text">
+              {!showFrenchLanguage ? (
+                <span>Company Name</span>
+              ) : (
+                <span>Nom de la compagnie</span>
+              )}
+            </div>
           </label>
         </div>
         {applicationAlreadyExists && (
           <div>
-            <h2>
-              Application with such company name already exists. What do you
-              want to do?
-            </h2>
+            {!showFrenchLanguage ? (
+              <h2>
+                Application with such company name already exists. What do you
+                want to do?
+              </h2>
+            ) : (
+              <h2>
+                L'application avec ce nom de société existe déjà. Que
+                faites-vous vouloir faire?
+              </h2>
+            )}
 
             <button
               onClick={(event) =>
@@ -101,9 +116,16 @@ const AddNewJob = ({
                 value={companyCity}
                 onChange={(event) => setCompanyCity(event.target.value)}
               >
-                <option value="">
-                  --Please choose a City where you applied--
-                </option>
+                {!showFrenchLanguage ? (
+                  <option value="">
+                    --Please choose a City where you applied--
+                  </option>
+                ) : (
+                  <option value="">
+                    {" "}
+                    --Veuillez choisir une ville où vous avez postulé--
+                  </option>
+                )}
                 {listOfCities.map((city) => {
                   return (
                     <option key={city} value={city}>
@@ -112,7 +134,13 @@ const AddNewJob = ({
                   );
                 })}
               </select>
-              <div className="text">City where you applied</div>
+              <div className="text">
+                {!showFrenchLanguage ? (
+                  <span>City where you applied</span>
+                ) : (
+                  <span>Ville où vous avez postulé</span>
+                )}
+              </div>
             </label>
           </div>
         )}
@@ -125,7 +153,13 @@ const AddNewJob = ({
               type="date"
               onChange={(event) => setApplyDate(event.target.value)}
             />
-            <div className="text">Apply date</div>
+            <div className="text">
+              {!showFrenchLanguage ? (
+                <span>Apply date</span>
+              ) : (
+                <span>Appliquer la date</span>
+              )}
+            </div>
           </div>
         )}
 
@@ -135,9 +169,16 @@ const AddNewJob = ({
               value={sourceWhereApplied}
               onChange={(event) => setSourceWhereApplied(event.target.value)}
             >
-              <option value="">
-                --Please choose a source where you applied--
-              </option>
+              {!showFrenchLanguage ? (
+                <option value="">
+                  --Please choose a source where you applied--
+                </option>
+              ) : (
+                <option value="">
+                  --Veuillez choisir une source où vous avez postulé--
+                </option>
+              )}
+
               {listOfSources.map((source) => {
                 return (
                   <option key={source} value={source}>
@@ -146,7 +187,13 @@ const AddNewJob = ({
                 );
               })}
             </select>
-            <div className="text">Source where applied</div>
+            <div className="text">
+              {!showFrenchLanguage ? (
+                <span>Source where applied</span>
+              ) : (
+                <span>Source où appliqué</span>
+              )}
+            </div>
           </div>
         )}
 
@@ -157,9 +204,16 @@ const AddNewJob = ({
               value={result}
               onChange={(event) => setResult(event.target.value)}
             >
-              <option value="">
-                -- Please choose a Result of Interview --
-              </option>
+              {!showFrenchLanguage ? (
+                <option value="">
+                  -- Please choose a Result of Interview --
+                </option>
+              ) : (
+                <option value="">
+                  -- Veuillez choisir un résultat de l'entrevue --
+                </option>
+              )}
+
               {listOfResults.map((result) => {
                 return (
                   <option key={result} value={result}>
@@ -168,6 +222,13 @@ const AddNewJob = ({
                 );
               })}
             </select>
+            <div className="text">
+              {!showFrenchLanguage ? (
+                <span>Result of this Application</span>
+              ) : (
+                <span>Résultat de cette application</span>
+              )}
+            </div>
           </div>
         )}
 
@@ -186,8 +247,10 @@ const AddNewJob = ({
         {result && (
           <div className="submit-bottno-container">
             <div
-              data-back="Add to List"
-              data-front="Submit"
+              data-back={
+                !showFrenchLanguage ? "Add to List" : "Ajouter à la liste"
+              }
+              data-front={!showFrenchLanguage ? "Submit" : "Soumettre"}
               className="submit-btn"
               onClick={handleCombineAllInputsInApplicationSubmit}
             ></div>

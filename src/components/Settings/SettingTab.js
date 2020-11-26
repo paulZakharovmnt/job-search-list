@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import OptionsTab from "./OptionsTab";
+import authContext from "../../context/auth-context/auth-context";
 import { CSSTransition } from "react-transition-group";
 import "./SettingTab.css";
 
@@ -7,6 +8,8 @@ const SettingTab = ({ tabNameToRender }) => {
   const optionTabs = ["Cities", "Sources", "Results"];
   const [optionTabToRender, setOptionTabToRender] = useState(null);
   const [showOptionTab, setShowOptionTab] = useState(false);
+
+  const { showFrenchLanguage, changeLanguage } = useContext(authContext);
 
   useEffect(() => {
     setShowOptionTab(false);
@@ -76,7 +79,21 @@ const SettingTab = ({ tabNameToRender }) => {
     );
   }
   if (tabNameToRender === "Language") {
-    return <div>Language</div>;
+    return (
+      <div>
+        Turn on french language
+        <div className="checkbox-language-container">
+          <input
+            checked={showFrenchLanguage}
+            className="language-checkbox"
+            type="checkbox"
+            onChange={changeLanguage}
+          />
+          <span></span>
+        </div>
+        {/* <button onClick={changeLanguage}>Change Language</button> */}
+      </div>
+    );
   }
 };
 

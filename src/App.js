@@ -7,7 +7,7 @@ import ApplicationsState from "./context/applications-context/ApplicationsState"
 import SettingsState from "./context/settings-context/SettingsState";
 
 const App = () => {
-  const { user } = useContext(AuthContext);
+  const { user, showFrenchLanguage } = useContext(AuthContext);
 
   return (
     <div className="App">
@@ -16,7 +16,7 @@ const App = () => {
       ) : (
         <ApplicationsState>
           <SettingsState>
-            <Main user={user} />
+            <Main user={user} showFrenchLanguage={showFrenchLanguage} />
           </SettingsState>
         </ApplicationsState>
       )}

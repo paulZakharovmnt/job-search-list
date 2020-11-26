@@ -3,6 +3,7 @@ import Nav from "../Nav/Nav";
 import AddNewJob from "./AddNewJob";
 import JobList from "./JobList";
 import EditItem from "./EditItem/EditItem";
+import SettingsModal from "../Settings/SettingsModal";
 
 import setApplicationsAllIdsToFB from "../../core/setToFBFunctions/setApplicationsAllIdsToFB";
 import setApplicationsByIdToFB from "../../core/setToFBFunctions/setApplicationsByIdToFB";
@@ -11,11 +12,11 @@ import fetchApplicationsById from "../../core/getFromFBFunctions/fetchApplicatio
 import getListOfSourcesFromFB from "../../core/getFromFBFunctions/getListOfSourcesFromFB";
 import getListOfResultsFromFB from "../../core/getFromFBFunctions/getListOfResultsFromFB";
 import getListOfCitiesFromFB from "../../core/getFromFBFunctions/getListOfCitiesFromFB";
-import SettingsModal from "../Settings/SettingsModal";
+
 import applicationContext from "../../context/applications-context/application-context";
 import settingsContext from "../../context/settings-context/settings-context";
 
-const Main = ({ user }) => {
+const Main = ({ user, showFrenchLanguage }) => {
   const [currentlyUpdatedJob, setCurrentlyUpdatedJob] = useState(null);
 
   const [showAddNewJobTab, setShowAddNewJobTab] = useState(false);
@@ -116,6 +117,7 @@ const Main = ({ user }) => {
         showSettings={showSettings}
         setShowSettings={setShowSettings}
         showAddNewJobTab={showAddNewJobTab}
+        showFrenchLanguage={showFrenchLanguage}
       />
       {showAddNewJobTab ? (
         <AddNewJob
@@ -129,6 +131,7 @@ const Main = ({ user }) => {
           searchInputValue={searchInputValue}
           handleDeleteApplicationClick={handleDeleteApplicationClick}
           handleOpenEditJobModalClick={handleOpenEditJobModalClick}
+          showFrenchLanguage={showFrenchLanguage}
         />
       )}
 
@@ -139,6 +142,7 @@ const Main = ({ user }) => {
           handleAddNewCommentToApplicationSubmit={
             handleAddNewCommentToApplicationSubmit
           }
+          showFrenchLanguage={showFrenchLanguage}
         />
       )}
 

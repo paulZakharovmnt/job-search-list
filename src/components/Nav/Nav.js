@@ -12,6 +12,7 @@ const Nav = ({
   setShowSettings,
   showSettings,
   showAddNewJobTab,
+  showFrenchLanguage,
 }) => {
   const { logoutUser } = useContext(AuthContext);
 
@@ -38,19 +39,31 @@ const Nav = ({
             className={addJobBtnClassnames}
             onClick={toggleShowJobAddTabClick}
           >
-            Add New Job
+            {!showFrenchLanguage ? (
+              <span>Add New Job</span>
+            ) : (
+              <span>Ajouter un nouveau travail</span>
+            )}
           </button>
           <button
             className={listOfJobsBtnClassnames}
             onClick={toggleShowJobsListTabClick}
           >
-            List of Jobs
+            {!showFrenchLanguage ? (
+              <span>List of Jobs</span>
+            ) : (
+              <span>Liste des emplois</span>
+            )}
           </button>
           <button
             className={settingsBtnClassNames}
             onClick={() => setShowSettings(!showSettings)}
           >
-            Settings
+            {!showFrenchLanguage ? (
+              <span>Settings</span>
+            ) : (
+              <span>Réglages</span>
+            )}
           </button>
         </div>
       </div>
@@ -69,7 +82,11 @@ const Nav = ({
           <h3> Hi, User</h3>
 
           <button className="nav-btn" onClick={handleLogOut}>
-            Logout
+            {!showFrenchLanguage ? (
+              <span>Logout</span>
+            ) : (
+              <span>Se déconnecter</span>
+            )}
           </button>
         </div>
       </div>

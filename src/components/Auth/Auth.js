@@ -92,7 +92,7 @@ const Auth = ({ handleSetUser }) => {
         logoutUser();
       }
     });
-  }, [handleSetUser]);
+  }, [logoutUser, setLoggedInUser]);
 
   useEffect(() => {
     authListener();
