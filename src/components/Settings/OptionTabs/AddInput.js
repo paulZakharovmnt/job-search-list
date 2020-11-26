@@ -7,19 +7,29 @@ const AddInput = ({ addNewOptionToList }) => {
   const [addNewOptionInput, setAddNewOptionInput] = useState("");
   const [showAddInput, setShowAddInput] = useState(false);
 
-  const addBtnClasses = classNames("add-item-btn", "fas fa-plus", {
-    active: showAddInput,
-  });
+  // const addBtnClasses = classNames("add-item-btn", "fas fa-plus", {
+  //   active: showAddInput,
+  // });
+  // const closeAddModalBtnClasses = classNames('fas fa-times', {
+  //   activeClose: !showAddInput
+  // })
   const addingInputContainerClasses = classNames("add-new-item-container", {
     adding: showAddInput,
   });
 
   return (
     <div className={addingInputContainerClasses}>
-      <i
-        className={addBtnClasses}
-        onClick={() => setShowAddInput(!showAddInput)}
-      ></i>
+      {!showAddInput ? (
+        <i
+          className="add-item-btn fas fa-plus "
+          onClick={() => setShowAddInput(!showAddInput)}
+        ></i>
+      ) : (
+        <i
+          className="close-add-item-btn fas fa-times"
+          onClick={() => setShowAddInput(!showAddInput)}
+        ></i>
+      )}
 
       <CSSTransition
         in={showAddInput}

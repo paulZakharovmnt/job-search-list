@@ -8,8 +8,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  cursor: pointer;
-  transition: width 0.3s ease-in-out;
+  transition: width 0.2s ease-in-out;
 }
 
 .add-new-item-container h4 {
@@ -26,6 +25,19 @@
 
 .add-new-item-container:hover .add-item-btn {
   color: rgb(28, 196, 28);
+  animation-name: spin-add-btn;
+  animation-duration: 1s;
+}
+
+.close-add-item-btn {
+  color: rgb(179, 44, 44);
+  font-size: 30px;
+  cursor: pointer;
+  transition: color 0.2s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.close-add-item-btn:hover {
+  color: rgb(250, 15, 15);
   animation-name: spin-add-btn;
   animation-duration: 1s;
 }
