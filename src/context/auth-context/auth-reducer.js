@@ -1,4 +1,8 @@
-import { SET_LOGGEDIN_USER, LOGOUT_USER } from "./auth-actions";
+import {
+  SET_LOGGEDIN_USER,
+  LOGOUT_USER,
+  CHANGE_LANGUAGE,
+} from "./auth-actions";
 
 const authReducer = (state, action) => {
   switch (action.type) {
@@ -6,6 +10,8 @@ const authReducer = (state, action) => {
       return { ...state, user: action.payload };
     case LOGOUT_USER:
       return { ...state, user: "" };
+    case CHANGE_LANGUAGE:
+      return { ...state, showFrenchLanguage: !state.showFrenchLanguage };
     default:
       return state;
   }
