@@ -108,7 +108,7 @@ const Main = ({ user, showFrenchLanguage }) => {
   };
 
   return (
-    <div>
+    <div className="main-container">
       <Nav
         toggleShowJobAddTabClick={toggleShowJobAddTabClick}
         toggleShowJobsListTabClick={toggleShowJobsListTabClick}
@@ -119,34 +119,36 @@ const Main = ({ user, showFrenchLanguage }) => {
         showAddNewJobTab={showAddNewJobTab}
         showFrenchLanguage={showFrenchLanguage}
       />
-      {showAddNewJobTab ? (
-        <AddNewJob
-          handleAddJobToListSubmit={handleAddJobToListSubmit}
-          applicationsAllIds={applicationsAllIds}
-          applicationsById={applicationsById}
-          handleOpenEditJobModalClick={handleOpenEditJobModalClick}
-        />
-      ) : (
-        <JobList
-          searchInputValue={searchInputValue}
-          handleDeleteApplicationClick={handleDeleteApplicationClick}
-          handleOpenEditJobModalClick={handleOpenEditJobModalClick}
-          showFrenchLanguage={showFrenchLanguage}
-        />
-      )}
+      <div className="info-container">
+        {showAddNewJobTab ? (
+          <AddNewJob
+            handleAddJobToListSubmit={handleAddJobToListSubmit}
+            applicationsAllIds={applicationsAllIds}
+            applicationsById={applicationsById}
+            handleOpenEditJobModalClick={handleOpenEditJobModalClick}
+          />
+        ) : (
+          <JobList
+            searchInputValue={searchInputValue}
+            handleDeleteApplicationClick={handleDeleteApplicationClick}
+            handleOpenEditJobModalClick={handleOpenEditJobModalClick}
+            showFrenchLanguage={showFrenchLanguage}
+          />
+        )}
 
-      {showEditJobModal && (
-        <EditItem // item
-          currentlyUpdatedJob={currentlyUpdatedJob}
-          closeEditJobModal={closeEditJobModal}
-          handleAddNewCommentToApplicationSubmit={
-            handleAddNewCommentToApplicationSubmit
-          }
-          showFrenchLanguage={showFrenchLanguage}
-        />
-      )}
+        {showEditJobModal && (
+          <EditItem // item
+            currentlyUpdatedJob={currentlyUpdatedJob}
+            closeEditJobModal={closeEditJobModal}
+            handleAddNewCommentToApplicationSubmit={
+              handleAddNewCommentToApplicationSubmit
+            }
+            showFrenchLanguage={showFrenchLanguage}
+          />
+        )}
 
-      {showSettings && <SettingsModal setShowSettings={setShowSettings} />}
+        {showSettings && <SettingsModal setShowSettings={setShowSettings} />}
+      </div>
     </div>
   );
 };
