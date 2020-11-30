@@ -8,12 +8,12 @@ const Job = ({
 }) => {
   const application = applicationsById[company];
   return (
-    <li className="job">
+    <div className="job">
       <h4 className="joblist-job-title">{company}</h4>
-      <p className="joblist-job-title">{application.city}</p>
-      <p className="joblist-job-title">{application.date}</p>
-      <p className="joblist-job-title">{application.source}</p>
-      <p className="joblist-job-title">{application.result}</p>
+      <p className="joblist-job-title city">{application.city}</p>
+      <p className="joblist-job-title date">{application.date}</p>
+      <p className="joblist-job-title source">{application.source}</p>
+      <p className="joblist-job-title result">{application.result}</p>
       <div className="icons">
         <i
           onClick={(event) => handleOpenEditJobModalClick(event, application)}
@@ -26,7 +26,7 @@ const Job = ({
           className="job-delete-btn fas fa-trash-alt"
         ></i>
       </div>
-    </li>
+    </div>
   );
 };
 
