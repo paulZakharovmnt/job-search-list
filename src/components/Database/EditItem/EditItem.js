@@ -48,7 +48,10 @@ const EditItem = ({
       <div className="edit-window">
         <div className="edit-header">
           <h1>Company info</h1>
-          <button onClick={closeEditJobModal}>Close</button>
+          <i
+            onClick={closeEditJobModal}
+            className="close-settings-btn fas fa-times"
+          />
         </div>
         <div className="company-data-container">
           <div className="detailed-company-information">
