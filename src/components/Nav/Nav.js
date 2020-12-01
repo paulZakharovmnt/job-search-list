@@ -20,6 +20,7 @@ const Nav = ({
   const { logoutUser } = useContext(AuthContext);
 
   const [sidebarMenuOpened, setSidebarMenuOpened] = useState(false);
+  const [showSearchBar, setShowSearchBar] = useState(false);
 
   const burgerTopClasses = classNames("burger", "burger-top", {
     open: sidebarMenuOpened,
@@ -72,6 +73,8 @@ const Nav = ({
         addJobBtnClassnames={addJobBtnClassnames}
         listOfJobsBtnClassnames={listOfJobsBtnClassnames}
         settingsBtnClassNames={settingsBtnClassNames}
+        showSearchBar={showSearchBar}
+        setShowSearchBar={setShowSearchBar}
       />
       {sidebarMenuOpened && (
         <SideBarMenu
