@@ -1,4 +1,5 @@
 import React from "react";
+import classNames from "classnames";
 
 const Job = ({
   company,
@@ -7,8 +8,14 @@ const Job = ({
   handleOpenEditJobModalClick,
 }) => {
   const application = applicationsById[company];
+
+  const jobClassnames = classNames("job", {
+    rejected: application.result === "Reject",
+    offer: application.result === "Offer",
+  });
+
   return (
-    <div className="job">
+    <div className={jobClassnames}>
       <h4 className="joblist-job-title">{company}</h4>
       <p className="joblist-job-title city">{application.city}</p>
       <p className="joblist-job-title date">{application.date}</p>
