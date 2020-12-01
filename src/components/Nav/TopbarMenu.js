@@ -14,6 +14,8 @@ const TopbarMenu = ({
   settingsBtnClassNames,
   listOfJobsBtnClassnames,
   addJobBtnClassnames,
+  setShowSearchBar,
+  showSearchBar,
 }) => {
   return (
     <div className="top-bar-menu">
@@ -53,6 +55,13 @@ const TopbarMenu = ({
       </div>
       <div className="nav-container-2">
         {!showAddNewJobTab && (
+          <i
+            className="fas fa-search"
+            onClick={() => setShowSearchBar(!showSearchBar)}
+          />
+        )}
+
+        {showSearchBar && (
           <input
             className="inpit-search"
             placeholder="search..."
