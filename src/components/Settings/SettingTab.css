@@ -34,14 +34,10 @@
   border: 3px solid #333333;
 }
 
-.activated {
-  color: white;
-}
-
 .arrow-btn-selector {
   opacity: 0;
   font-size: 34px;
-  color: white;
+  color: #c3073f;
   transition: all 0.2s ease-in;
 }
 

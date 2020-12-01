@@ -52,6 +52,7 @@
 
 .btnContainer {
   padding: 30px;
+  text-align: center;
 }
 
 .btn {
@@ -79,7 +80,7 @@
   display: block;
   transition: 0.5s;
   position: absolute;
-  background: #adadaf;
+  background: #c3073f;
   content: attr(data-back);
   transform: translateY(-50%) rotateX(90deg);
 }
@@ -94,7 +95,7 @@
   line-height: 40px;
   transition: 0.5s;
   position: relative;
-  background: #323237;
+  background: #1a1a1d;
   content: attr(data-front);
   transform: translateY(0) rotateX(0);
 }

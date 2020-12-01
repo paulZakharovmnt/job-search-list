@@ -1,8 +1,9 @@
 .add-job {
   background-color: rgba(255, 255, 255, 0.76);
+  background-color: rgba(255, 255, 255, 0.76);
   width: 50%;
   margin: 0 auto;
-  margin-top: 100px;
+  text-align: center;
   display: flex;
   flex-direction: column;
 }
@@ -146,7 +147,7 @@
   display: block;
   transition: 0.5s;
   position: absolute;
-  background: #333333;
+  background: #1a1a1d;
   content: attr(data-back);
   transform: translateY(50%) rotateX(90deg);
 }
@@ -189,6 +190,8 @@
   line-height: 20px;
   text-transform: uppercase;
   transition: all 0.3s;
+  margin-top: 5px;
+  letter-spacing: 4px;
 }
 
 .result input {
@@ -208,4 +211,10 @@
 .result input:focus {
   max-width: 100%;
   width: 350px;
+}
+
+@media screen and (max-width: 768px) {
+  .add-job {
+    width: 90%;
+  }
 }

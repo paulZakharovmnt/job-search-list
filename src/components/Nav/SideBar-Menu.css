@@ -1,0 +1,34 @@
+.black-drop {
+  background-color: rgba(0, 0, 0, 0.74);
+  z-index: 10;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.sidebar-menu {
+  background-color: #4e4e50;
+  width: 75%;
+  height: 100%;
+}
+
+.side-nav-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+  height: 90%;
+}
+
+.side-nav-container-1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 200px;
+
+  height: 40%;
+}
