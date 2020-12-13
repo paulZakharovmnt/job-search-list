@@ -74,6 +74,9 @@ const Main = ({ user, showFrenchLanguage }) => {
   }, [user, applicationsAllIds, applicationsById]);
 
   const handleDeleteApplicationClick = (company) => {
+    if (applicationsAllIds.length === 1) {
+      setApplicationsAllIdsToFB(user, []);
+    }
     deleteApplication(company);
   };
 
