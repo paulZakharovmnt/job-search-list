@@ -139,3 +139,16 @@
   opacity: 0;
   transition: all 0.3s ease-in;
 }
+
+@media screen and (max-width: 768px) {
+  .selector-box {
+    flex-direction: column;
+  }
+  .selector-contaner1 {
+    width: 100%;
+  }
+
+  .selector-contaner2 {
+    width: 100%;
+  }
+}
